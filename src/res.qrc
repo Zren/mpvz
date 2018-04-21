@@ -1,0 +1,8 @@
+<RCC>
+	<qresource prefix="/">
+		<file>qml/MainWindow.qml</file>
+	</qresource>
+	<qresource prefix="/">
+		<file>qml/MpvPlayer.qml</file>
+	</qresource>
+</RCC>
