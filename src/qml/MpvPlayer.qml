@@ -88,28 +88,28 @@ Item {
 
 
 	function zeroPad(n) {
-		var s = n.toString();
-		if (s.length == 0) s = "0";
-		if (s.length == 1) s = "0" + s;
-		return s;
+		var s = n.toString()
+		if (s.length == 0) s = "0"
+		if (s.length == 1) s = "0" + s
+		return s
 	}
 	function formatTime(t) {
-		var totalSeconds = Math.floor(t);
-		var seconds = totalSeconds % 60;
-		var hours = Math.floor(totalSeconds / 3600);
-		var minutes = Math.floor((totalSeconds - hours * 3600) / 60);
-		return zeroPad(hours) + ":" + zeroPad(minutes) + ":" + zeroPad(seconds);
+		var totalSeconds = Math.floor(t)
+		var seconds = totalSeconds % 60
+		var hours = Math.floor(totalSeconds / 3600)
+		var minutes = Math.floor((totalSeconds - hours * 3600) / 60)
+		return zeroPad(hours) + ":" + zeroPad(minutes) + ":" + zeroPad(seconds)
 	}
 	function formatShortTime(t) {
-		var totalSeconds = Math.floor(t);
-		var seconds = totalSeconds % 60;
-		var hours = Math.floor(totalSeconds / 3600);
-		var minutes = Math.floor((totalSeconds - hours * 3600) / 60);
+		var totalSeconds = Math.floor(t)
+		var seconds = totalSeconds % 60
+		var hours = Math.floor(totalSeconds / 3600)
+		var minutes = Math.floor((totalSeconds - hours * 3600) / 60)
 		var s = ""
 		if (hours > 0) {
-			return hours + ":" + zeroPad(minutes) + ":" + zeroPad(seconds);
+			return hours + ":" + zeroPad(minutes) + ":" + zeroPad(seconds)
 		} else {
-			return minutes + ":" + zeroPad(seconds);
+			return minutes + ":" + zeroPad(seconds)
 		}
 	}
 }
