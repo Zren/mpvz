@@ -16,9 +16,9 @@ Item {
 		MouseArea {
 			anchors.fill: parent
 		}
-	}
 
-	function playFile(filepath) {
-		mpvObject.command(["loadfile", filepath])
+		function loadfile(filepath) {
+			mpvObject.command(["loadfile", filepath])
+		}
 	}
 }

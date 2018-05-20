@@ -1,13 +1,14 @@
+#include "mpvapp.h"
 #include "mpvobject.h"
 
 #include <stdexcept>
 #include <clocale>
 
 #include <QGuiApplication>
-#include <QtQuick/QQuickWindow>
-#include <QtQuick/QQuickView>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
+// #include <QtQuick/QQuickWindow>
+// #include <QtQuick/QQuickView>
+// #include <QQmlApplicationEngine>
+// #include <QQmlContext>
 
 
 int main(int argc, char **argv) {
@@ -22,18 +23,41 @@ int main(int argc, char **argv) {
 
 	qmlRegisterType<MpvObject>("mpvz", 1, 0, "MpvObject");
 
-	QQuickView view;
-	view.setResizeMode(QQuickView::SizeRootObjectToView);
-	view.setSource(QUrl("qrc:///qml/MpvPlayer.qml"));
-	view.show();
+	// QQuickView view;
+	// view.setResizeMode(QQuickView::SizeRootObjectToView);
+	// view.setSource(QUrl("qrc:///qml/MpvPlayer.qml"));
+	// view.show();
+
+	MpvApp mpvApp;
+	mpvApp.parseArgs();
+	mpvApp.init();
+	return mpvApp.run();
 
 	// QQmlApplicationEngine engine;
-	// QQmlContext *context = engine.rootContext();
+	// // QQmlContext *context = engine.rootContext();
 	// // context->setContextProperty(QStringLiteral("mpv"), mpvObject);
 	
 	// engine.load(QUrl(QStringLiteral("qrc:///qml/MainWindow.qml")));
 	// if (engine.rootObjects().isEmpty())
 	// 	return -1;
 
-	return app.exec();
+	// MpvObject *mpvObject = engine.findChild<MpvObject*>("mpvObject");
+
+	// QTimer::singleShot(50, this, &App::windowsRestored);
+
+	// QString filepath = QStringLiteral("test.mkv");
+	// mpvObject->command(QStringList() << "loadfile" << filepath);
+	// mpvObject->command(QStringList() << "loadfile" << "test.mkv");
+
+
+
+	// // if (mpvObject) {
+	// 	QVariant returnedValue;
+	// 	QVariant msg = "test.mkv";
+	// 	QMetaObject::invokeMethod(mpvObject, "loadfile",
+	// 			Q_RETURN_ARG(QVariant, returnedValue),
+	// 			Q_ARG(QVariant, msg));
+	// // }
+
+	// return app.exec();
 }

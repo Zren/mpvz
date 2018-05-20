@@ -23,4 +23,8 @@ Window {
 		id: mpvPlayer
 		anchors.fill: parent
 	}
+
+	Component.onCompleted: {
+		mpvPlayer.mpvObject.loadfile("test.mkv")
+	}
 }
