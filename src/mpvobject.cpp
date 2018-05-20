@@ -20,7 +20,10 @@ static void *get_proc_address(void *ctx, const char *name) {
 }
 
 MpvRenderer::MpvRenderer(mpv::qt::Handle a_mpv, mpv_opengl_cb_context *a_mpv_gl)
-	: mpv(a_mpv), mpv_gl(a_mpv_gl), window(0), size()
+	: mpv(a_mpv)
+	, mpv_gl(a_mpv_gl)
+	, window(0)
+	, size()
 {
 	int r = mpv_opengl_cb_init_gl(mpv_gl, NULL, get_proc_address, NULL);
 	if (r < 0)
@@ -51,7 +54,10 @@ void MpvRenderer::paint()
 }
 
 MpvObject::MpvObject(QQuickItem * parent)
-	: QQuickItem(parent), mpv_gl(0), renderer(0), killOnce(false)
+	: QQuickItem(parent)
+	, mpv_gl(0)
+	, renderer(0)
+	, killOnce(false)
 {
 	mpv = mpv::qt::Handle::FromRawHandle(mpv_create());
 	if (!mpv)

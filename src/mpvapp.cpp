@@ -3,9 +3,9 @@
 
 #include <QCommandLineParser>
 
-MpvApp::MpvApp(QObject *parent) :
-	QObject(parent),
-	m_engine()
+MpvApp::MpvApp(QObject *parent)
+	: QObject(parent)
+	, m_engine()
 {
 }
 
