@@ -30,7 +30,9 @@ int main(int argc, char **argv) {
 
 	MpvApp mpvApp;
 	mpvApp.parseArgs();
-	mpvApp.init();
+	if (!mpvApp.init()) {
+		return -1;
+	}
 	return mpvApp.run();
 
 	// QQmlApplicationEngine engine;
