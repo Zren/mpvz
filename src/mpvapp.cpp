@@ -1,5 +1,4 @@
 #include "mpvapp.h"
-// #include "mpvobject.h"
 
 #include <QCommandLineParser>
 
@@ -38,7 +37,7 @@ bool MpvApp::init() {
 	if (m_engine.rootObjects().isEmpty())
 		return false;
 
-	// m_mpvObject = m_engine.findChild<MpvObject*>("mpvObject");
+	m_mpvObject = m_engine.findChild<MpvObject*>("mpvObject");
 	return true;
 }
 

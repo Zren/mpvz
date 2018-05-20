@@ -1,7 +1,7 @@
 #ifndef MPVAPP_H
 #define MPVAPP_H
 
-// #include "mpvobject.h"
+#include "mpvobject.h"
 #include <QQmlApplicationEngine>
 
 class MpvApp : public QObject {
@@ -19,7 +19,7 @@ signals:
 
 private:
 	QQmlApplicationEngine m_engine;
-	// MpvObject *m_mpvObject = nullptr;
+	MpvObject *m_mpvObject = nullptr;
 	QStringList m_customFiles;
 
 };
