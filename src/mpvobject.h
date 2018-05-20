@@ -32,6 +32,10 @@ class MpvObject : public QQuickItem
 	MpvRenderer *renderer;
 	bool killOnce;
 
+
+	Q_PROPERTY(bool duration READ duration NOTIFY durationChanged)
+	Q_PROPERTY(bool position READ position NOTIFY positionChanged)
+
 public:
 	MpvObject(QQuickItem * parent = 0);
 	virtual ~MpvObject();
@@ -41,9 +45,12 @@ public slots:
 	void swapped();
 	void cleanup();
 	void reinitRenderer();
+
+	bool duration() const { return m_duration; }
+	bool position() const { return m_position; }
 signals:
-    void durationChanged(int value); // Unit: seconds
-    void positionChanged(int value); // Unit: seconds
+    void durationChanged(double value); // Unit: seconds
+    void positionChanged(double value); // Unit: seconds
 	void mpvUpdated();
 private slots:
     void on_mpv_events();
@@ -52,6 +59,9 @@ private slots:
 private:
     void handle_mpv_event(mpv_event *event);
 	static void on_update(void *ctx);
+
+	double m_duration;
+	double m_position;
 };
 
 #endif

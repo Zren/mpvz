@@ -190,12 +190,18 @@ void MpvObject::handle_mpv_event(mpv_event *event)
         if (strcmp(prop->name, "time-pos") == 0) {
             if (prop->format == MPV_FORMAT_DOUBLE) {
                 double time = *(double *)prop->data;
-                Q_EMIT positionChanged(time);
+                if (time != m_position) {
+                	m_position = time;
+	                Q_EMIT positionChanged(time);
+	            }
             }
         } else if (strcmp(prop->name, "duration") == 0) {
             if (prop->format == MPV_FORMAT_DOUBLE) {
                 double time = *(double *)prop->data;
-                Q_EMIT durationChanged(time);
+                if (time != m_duration) {
+                	m_duration = time;
+                	Q_EMIT durationChanged(time);
+                }
             }
         }
         break;
