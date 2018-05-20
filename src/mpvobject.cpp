@@ -63,13 +63,15 @@ MpvObject::MpvObject(QQuickItem * parent)
 	, mpv_gl(0)
 	, renderer(0)
 	, killOnce(false)
+	, m_duration(0)
+	, m_position(0)
 {
 	mpv = mpv::qt::Handle::FromRawHandle(mpv_create());
 	if (!mpv)
 		throw std::runtime_error("could not create mpv context");
 
 	mpv_set_option_string(mpv, "terminal", "yes");
-	mpv_set_option_string(mpv, "msg-level", "all=v");
+	mpv_set_option_string(mpv, "msg-level", "all=no"); // all=v
 
 	if (mpv_initialize(mpv) < 0)
 		throw std::runtime_error("could not initialize mpv context");
@@ -158,6 +160,15 @@ void MpvObject::command(const QVariant& params)
 {
 	mpv::qt::command_variant(mpv, params);
 }
+void MpvObject::setProperty(const QString& name, const QVariant& value)
+{
+	mpv::qt::set_property_variant(mpv, name, value);
+}
+
+QVariant MpvObject::getProperty(const QString &name) const
+{
+	return mpv::qt::get_property_variant(mpv, name);
+}
 
 void MpvObject::reinitRenderer()
 {
@@ -184,24 +195,34 @@ void MpvObject::on_mpv_events()
 
 void MpvObject::handle_mpv_event(mpv_event *event)
 {
+	// See: https://github.com/mpv-player/mpv/blob/master/libmpv/client.h
+
 	switch (event->event_id) {
 	case MPV_EVENT_PROPERTY_CHANGE: {
 		mpv_event_property *prop = (mpv_event_property *)event->data;
 		if (strcmp(prop->name, "time-pos") == 0) {
 			if (prop->format == MPV_FORMAT_DOUBLE) {
 				double time = *(double *)prop->data;
-				if (time != m_position) {
+				// if (time != m_position) {
 					m_position = time;
 					Q_EMIT positionChanged(time);
-				}
+				// }
 			}
 		} else if (strcmp(prop->name, "duration") == 0) {
 			if (prop->format == MPV_FORMAT_DOUBLE) {
 				double time = *(double *)prop->data;
-				if (time != m_duration) {
+				// if (time != m_duration) {
 					m_duration = time;
 					Q_EMIT durationChanged(time);
-				}
+				// }
+			}
+		} else if (strcmp(prop->name, "pause") == 0) {
+			if (prop->format == MPV_FORMAT_FLAG) {
+				bool value = *(bool *)prop->data;
+				// if (value != m_paused) {
+					m_paused = value;
+					Q_EMIT pausedChanged(value);
+				// }
 			}
 		}
 		break;
@@ -209,4 +230,15 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 	default: ;
 		// Ignore uninteresting or unknown events.
 	}
+}
+
+void MpvObject::playPause()
+{
+	const bool paused = getProperty("pause").toBool();
+	setProperty("pause", !paused);
+}
+
+void MpvObject::seek(double pos)
+{
+	command(QVariantList() << "seek" << pos << "absolute");
 }

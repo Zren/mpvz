@@ -5,6 +5,7 @@
 #include <clocale>
 
 #include <QGuiApplication>
+#include <QIcon>
 // #include <QtQuick/QQuickWindow>
 // #include <QtQuick/QQuickView>
 // #include <QQmlApplicationEngine>
@@ -16,6 +17,8 @@ int main(int argc, char **argv) {
 	QGuiApplication::setApplicationDisplayName("mpvz");
 
 	QCoreApplication::setApplicationVersion(QT_VERSION_STR);
+
+	QIcon::setThemeName("mpvz");
 
 	// Qt sets the locale in the QGuiApplication constructor, but libmpv
 	// requires the LC_NUMERIC category to be set to "C", so change it back.

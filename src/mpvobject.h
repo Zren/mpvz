@@ -7,6 +7,8 @@
 #include <mpv/opengl_cb.h>
 #include <mpv/qthelper.hpp>
 
+
+
 class MpvRenderer : public QObject
 {
 	Q_OBJECT
@@ -23,6 +25,8 @@ public slots:
 	void paint();
 };
 
+
+
 class MpvObject : public QQuickItem
 {
 	Q_OBJECT
@@ -33,12 +37,18 @@ class MpvObject : public QQuickItem
 	bool killOnce;
 
 
+	Q_PROPERTY(bool paused READ paused NOTIFY pausedChanged)
 	Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
 	Q_PROPERTY(double position READ position NOTIFY positionChanged)
 
 public:
 	MpvObject(QQuickItem * parent = 0);
 	virtual ~MpvObject();
+
+	void setProperty(const QString& name, const QVariant& value);
+	QVariant getProperty(const QString& name) const;
+
+
 public slots:
 	void command(const QVariant& params);
 	void sync();
@@ -46,20 +56,29 @@ public slots:
 	void cleanup();
 	void reinitRenderer();
 
+	void playPause();
+	void seek(double pos);
+
+	bool paused() const { return m_paused; }
 	double duration() const { return m_duration; }
 	double position() const { return m_position; }
+
 signals:
+	void pausedChanged(bool value);
 	void durationChanged(double value); // Unit: seconds
 	void positionChanged(double value); // Unit: seconds
 	void mpvUpdated();
+
 private slots:
 	void on_mpv_events();
 	void doUpdate();
 	void handleWindowChanged(QQuickWindow *win);
+
 private:
 	void handle_mpv_event(mpv_event *event);
 	static void on_update(void *ctx);
 
+	bool m_paused;
 	double m_duration;
 	double m_position;
 };

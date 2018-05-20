@@ -1,8 +1,10 @@
 <RCC>
 	<qresource prefix="/">
 		<file>qml/MainWindow.qml</file>
-	</qresource>
-	<qresource prefix="/">
 		<file>qml/MpvPlayer.qml</file>
+	</qresource>
+	<qresource prefix="icons/">
+		<file>icons/media-playback-pause.png</file>
+		<file>icons/media-playback-start.png</file>
 	</qresource>
 </RCC>

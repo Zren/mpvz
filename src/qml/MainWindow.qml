@@ -24,7 +24,13 @@ Window {
 		anchors.fill: parent
 	}
 
+	Timer {
+		running: true
+		interval: 500
+		onTriggered: mpvPlayer.mpvObject.loadfile("test.mkv")
+	}
+
 	Component.onCompleted: {
-		mpvPlayer.mpvObject.loadfile("test.mkv")
+		// mpvPlayer.mpvObject.loadfile("test.mkv")
 	}
 }
