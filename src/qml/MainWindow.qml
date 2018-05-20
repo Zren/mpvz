@@ -19,10 +19,20 @@ Window {
 	height: 720
 	visible: true
 
+	property bool isFullscreen: visibility == 5 // QWindow::FullScreen    
+
 	MpvPlayer {
 		id: mpvPlayer
 		anchors.fill: parent
 	}
+
+    function toggleFullscreen() {
+        if (window.isFullscreen) {
+            window.show()
+        } else {
+            window.showFullScreen()
+        }
+    }
 
 	Timer {
 		running: true
