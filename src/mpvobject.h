@@ -33,8 +33,8 @@ class MpvObject : public QQuickItem
 	bool killOnce;
 
 
-	Q_PROPERTY(bool duration READ duration NOTIFY durationChanged)
-	Q_PROPERTY(bool position READ position NOTIFY positionChanged)
+	Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
+	Q_PROPERTY(double position READ position NOTIFY positionChanged)
 
 public:
 	MpvObject(QQuickItem * parent = 0);
@@ -46,8 +46,8 @@ public slots:
 	void cleanup();
 	void reinitRenderer();
 
-	bool duration() const { return m_duration; }
-	bool position() const { return m_position; }
+	double duration() const { return m_duration; }
+	double position() const { return m_position; }
 signals:
 	void durationChanged(double value); // Unit: seconds
 	void positionChanged(double value); // Unit: seconds
