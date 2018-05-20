@@ -36,11 +36,13 @@ Window {
 
 	Timer {
 		running: true
-		interval: 500
-		onTriggered: mpvPlayer.mpvObject.loadfile("test.mkv")
-	}
-
-	Component.onCompleted: {
-		// mpvPlayer.mpvObject.loadfile("test.mkv")
+		interval: 50
+		onTriggered: {
+			console.log('app.urls', app.urls)
+			if (app.urls.length >= 1) {
+				mpvPlayer.mpvObject.loadFile(app.urls[0])
+				console.log('loadFile', app.urls[0])
+			}
+		}
 	}
 }

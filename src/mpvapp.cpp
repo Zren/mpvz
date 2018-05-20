@@ -1,6 +1,17 @@
 #include "mpvapp.h"
 
 #include <QCommandLineParser>
+#include <QQmlContext>
+
+AppObj::AppObj(QObject *parent)
+	: QObject(parent)
+{
+}
+
+AppObj::~AppObj() {
+}
+
+
 
 MpvApp::MpvApp(QObject *parent)
 	: QObject(parent)
@@ -14,7 +25,7 @@ MpvApp::~MpvApp() {
 
 void MpvApp::parseArgs() {
 	QCommandLineParser parser;
-	// parser.setApplicationDescription(tr("Media Player Classic Qute Theater"));
+	parser.setApplicationDescription("mpvz");
 	// parser.addHelpOption();
 	// parser.addVersionOption();
 
@@ -37,7 +48,15 @@ bool MpvApp::init() {
 	if (m_engine.rootObjects().isEmpty())
 		return false;
 
-	m_mpvObject = m_engine.findChild<MpvObject*>("mpvObject");
+	QQmlContext *context = m_engine.rootContext();
+	AppObj *appObj = new AppObj();
+	appObj->m_urls = m_customFiles;
+	context->setContextProperty(QStringLiteral("app"), appObj);
+
+	// m_mpvObject = m_engine.findChild<MpvObject*>("mpvObject");
+	// if (m_mpvObject) {
+	// 	m_mpvObject->loadFile(m_customFiles);
+	// }
 	return true;
 }
 

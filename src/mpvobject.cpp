@@ -242,3 +242,8 @@ void MpvObject::seek(double pos)
 {
 	command(QVariantList() << "seek" << pos << "absolute");
 }
+
+void MpvObject::loadFile(QVariant urls)
+{
+	command(QVariantList() << "loadfile" << urls);
+}

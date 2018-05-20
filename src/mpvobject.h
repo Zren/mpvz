@@ -58,6 +58,7 @@ public slots:
 
 	void playPause();
 	void seek(double pos);
+	void loadFile(QVariant urls);
 
 	bool paused() const { return m_paused; }
 	double duration() const { return m_duration; }
