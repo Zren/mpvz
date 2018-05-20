@@ -20,5 +20,7 @@ Item {
 		function loadfile(filepath) {
 			mpvObject.command(["loadfile", filepath])
 		}
+
+		// onMpvUpdated: console.log('onMpvUpdated', Date.now())
 	}
 }

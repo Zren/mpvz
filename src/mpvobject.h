@@ -42,7 +42,7 @@ public slots:
 	void cleanup();
 	void reinitRenderer();
 signals:
-	void onUpdate();
+	void mpvUpdated();
 private slots:
 	void doUpdate();
 	void handleWindowChanged(QQuickWindow *win);

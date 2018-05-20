@@ -79,7 +79,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	if (!mpv_gl)
 		throw std::runtime_error("OpenGL not compiled in");
 	mpv_opengl_cb_set_update_callback(mpv_gl, MpvObject::on_update, (void *)this);
-	connect(this, &MpvObject::onUpdate, this, &MpvObject::doUpdate,
+	connect(this, &MpvObject::mpvUpdated, this, &MpvObject::doUpdate,
 			Qt::QueuedConnection);
 
 	connect(this, &QQuickItem::windowChanged,
@@ -136,10 +136,10 @@ void MpvObject::cleanup()
 void MpvObject::on_update(void *ctx)
 {
 	MpvObject *self = (MpvObject *)ctx;
-	emit self->onUpdate();
+	emit self->mpvUpdated();
 }
 
-// connected to onUpdate(); signal makes sure it runs on the GUI thread
+// connected to mpvUpdated(); signal makes sure it runs on the GUI thread
 void MpvObject::doUpdate()
 {
 	window()->update();
