@@ -49,15 +49,15 @@ public slots:
 	bool duration() const { return m_duration; }
 	bool position() const { return m_position; }
 signals:
-    void durationChanged(double value); // Unit: seconds
-    void positionChanged(double value); // Unit: seconds
+	void durationChanged(double value); // Unit: seconds
+	void positionChanged(double value); // Unit: seconds
 	void mpvUpdated();
 private slots:
-    void on_mpv_events();
+	void on_mpv_events();
 	void doUpdate();
 	void handleWindowChanged(QQuickWindow *win);
 private:
-    void handle_mpv_event(mpv_event *event);
+	void handle_mpv_event(mpv_event *event);
 	static void on_update(void *ctx);
 
 	double m_duration;
