@@ -53,6 +53,11 @@ void MpvRenderer::paint()
 	window->resetOpenGLState();
 }
 
+static void wakeup(void *ctx)
+{
+    QMetaObject::invokeMethod((MpvObject*)ctx, "on_mpv_events", Qt::QueuedConnection);
+}
+
 MpvObject::MpvObject(QQuickItem * parent)
 	: QQuickItem(parent)
 	, mpv_gl(0)
@@ -84,6 +89,10 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 	connect(this, &QQuickItem::windowChanged,
 			this, &MpvObject::handleWindowChanged);
+
+	mpv_observe_property(mpv, 0, "duration", MPV_FORMAT_DOUBLE);
+    mpv_observe_property(mpv, 0, "time-pos", MPV_FORMAT_DOUBLE);
+    mpv_set_wakeup_callback(mpv, wakeup, this);
 }
 
 MpvObject::~MpvObject()
@@ -158,4 +167,40 @@ void MpvObject::reinitRenderer()
 	// mpv_opengl_cb_uninit_gl() (which is the thing we want to test).
 	killOnce = true;
 	window()->update();
+}
+
+
+void MpvObject::on_mpv_events()
+{
+    // Process all events, until the event queue is empty.
+    while (mpv) {
+        mpv_event *event = mpv_wait_event(mpv, 0);
+        if (event->event_id == MPV_EVENT_NONE) {
+            break;
+        }
+        handle_mpv_event(event);
+    }
+}
+
+void MpvObject::handle_mpv_event(mpv_event *event)
+{
+    switch (event->event_id) {
+    case MPV_EVENT_PROPERTY_CHANGE: {
+        mpv_event_property *prop = (mpv_event_property *)event->data;
+        if (strcmp(prop->name, "time-pos") == 0) {
+            if (prop->format == MPV_FORMAT_DOUBLE) {
+                double time = *(double *)prop->data;
+                Q_EMIT positionChanged(time);
+            }
+        } else if (strcmp(prop->name, "duration") == 0) {
+            if (prop->format == MPV_FORMAT_DOUBLE) {
+                double time = *(double *)prop->data;
+                Q_EMIT durationChanged(time);
+            }
+        }
+        break;
+    }
+    default: ;
+        // Ignore uninteresting or unknown events.
+    }
 }

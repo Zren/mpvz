@@ -42,11 +42,15 @@ public slots:
 	void cleanup();
 	void reinitRenderer();
 signals:
+    void durationChanged(int value); // Unit: seconds
+    void positionChanged(int value); // Unit: seconds
 	void mpvUpdated();
 private slots:
+    void on_mpv_events();
 	void doUpdate();
 	void handleWindowChanged(QQuickWindow *win);
 private:
+    void handle_mpv_event(mpv_event *event);
 	static void on_update(void *ctx);
 };
 
