@@ -21,14 +21,21 @@ Item {
 
 		function toggleMute() {
 			muted = !muted
+			if (muted) {
+				osd.show("Muted")
+			} else {
+				osd.show("Volume: " + volume + " %")
+			}
 		}
 
 		function volumeUp() {
 			volume = Math.min(volume + 2, 100)
+			osd.show("Volume: " + volume + " %")
 		}
 
 		function volumeDown() {
 			volume = Math.max(0, volume - 2)
+			osd.show("Volume: " + volume + " %")
 		}
 	}
 
@@ -96,6 +103,43 @@ Item {
 			
 			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
 			propagateComposedEvents: overlayControls.showOverlay ? false : true
+		}
+	}
+
+	Rectangle {
+		id: osd
+		anchors.left: parent.left
+		anchors.top: parent.top
+		anchors.margins: 10
+		property int padding: 10
+		width: padding + osdText.implicitWidth + padding
+		height: padding + osdText.implicitHeight + padding
+
+		opacity: osdTimeoutTimer.running ? 1 : 0
+		Behavior on opacity {
+			NumberAnimation { duration: 250 }
+		}
+
+		color: "#BB111111"
+		border.width: 1
+		border.color: "#BB222222"
+		radius: 4
+
+		Text {
+			id: osdText
+			anchors.centerIn: parent
+			color: "#FFFFFF"
+			font.pixelSize: 24
+		}
+
+		Timer {
+			id: osdTimeoutTimer
+			interval: 1000
+		}
+
+		function show(msg) {
+			osdText.text = msg
+			osdTimeoutTimer.restart()
 		}
 	}
 	
