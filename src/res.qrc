@@ -2,6 +2,9 @@
 	<qresource prefix="/">
 		<file>qml/MainWindow.qml</file>
 		<file>qml/MpvPlayer.qml</file>
+		<file>qml/SeekbarSlider.qml</file>
+		<file>qml/AppSlider.qml</file>
+		<file>qml/AppSliderStyle.qml</file>
 	</qresource>
 	<qresource prefix="icons/">
 		<file>icons/media-playback-pause.png</file>

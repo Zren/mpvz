@@ -59,42 +59,17 @@ Item {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
+		anchors.margins: 2
 
-		Slider {
+		spacing: 0
+
+		SeekbarSlider {
 			id: seekSlider
 			Layout.fillWidth: true
-
-			Connections {
-				target: mpvObject
-				onPositionChanged: {
-					// console.log('onPositionChanged', mpvObject.position, seekSlider.value)
-					if (mpvObject.duration > 0 && !seekSlider.pressed && !seekDebounce.running) {
-						seekSlider.value = mpvObject.position
-					}
-				}
-				onDurationChanged: {
-					seekSlider.maximumValue = mpvObject.duration
-				}
-			}
-
-			minimumValue: 0
-
-			Timer {
-				id: seekDebounce
-				interval: 100
-				onTriggered: mpvObject.seek(seekSlider.value)
-			}
-
-			onValueChanged: {
-				// console.log('slider.value', value)
-				if (pressed) {
-					seekDebounce.restart()
-				}
-			}
-			onMaximumValueChanged: console.log('slider.maxValue', maximumValue)
 		}
 
 		RowLayout {
+			Layout.preferredHeight: 32
 			Layout.fillWidth: true
 			
 			ToolButton {

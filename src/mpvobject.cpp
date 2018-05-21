@@ -232,6 +232,22 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 	}
 }
 
+void MpvObject::play()
+{
+	const bool paused = getProperty("pause").toBool();
+	if (paused) {
+		setProperty("pause", false);
+	}
+}
+
+void MpvObject::pause()
+{
+	const bool paused = getProperty("pause").toBool();
+	if (!paused) {
+		setProperty("pause", true);
+	}
+}
+
 void MpvObject::playPause()
 {
 	const bool paused = getProperty("pause").toBool();

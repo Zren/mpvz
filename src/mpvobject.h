@@ -57,6 +57,8 @@ public slots:
 	void reinitRenderer();
 
 	void playPause();
+	void play();
+	void pause();
 	void seek(double pos);
 	void loadFile(QVariant urls);
 
