@@ -7,6 +7,8 @@
 
 class AppObj : public QObject {
 	Q_OBJECT
+	
+	friend class MpvApp;
 
 	Q_PROPERTY(QStringList urls READ urls)
 
