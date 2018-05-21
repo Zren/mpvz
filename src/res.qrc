@@ -8,7 +8,17 @@
 		<file>qml/AppSlider.qml</file>
 		<file>qml/AppSliderStyle.qml</file>
 
-		<file>icons/media-playback-pause.svg</file>
-		<file>icons/media-playback-start.svg</file>
+		<file>icons/Tethys/fs-checked-hovered.png</file>
+		<file>icons/Tethys/fs-checked-pressed.png</file>
+		<file>icons/Tethys/fs-checked.png</file>
+		<file>icons/Tethys/fs-hovered.png</file>
+		<file>icons/Tethys/fs-pressed.png</file>
+		<file>icons/Tethys/fs.png</file>
+		<file>icons/Tethys/pause-hovered.png</file>
+		<file>icons/Tethys/pause-pressed.png</file>
+		<file>icons/Tethys/pause.png</file>
+		<file>icons/Tethys/play-hovered.png</file>
+		<file>icons/Tethys/play-pressed.png</file>
+		<file>icons/Tethys/play.png</file>
 	</qresource>
 </RCC>

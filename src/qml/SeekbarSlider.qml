@@ -70,8 +70,8 @@ AppSlider {
 	}
 
 	property int visibleSliderHeight: 4
-	property int topPadding: 8
-	property int bottomPadding: 8
+	property int topPadding: 10
+	property int bottomPadding: 6
 	implicitHeight: topPadding + visibleSliderHeight + bottomPadding // 20
 
 	style: AppSliderStyle {
@@ -84,7 +84,7 @@ AppSlider {
 			Rectangle {
 				id: grooveRect
 				anchors.bottom: parent.bottom
-				anchors.bottomMargin: control.bottomMargin
+				anchors.bottomMargin: control.bottomPadding
 				width: parent.width
 				height: control.visibleSliderHeight
 

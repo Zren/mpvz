@@ -21,9 +21,10 @@ MouseArea {
 
 		RowLayout {
 			Layout.fillWidth: true
+			spacing: 2
 			
 			ControlBarButton {
-				iconName: mpvObject.paused ? "media-playback-start" : "media-playback-pause"
+				iconName: mpvObject.paused ? "play" : "pause"
 				onClicked: mpvObject.playPause()
 			}
 
@@ -38,6 +39,17 @@ MouseArea {
 			Item {
 				Layout.fillWidth: true
 			}
+
+			ControlBarButton {
+				iconName: window.isFullscreen ? "fs-checked" : "fs"
+				onClicked: window.toggleFullscreen()
+			}
+
+		}
+
+		Item {
+			Layout.fillWidth: true
+			implicitHeight: 8
 		}
 	}
 }
