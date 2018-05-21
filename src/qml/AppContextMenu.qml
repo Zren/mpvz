@@ -3,24 +3,33 @@ import QtQuick.Controls 1.4
 
 Menu {
 	id: contextMenu
+	
+	Menu {
+		title: "Open"
 
-	MenuItem {
-		text: window.isPlaying ? "Pause" : "Play"
-		onTriggered: window.togglePlay()
+		MenuItem { action: appActions.openFileAction }
 	}
 
-	MenuItem {
-		text: "Stop"
-		onTriggered: window.stopVideo()
+	MenuSeparator {}
+
+	Menu {
+		title: "Play"
+
+		MenuItem { action: appActions.playPauseAction }
+		MenuItem { action: appActions.stopAction }
+
+		MenuSeparator {}
+
+		Menu {
+			title: "Seek"
+
+			MenuItem { action: appActions.seekBeginningAction }
+
+			MenuSeparator {}
+
+			MenuItem { action: appActions.seekBackwardAction }
+			MenuItem { action: appActions.seekForwardAction }
+		}
 	}
 
-	MenuItem {
-		text: "Previous"
-		onTriggered: window.previousVideo()
-	}
-
-	MenuItem {
-		text: "Next"
-		onTriggered: window.nextVideo()
-	}
 }

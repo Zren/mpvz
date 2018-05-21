@@ -116,6 +116,10 @@ Item {
 
 
 
+	function seekBeginning() {
+		controlBar.seekSlider.value = 0
+	}
+
 	function seekBackward() {
 		controlBar.seekSlider.decrement()
 	}

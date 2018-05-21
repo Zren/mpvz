@@ -201,31 +201,13 @@ MenuBar {
 	Menu {
 		title: "Navigate"
 
-		MenuItem {
-			text: "Previous"
-			shortcut: "PgUp"
-			onTriggered: mpvPlayer.previousVideo()
-		}
-
-		MenuItem {
-			text: "Next"
-			shortcut: "PgDown"
-			onTriggered: mpvPlayer.nextVideo()
-		}
+		MenuItem { action: appActions.previousVideoAction }
+		MenuItem { action: appActions.nextVideoAction }
 
 		MenuSeparator {}
 
-		MenuItem {
-			text: "Seek Backward"
-			shortcut: "Left"
-			onTriggered: mpvPlayer.seekBackward()
-		}
-
-		MenuItem {
-			text: "Seek Forward"
-			shortcut: "Right"
-			onTriggered: mpvPlayer.seekForward()
-		}
+		MenuItem { action: appActions.seekBackwardAction }
+		MenuItem { action: appActions.seekForwardAction }
 	}
 
 

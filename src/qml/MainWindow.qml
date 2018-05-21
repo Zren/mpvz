@@ -38,7 +38,7 @@ AppWindow {
 	
 	property bool intialized: false
 	menuBarVisible: !hideMenuBar && !isFullscreen
-	property bool hideMenuBar: true
+	property bool hideMenuBar: false
 
 	property bool bordersVisible: true
 	property string alwaysOnTop: 'never' // 'never', 'always', 'whilePlaying'
@@ -69,6 +69,8 @@ AppWindow {
 		setWindowFlag(flagIt, Qt.WindowStaysOnTopHint)
 	}
 
+
+	AppActions { id: appActions }
 	AppContextMenu { id: contextMenu }
 	AppMenuBar { id: appMenuBar }
 	menuBar: appMenuBar
