@@ -9,7 +9,7 @@ import QtQuick.Controls.Styles 1.4
 import QtMultimedia 5.7
 import Qt.labs.folderlistmodel 2.1
 
-Window {
+AppWindow {
 	id: window
 
 	objectName: "mainWindow"
@@ -19,13 +19,29 @@ Window {
 	height: 720
 	visible: true
 
+	title: {
+		var s = "";
+		if (mpvObject.mediaTitle) {
+			s += mpvObject.mediaTitle;
+			s += " - "
+		}
+
+		s += "mpvz";
+		return s;
+	}
+
+	readonly property alias mpvObject: mpvPlayer.mpvObject
 	readonly property bool isFullscreen: visibility == 5 // QWindow::FullScreen
 	readonly property bool isPlaying: !mpvPlayer.mpvObject.paused
 
 	onIsPlayingChanged: updateAlwaysOnTopFlag()
 	
+	property bool intialized: false
+	menuBarVisible: !hideMenuBar && !isFullscreen
+	property bool hideMenuBar: true
+
 	property bool bordersVisible: true
-	property string alwaysOnTop: 'whilePlaying' // 'never', 'always', 'whilePlaying'
+	property string alwaysOnTop: 'never' // 'never', 'always', 'whilePlaying'
 	
 	onAlwaysOnTopChanged: updateAlwaysOnTopFlag()
 	onBordersVisibleChanged: setWindowFlag(!bordersVisible, Qt.FramelessWindowHint)
@@ -52,6 +68,10 @@ Window {
 
 		setWindowFlag(flagIt, Qt.WindowStaysOnTopHint)
 	}
+
+	AppContextMenu { id: contextMenu }
+	AppMenuBar { id: appMenuBar }
+	menuBar: appMenuBar
 
 	MpvPlayer {
 		id: mpvPlayer

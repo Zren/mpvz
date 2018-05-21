@@ -1,6 +1,9 @@
 <RCC>
 	<qresource>
 		<file>qml/MainWindow.qml</file>
+		<file>qml/AppWindow.qml</file>
+		<file>qml/AppMenuBar.qml</file>
+		<file>qml/AppContextMenu.qml</file>
 		<file>qml/MpvPlayer.qml</file>
 		<file>qml/ControlBar.qml</file>
 		<file>qml/ControlBarButton.qml</file>

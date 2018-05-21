@@ -71,13 +71,18 @@ MpvObject::MpvObject(QQuickItem * parent)
 		throw std::runtime_error("could not create mpv context");
 
 	mpv_set_option_string(mpv, "terminal", "yes");
-	mpv_set_option_string(mpv, "msg-level", "all=no"); // all=v
+	mpv_set_option_string(mpv, "msg-level", "all=warn,ao/alsa=error"); // all=no OR all=v
 
 	if (mpv_initialize(mpv) < 0)
 		throw std::runtime_error("could not initialize mpv context");
 
 	// Make use of the MPV_SUB_API_OPENGL_CB API.
 	mpv::qt::set_option_variant(mpv, "vo", "opengl-cb");
+
+    // Request hw decoding, just for testing.
+    mpv::qt::set_option_variant(mpv, "hwdec", "auto");
+
+    mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
 
 	// Setup the callback that will make QtQuick update and redraw if there
 	// is a new video frame. Use a queued connection: this makes sure the
@@ -95,6 +100,9 @@ MpvObject::MpvObject(QQuickItem * parent)
 	mpv_observe_property(mpv, 0, "duration", MPV_FORMAT_DOUBLE);
 	mpv_observe_property(mpv, 0, "time-pos", MPV_FORMAT_DOUBLE);
 	mpv_observe_property(mpv, 0, "pause", MPV_FORMAT_FLAG);
+	mpv_observe_property(mpv, 0, "media-title", MPV_FORMAT_STRING);
+	mpv_observe_property(mpv, 0, "hwdec-current", MPV_FORMAT_STRING);
+	
 	mpv_set_wakeup_callback(mpv, wakeup, this);
 }
 
@@ -201,23 +209,27 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 	switch (event->event_id) {
 	case MPV_EVENT_PROPERTY_CHANGE: {
 		mpv_event_property *prop = (mpv_event_property *)event->data;
-		if (strcmp(prop->name, "time-pos") == 0) {
-			if (prop->format == MPV_FORMAT_DOUBLE) {
-				double time = *(double *)prop->data;
-				m_position = time;
-				Q_EMIT positionChanged(time);
-			}
-		} else if (strcmp(prop->name, "duration") == 0) {
-			if (prop->format == MPV_FORMAT_DOUBLE) {
-				double time = *(double *)prop->data;
-				m_duration = time;
-				Q_EMIT durationChanged(time);
-			}
-		} else if (strcmp(prop->name, "pause") == 0) {
-			if (prop->format == MPV_FORMAT_FLAG) {
-				bool value = *(bool *)prop->data;
-				m_paused = value;
-				Q_EMIT pausedChanged(value);
+		if (strcmp(prop->name, "time-pos") == 0 && prop->format == MPV_FORMAT_DOUBLE) {
+			double time = *(double *)prop->data;
+			m_position = time;
+			Q_EMIT positionChanged(time);
+		} else if (strcmp(prop->name, "duration") == 0 && prop->format == MPV_FORMAT_DOUBLE) {
+			double time = *(double *)prop->data;
+			m_duration = time;
+			Q_EMIT durationChanged(time);
+		} else if (strcmp(prop->name, "pause") == 0 && prop->format == MPV_FORMAT_FLAG) {
+			bool value = *(bool *)prop->data;
+			m_paused = value;
+			Q_EMIT pausedChanged(value);
+		} else if (prop->format == MPV_FORMAT_STRING) {
+			if (strcmp(prop->name, "media-title") == 0) {
+				QString value = getProperty("media-title").toString();
+				m_mediaTitle = value;
+				Q_EMIT mediaTitleChanged(value);
+			} else if (strcmp(prop->name, "hwdec-current") == 0) {
+				QString value = getProperty("hwdec-current").toString();
+				m_hwdecCurrent = value;
+				Q_EMIT hwdecCurrentChanged(value);
 			}
 		}
 		break;
@@ -229,24 +241,21 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 
 void MpvObject::play()
 {
-	const bool paused = getProperty("pause").toBool();
-	if (paused) {
+	if (m_paused) {
 		setProperty("pause", false);
 	}
 }
 
 void MpvObject::pause()
 {
-	const bool paused = getProperty("pause").toBool();
-	if (!paused) {
+	if (!m_paused) {
 		setProperty("pause", true);
 	}
 }
 
 void MpvObject::playPause()
 {
-	const bool paused = getProperty("pause").toBool();
-	setProperty("pause", !paused);
+	setProperty("pause", !m_paused);
 }
 
 void MpvObject::seek(double pos)

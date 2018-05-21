@@ -40,6 +40,8 @@ class MpvObject : public QQuickItem
 	Q_PROPERTY(bool paused READ paused NOTIFY pausedChanged)
 	Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
 	Q_PROPERTY(double position READ position NOTIFY positionChanged)
+	Q_PROPERTY(QString mediaTitle READ mediaTitle NOTIFY mediaTitleChanged)
+	Q_PROPERTY(QString hwdecCurrent READ hwdecCurrent NOTIFY hwdecCurrentChanged)
 
 public:
 	MpvObject(QQuickItem * parent = 0);
@@ -65,11 +67,16 @@ public slots:
 	bool paused() const { return m_paused; }
 	double duration() const { return m_duration; }
 	double position() const { return m_position; }
+	QString mediaTitle() const { return m_mediaTitle; }
+	QString hwdecCurrent() const { return m_hwdecCurrent; }
 
 signals:
 	void pausedChanged(bool value);
 	void durationChanged(double value); // Unit: seconds
 	void positionChanged(double value); // Unit: seconds
+	void mediaTitleChanged(QString value);
+	void hwdecCurrentChanged(QString value);
+
 	void mpvUpdated();
 
 private slots:
@@ -84,6 +91,8 @@ private:
 	bool m_paused;
 	double m_duration;
 	double m_position;
+	QString m_mediaTitle;
+	QString m_hwdecCurrent;
 };
 
 #endif

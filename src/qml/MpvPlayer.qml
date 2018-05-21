@@ -45,10 +45,6 @@ Item {
 			}
 		}
 
-		function loadfile(filepath) {
-			mpvObject.command(["loadfile", filepath])
-		}
-
 		// onMpvUpdated: console.log('onMpvUpdated', Date.now())
 		// onPositionChanged: console.log('onPositionChanged', value)
 		onDurationChanged: console.log('onDurationChanged', value)
@@ -60,7 +56,7 @@ Item {
 		id: overlayControls
 		anchors.fill: parent
 		property bool showOverlay: controlBar.containsMouse || hideCursorTimeout.running
-        
+		
 
 		opacity: overlayControls.showOverlay ? 1 : 0
 		Behavior on opacity {
@@ -85,7 +81,7 @@ Item {
 			anchors.bottom: parent.bottom
 			
 			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
-        	propagateComposedEvents: overlayControls.showOverlay ? false : true
+			propagateComposedEvents: overlayControls.showOverlay ? false : true
 		}
 	}
 	
@@ -115,5 +111,15 @@ Item {
 		} else {
 			return minutes + ":" + zeroPad(seconds)
 		}
+	}
+
+	
+
+	function seekBackward() {
+		controlBar.seekSlider.decrement()
+	}
+
+	function seekForward() {
+		controlBar.seekSlider.increment()
 	}
 }

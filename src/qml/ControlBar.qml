@@ -6,6 +6,8 @@ MouseArea {
 	implicitHeight: columnLayout.implicitHeight
 	hoverEnabled: true
 
+	property alias seekSlider: seekSlider
+
 	ColumnLayout {
 		id: columnLayout
 		anchors.left: parent.left
