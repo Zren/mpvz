@@ -14,42 +14,41 @@ Item {
 		objectName: "mpvObject"
 		anchors.fill: parent
 
-		MouseArea {
-			id: videoMouseArea
-			anchors.fill: parent
-			acceptedButtons: Qt.AllButtons
-			hoverEnabled: true
-			property double lastClickToPause: 0
-			onClicked: {
-				if (mouse.button == Qt.LeftButton) {
-					lastClickToPause = Date.now()
-					mpvObject.playPause()
-				} else if (mouse.button == Qt.RightButton) {
-					contextMenu.popup()
-				}
-			}
-			onDoubleClicked: {
-				mpvObject.playPause()
-				window.toggleFullscreen()
-			}
-			
-			cursorShape: Qt.ArrowCursor
-			onPositionChanged: {
-				videoMouseArea.cursorShape = Qt.ArrowCursor
-				hideCursorTimeout.restart()
-			}
-			Timer {
-				id: hideCursorTimeout
-				interval: 700
-				onTriggered: videoMouseArea.cursorShape = Qt.BlankCursor
-			}
-		}
-
 		// onMpvUpdated: console.log('onMpvUpdated', Date.now())
 		// onPositionChanged: console.log('onPositionChanged', value)
 		onDurationChanged: console.log('onDurationChanged', value)
 	}
 
+	MouseArea {
+		id: videoMouseArea
+		anchors.fill: mpvObject
+		acceptedButtons: Qt.AllButtons
+		hoverEnabled: true
+		property double lastClickToPause: 0
+		onClicked: {
+			if (mouse.button == Qt.LeftButton) {
+				lastClickToPause = Date.now()
+				mpvObject.playPause()
+			} else if (mouse.button == Qt.RightButton) {
+				contextMenu.popup()
+			}
+		}
+		onDoubleClicked: {
+			mpvObject.playPause()
+			window.toggleFullscreen()
+		}
+		
+		cursorShape: Qt.ArrowCursor
+		onPositionChanged: {
+			videoMouseArea.cursorShape = Qt.ArrowCursor
+			hideCursorTimeout.restart()
+		}
+		Timer {
+			id: hideCursorTimeout
+			interval: 700
+			onTriggered: videoMouseArea.cursorShape = Qt.BlankCursor
+		}
+	}
 
 
 	Item {
@@ -113,7 +112,7 @@ Item {
 		}
 	}
 
-	
+
 
 	function seekBackward() {
 		controlBar.seekSlider.decrement()
