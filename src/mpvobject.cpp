@@ -79,10 +79,10 @@ MpvObject::MpvObject(QQuickItem * parent)
 	// Make use of the MPV_SUB_API_OPENGL_CB API.
 	mpv::qt::set_option_variant(mpv, "vo", "opengl-cb");
 
-    // Request hw decoding, just for testing.
-    mpv::qt::set_option_variant(mpv, "hwdec", "auto");
+	// Request hw decoding, just for testing.
+	mpv::qt::set_option_variant(mpv, "hwdec", "auto");
 
-    mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
+	mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
 
 	// Setup the callback that will make QtQuick update and redraw if there
 	// is a new video frame. Use a queued connection: this makes sure the
