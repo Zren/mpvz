@@ -76,6 +76,9 @@ MpvObject::MpvObject(QQuickItem * parent)
 	if (mpv_initialize(mpv) < 0)
 		throw std::runtime_error("could not initialize mpv context");
 
+
+	mpv::qt::set_option_variant(mpv, "audio-client-name", "mpvz");
+
 	// Make use of the MPV_SUB_API_OPENGL_CB API.
 	mpv::qt::set_option_variant(mpv, "vo", "opengl-cb");
 
