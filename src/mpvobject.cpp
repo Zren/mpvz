@@ -105,6 +105,8 @@ MpvObject::MpvObject(QQuickItem * parent)
 	mpv_observe_property(mpv, 0, "pause", MPV_FORMAT_FLAG);
 	mpv_observe_property(mpv, 0, "media-title", MPV_FORMAT_STRING);
 	mpv_observe_property(mpv, 0, "hwdec-current", MPV_FORMAT_STRING);
+	mpv_observe_property(mpv, 0, "volume", MPV_FORMAT_INT64);
+	mpv_observe_property(mpv, 0, "mute", MPV_FORMAT_FLAG);
 	
 	mpv_set_wakeup_callback(mpv, wakeup, this);
 }
@@ -220,10 +222,15 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			double time = *(double *)prop->data;
 			m_duration = time;
 			Q_EMIT durationChanged(time);
-		} else if (strcmp(prop->name, "pause") == 0 && prop->format == MPV_FORMAT_FLAG) {
-			bool value = *(bool *)prop->data;
-			m_paused = value;
-			Q_EMIT pausedChanged(value);
+		} else if (prop->format == MPV_FORMAT_FLAG) {
+			if (strcmp(prop->name, "pause") == 0) {
+				bool value = *(bool *)prop->data;
+				m_paused = value;
+				Q_EMIT pausedChanged(value);
+			} else if (strcmp(prop->name, "mute") == 0) {
+				bool value = *(bool *)prop->data;
+				Q_EMIT mutedChanged(value);
+			}
 		} else if (prop->format == MPV_FORMAT_STRING) {
 			if (strcmp(prop->name, "media-title") == 0) {
 				QString value = getProperty("media-title").toString();
@@ -233,6 +240,11 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 				QString value = getProperty("hwdec-current").toString();
 				m_hwdecCurrent = value;
 				Q_EMIT hwdecCurrentChanged(value);
+			}
+		} else if (prop->format == MPV_FORMAT_INT64) {
+			if (strcmp(prop->name, "volume") == 0) {
+				int64_t value = getProperty("volume").toInt();
+				Q_EMIT volumeChanged(value);
 			}
 		}
 		break;

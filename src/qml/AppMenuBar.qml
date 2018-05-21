@@ -9,23 +9,8 @@ MenuBar {
 	Menu {
 		title: "File"
 
-		// MenuItem {
-		//     text: "Quick Open File..."
-		//     shortcut: "Ctrl+Q"
-		//     onTriggered: openFileDialog.open()
-		// }
-
-		// MenuSeparator {}
-
-		MenuItem {
-			text: "Open File..."
-			shortcut: "Ctrl+O"
-			// onTriggered: openFileDialog.open()
-		}
-
-		// MenuItem {
-		//     text: "Open Directory..."
-		// }
+		MenuItem { action: appActions.openFileAction }
+		MenuItem { action: appActions.openFolderAction }
 
 		Menu {
 			id: recentFilesMenu
@@ -108,13 +93,7 @@ MenuBar {
 
 		MenuSeparator {}
 
-		MenuItem {
-			text: "Full Screen"
-			shortcut: "Ctrl+Return"
-			checkable: true
-			checked: window.isFullscreen
-			onTriggered: window.toggleFullscreen()
-		}
+		MenuItem { action: appActions.toggleFullscreenAction }
 
 		MenuSeparator {}
 
@@ -158,11 +137,7 @@ MenuBar {
 	Menu {
 		title: "Play"
 
-		MenuItem {
-			text: "Play/Pause"
-			shortcut: "Space"
-			onTriggered: mpvObject.playPause()
-		}
+		MenuItem { action: appActions.playPauseAction }
 
 		MenuItem {
 			text: "Stop"
@@ -175,23 +150,12 @@ MenuBar {
 		Menu {
 			title: "Volume"
 
-			MenuItem {
-				text: "Up"
-				shortcut: "Up"
-				// onTriggered: video.volume = Math.min(1, video.volume + 0.1) // +10%
-			}
+			MenuItem { action: appActions.volumeMuteAction }
 
-			MenuItem {
-				text: "Down"
-				shortcut: "Down"
-				// onTriggered: video.volume = Math.max(0, video.volume - 0.1) // -10%
-			}
+			MenuSeparator {}
 
-			MenuItem {
-				text: "Mute"
-				shortcut: "Ctrl+M"
-				// onTriggered: video.muted = !video.muted
-			}
+			MenuItem { action: appActions.volumeUpAction }
+			MenuItem { action: appActions.volumeDownAction }
 		}
 	}
 

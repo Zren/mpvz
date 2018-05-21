@@ -32,4 +32,27 @@ Menu {
 		}
 	}
 
+	Menu {
+		title: "Video"
+	}
+
+	Menu {
+		title: "Audio"
+
+		Menu {
+			title: "Volume"
+
+			MenuItem { action: appActions.volumeMuteAction }
+
+			MenuSeparator {}
+
+			MenuItem { action: appActions.volumeUpAction }
+			MenuItem { action: appActions.volumeDownAction }
+		}
+	}
+
+	Menu {
+		title: "Subtitle"
+	}
+
 }

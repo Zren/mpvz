@@ -43,7 +43,7 @@ QtObject {
 	//--- Play > Seek
 	property Action seekBeginningAction: Action {
 		text: "Beginning"
-		shortcut: "Left"
+		shortcut: "Home"
 		onTriggered: mpvPlayer.seekBeginning()
 	}
 
@@ -57,5 +57,33 @@ QtObject {
 		text: "+5 sec"
 		shortcut: "Right"
 		onTriggered: mpvPlayer.seekForward()
+	}
+
+	//--- Audio > Volume
+	property Action volumeMuteAction: Action {
+		text: "Mute"
+		shortcut: "M"
+		checkable: true
+		checked: mpvObject.muted
+		onTriggered: mpvObject.toggleMute()
+	}
+	property Action volumeUpAction: Action {
+		text: "+2 %"
+		shortcut: "Up"
+		onTriggered: mpvObject.volumeUp()
+	}
+	property Action volumeDownAction: Action {
+		text: "-2 %"
+		shortcut: "Down"
+		onTriggered: mpvObject.volumeDown()
+	}
+
+	//--- Window
+	property Action toggleFullscreenAction: Action {
+		text: "Toggle Fullscreen"
+		shortcut: "Alt+Enter"
+		checkable: true
+		checked: window.isFullscreen
+		onTriggered: window.toggleFullscreen()
 	}
 }

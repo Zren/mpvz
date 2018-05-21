@@ -17,6 +17,19 @@ Item {
 		// onMpvUpdated: console.log('onMpvUpdated', Date.now())
 		// onPositionChanged: console.log('onPositionChanged', value)
 		onDurationChanged: console.log('onDurationChanged', value)
+		onVolumeChanged: console.log('onVolumeChanged', value)
+
+		function toggleMute() {
+			muted = !muted
+		}
+
+		function volumeUp() {
+			volume = Math.min(volume + 2, 100)
+		}
+
+		function volumeDown() {
+			volume = Math.max(0, volume - 2)
+		}
 	}
 
 	MouseArea {

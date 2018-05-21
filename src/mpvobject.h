@@ -42,6 +42,8 @@ class MpvObject : public QQuickItem
 	Q_PROPERTY(double position READ position NOTIFY positionChanged)
 	Q_PROPERTY(QString mediaTitle READ mediaTitle NOTIFY mediaTitleChanged)
 	Q_PROPERTY(QString hwdecCurrent READ hwdecCurrent NOTIFY hwdecCurrentChanged)
+	Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
+	Q_PROPERTY(bool muted READ muted WRITE setMuted NOTIFY mutedChanged)
 
 public:
 	MpvObject(QQuickItem * parent = 0);
@@ -69,6 +71,11 @@ public slots:
 	double position() const { return m_position; }
 	QString mediaTitle() const { return m_mediaTitle; }
 	QString hwdecCurrent() const { return m_hwdecCurrent; }
+	int volume() const { return getProperty("volume").toInt(); }
+	bool muted() const { return getProperty("mute").toBool(); }
+
+	void setVolume(int value) { setProperty("volume", value); }
+	void setMuted(bool value) { setProperty("mute", value); }
 
 signals:
 	void pausedChanged(bool value);
@@ -76,6 +83,8 @@ signals:
 	void positionChanged(double value); // Unit: seconds
 	void mediaTitleChanged(QString value);
 	void hwdecCurrentChanged(QString value);
+	void volumeChanged(int64_t value);
+	void mutedChanged(bool value);
 
 	void mpvUpdated();
 
