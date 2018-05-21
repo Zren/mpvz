@@ -10,6 +10,8 @@ MouseArea {
 		id: columnLayout
 		anchors.left: parent.left
 		anchors.right: parent.right
+		anchors.leftMargin: 20
+		anchors.rightMargin: 20
 		spacing: 0
 
 		SeekbarSlider {
@@ -18,17 +20,19 @@ MouseArea {
 		}
 
 		RowLayout {
-			Layout.preferredHeight: 32
 			Layout.fillWidth: true
 			
-			ToolButton {
-				iconSource: mpvObject.paused ? "qrc:icons/media-playback-start.png" : "qrc:icons/media-playback-pause.png"
-				// iconSource: mpvObject.paused ? "media-playback-start" : "media-playback-pause"
+			ControlBarButton {
+				iconName: mpvObject.paused ? "media-playback-start" : "media-playback-pause"
 				onClicked: mpvObject.playPause()
 			}
 
 			Label {
 				text: "" + mpvPlayer.formatShortTime(mpvObject.position) + " / " + mpvPlayer.formatShortTime(mpvObject.duration)
+				color: "#FFFFFF"
+				style: Text.Raised
+				styleColor: "#111111"
+
 			}
 
 			Item {

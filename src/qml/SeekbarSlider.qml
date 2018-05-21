@@ -69,9 +69,9 @@ AppSlider {
 		}
 	}
 
-	property int visibleSliderHeight: 8
+	property int visibleSliderHeight: 4
 	property int topPadding: 8
-	property int bottomPadding: 4
+	property int bottomPadding: 8
 	implicitHeight: topPadding + visibleSliderHeight + bottomPadding // 20
 
 	style: AppSliderStyle {
