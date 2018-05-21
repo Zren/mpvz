@@ -29,15 +29,13 @@ MouseArea {
 			}
 
 			Label {
+				Layout.fillWidth: true
 				text: "" + mpvPlayer.formatShortTime(mpvObject.position) + " / " + mpvPlayer.formatShortTime(mpvObject.duration)
+				horizontalAlignment: Text.AlignHCenter
 				color: "#FFFFFF"
 				style: Text.Raised
 				styleColor: "#111111"
 
-			}
-
-			Item {
-				Layout.fillWidth: true
 			}
 
 			ControlBarButton {
