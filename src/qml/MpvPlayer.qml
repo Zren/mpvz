@@ -34,8 +34,10 @@ Item {
 			}
 		}
 		onDoubleClicked: {
-			mpvObject.playPause()
-			window.toggleFullscreen()
+			if (mouse.button == Qt.LeftButton) {
+				mpvObject.playPause()
+				window.toggleFullscreen()
+			}
 		}
 		
 		cursorShape: Qt.ArrowCursor
