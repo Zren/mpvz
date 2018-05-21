@@ -40,7 +40,7 @@ Item {
 			}
 			Timer {
 				id: hideCursorTimeout
-				interval: 1000
+				interval: 700
 				onTriggered: videoMouseArea.cursorShape = Qt.BlankCursor
 			}
 		}
@@ -55,38 +55,40 @@ Item {
 	}
 
 
-	ColumnLayout {
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		anchors.margins: 2
 
-		spacing: 0
+	Item {
+		id: overlayControls
+		anchors.fill: parent
+		property bool showOverlay: controlBar.containsMouse || hideCursorTimeout.running
+        
 
-		SeekbarSlider {
-			id: seekSlider
-			Layout.fillWidth: true
+		opacity: overlayControls.showOverlay ? 1 : 0
+		Behavior on opacity {
+			NumberAnimation { duration: overlayControls.showOverlay ? 400 : 0 }
 		}
 
-		RowLayout {
-			Layout.preferredHeight: 32
-			Layout.fillWidth: true
+		Rectangle {
+			anchors.fill: parent
 			
-			ToolButton {
-				iconSource: mpvObject.paused ? "qrc:icons/media-playback-start.png" : "qrc:icons/media-playback-pause.png"
-				// iconSource: mpvObject.paused ? "media-playback-start" : "media-playback-pause"
-				onClicked: mpvObject.playPause()
+			gradient: Gradient {
+				GradientStop { position: 0.0; color: "#FF000000" }
+				GradientStop { position: 0.2; color: "#00000000" }
+				GradientStop { position: 0.8; color: "#00000000" }
+				GradientStop { position: 1.0; color: "#FF000000" }
 			}
+		}
 
-			Label {
-				text: "" + formatShortTime(mpvObject.position) + " / " + formatShortTime(mpvObject.duration)
-			}
-
-			Item {
-				Layout.fillWidth: true
-			}
+		ControlBar {
+			id: controlBar
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.bottom: parent.bottom
+			
+			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
+        	propagateComposedEvents: overlayControls.showOverlay ? false : true
 		}
 	}
+	
 
 
 	function zeroPad(n) {

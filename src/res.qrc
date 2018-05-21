@@ -2,6 +2,7 @@
 	<qresource prefix="/">
 		<file>qml/MainWindow.qml</file>
 		<file>qml/MpvPlayer.qml</file>
+		<file>qml/ControlBar.qml</file>
 		<file>qml/SeekbarSlider.qml</file>
 		<file>qml/AppSlider.qml</file>
 		<file>qml/AppSliderStyle.qml</file>
