@@ -90,6 +90,7 @@ Item {
 		id: overlayControls
 		anchors.fill: parent
 		property bool showOverlay: controlBar.containsMouse || sidebar.containsMouse || hideCursorTimeout.running
+		readonly property bool isVisible: opacity > 0
 		
 
 		opacity: overlayControls.showOverlay ? 1 : 0
@@ -117,21 +118,32 @@ Item {
 			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
 			propagateComposedEvents: overlayControls.showOverlay ? false : true
 		}
-		MouseArea {
+		
+		Sidebar {
 			id: sidebar
 			anchors.top: parent.top
 			anchors.right: parent.right
-			anchors.bottom: controlBar.top
+			anchors.rightMargin: open ? 0 : -width
+			// anchors.bottom: controlBar.top
+			anchors.bottom: parent.bottom
 			width: 240
+			
+			property bool open: true
+			Behavior on anchors.rightMargin {
+				NumberAnimation { duration: 200 }
+			}
 
-			hoverEnabled: true
+			Connections {
+				target: overlayControls
+				onIsVisibleChanged: {
+					if (!overlayControls.isVisible) {
+						sidebar.open = false
+					}
+				}
+			}
+
 			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
 			propagateComposedEvents: overlayControls.showOverlay ? false : true
-
-			ChapterList {
-				id: chapterList
-				anchors.fill: parent
-			}
 		}
 	}
 

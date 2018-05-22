@@ -27,16 +27,11 @@ AppScrollView {
 			onClicked: controlBar.seekSlider.value = chapterStartTime
 
 			Rectangle {
-				anchors.fill: parent
-				anchors.bottomMargin: 1
-				color: "#88111111"
-			}
-			Rectangle {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.bottom: parent.bottom
 				height: 1
-				color: "#CC111111"
+				color: "#22FFFFFF"
 			}
 
 			RowLayout {
