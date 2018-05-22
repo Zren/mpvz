@@ -89,7 +89,7 @@ Item {
 	Item {
 		id: overlayControls
 		anchors.fill: parent
-		property bool showOverlay: controlBar.containsMouse || hideCursorTimeout.running
+		property bool showOverlay: controlBar.containsMouse || sidebar.containsMouse || hideCursorTimeout.running
 		
 
 		opacity: overlayControls.showOverlay ? 1 : 0
@@ -117,12 +117,21 @@ Item {
 			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
 			propagateComposedEvents: overlayControls.showOverlay ? false : true
 		}
-
-		ChapterList {
+		MouseArea {
+			id: sidebar
 			anchors.top: parent.top
 			anchors.right: parent.right
 			anchors.bottom: controlBar.top
-			width: 200
+			width: 240
+
+			hoverEnabled: true
+			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
+			propagateComposedEvents: overlayControls.showOverlay ? false : true
+
+			ChapterList {
+				id: chapterList
+				anchors.fill: parent
+			}
 		}
 	}
 
