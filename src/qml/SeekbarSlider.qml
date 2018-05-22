@@ -70,8 +70,9 @@ AppSlider {
 	}
 
 	property int visibleSliderHeight: 4
-	property int topPadding: 10
-	property int bottomPadding: 6
+	property int topPadding: 8
+	property int bottomPadding: 8
+	property int handleSize: 16
 	implicitHeight: topPadding + visibleSliderHeight + bottomPadding // 20
 
 	style: AppSliderStyle {
@@ -112,7 +113,20 @@ AppSlider {
 			}
 		}
 
-		handle: Item {}
+		handle: Item {
+			height: parent.height
+
+			Rectangle {
+				anchors.centerIn: parent
+				property int size: seekbar.mouseArea.containsMouse ? control.handleSize : 0
+				width: size
+				height: size
+				radius: control.handleSize
+				Behavior on size {
+					NumberAnimation { duration: 400 }
+				}
+			}
+		}
 	}
 
 	onPressedChanged: {
