@@ -13,10 +13,14 @@ Flickable {
 			model: mpvObject.chapterListCount
 			
 			MouseArea {
+				id: chapterItem
 				Layout.fillWidth: true
 				Layout.preferredHeight: chapterButtonContents.implicitHeight
 
-				onClicked: controlBar.seekSlider.value = mpvObject.getChapterTime(index)
+				readonly property string chapterTitle: mpvObject.getChapterTitle(index)
+				readonly property double chapterTime: mpvObject.getChapterTime(index)
+
+				onClicked: controlBar.seekSlider.value = chapterTime
 
 				Rectangle {
 					anchors.fill: parent
@@ -49,7 +53,7 @@ Flickable {
 					ColumnLayout {
 						spacing: 0
 						Text {
-							text: mpvObject.getChapterTitle(index)
+							text: chapterTitle || ("Chapter #" + (index + 1))
 							color: "#fff"
 							font.pixelSize: 14
 							font.weight: Font.Bold
@@ -57,7 +61,7 @@ Flickable {
 							elide: Text.ElideRight
 						}
 						Text {
-							text: formatShortTime(mpvObject.getChapterTime(index))
+							text: formatShortTime(chapterTime)
 							color: "#fff"
 							font.pixelSize: 12
 							maximumLineCount: 1
