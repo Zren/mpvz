@@ -72,6 +72,19 @@ Item {
 		}
 	}
 
+	DropArea {
+		id: dropArea
+		anchors.fill: parent
+		onDropped: {
+			if (drop.hasUrls) {
+				if (drop.urls.length >= 1) {
+					mpvObject.loadFile(drop.urls[0])
+					drop.accept(Qt.CopyAction)
+				}
+			}
+		}
+	}
+
 
 	Item {
 		id: overlayControls
