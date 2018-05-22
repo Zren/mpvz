@@ -111,6 +111,25 @@ AppSlider {
 					color: "#3DAEE6"
 				}
 			}
+
+			Item {
+				id: chapterMarkers
+				anchors.fill: grooveRect
+
+				Repeater {
+					model: mpvObject.chapterListCount
+
+					Image {
+						readonly property double chapterPosition: mpvObject.getChapterTime(index)
+						readonly property double positionRatio: seekbar.maximumValue ? chapterPosition / seekbar.maximumValue : 0
+						x: control.width * positionRatio - width/2
+						y: chapterMarkers.height/2
+						width: 8
+						height: 8
+						source: "qrc:icons/Tethys/marker.png"
+					}
+				}
+			}
 		}
 
 		handle: Item {

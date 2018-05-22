@@ -6,6 +6,7 @@
 		<file>qml/AppMenuBar.qml</file>
 		<file>qml/AppContextMenu.qml</file>
 		<file>qml/MpvPlayer.qml</file>
+		<file>qml/ChapterList.qml</file>
 		<file>qml/ControlBar.qml</file>
 		<file>qml/ControlBarButton.qml</file>
 		<file>qml/SeekbarSlider.qml</file>
@@ -18,6 +19,7 @@
 		<file>icons/Tethys/fs-hovered.png</file>
 		<file>icons/Tethys/fs-pressed.png</file>
 		<file>icons/Tethys/fs.png</file>
+		<file>icons/Tethys/marker.png</file>
 		<file>icons/Tethys/pause-hovered.png</file>
 		<file>icons/Tethys/pause-pressed.png</file>
 		<file>icons/Tethys/pause.png</file>

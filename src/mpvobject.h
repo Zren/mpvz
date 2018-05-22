@@ -44,6 +44,8 @@ class MpvObject : public QQuickItem
 	Q_PROPERTY(QString hwdecCurrent READ hwdecCurrent NOTIFY hwdecCurrentChanged)
 	Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
 	Q_PROPERTY(bool muted READ muted WRITE setMuted NOTIFY mutedChanged)
+	Q_PROPERTY(int chapter READ chapter NOTIFY chapterChanged)
+	Q_PROPERTY(int chapterListCount READ chapterListCount NOTIFY chapterListCountChanged)
 
 public:
 	MpvObject(QQuickItem * parent = 0);
@@ -52,6 +54,8 @@ public:
 	void setProperty(const QString& name, const QVariant& value);
 	QVariant getProperty(const QString& name) const;
 
+	Q_INVOKABLE QString getChapterTitle(int chapterIndex) const { return getProperty(QString("chapter-list/%1/title").arg(chapterIndex)).toString(); }
+	Q_INVOKABLE double getChapterTime(int chapterIndex) const { return getProperty(QString("chapter-list/%1/time").arg(chapterIndex)).toDouble(); }
 
 public slots:
 	void command(const QVariant& params);
@@ -74,6 +78,9 @@ public slots:
 	int volume() const { return getProperty("volume").toInt(); }
 	bool muted() const { return getProperty("mute").toBool(); }
 
+	int chapter() const { return getProperty("chapter").toInt(); }
+	int chapterListCount() const { return getProperty("chapter-list/count").toInt(); } // OR "chapters"
+
 	void setVolume(int value) { setProperty("volume", value); }
 	void setMuted(bool value) { setProperty("mute", value); }
 
@@ -85,6 +92,8 @@ signals:
 	void hwdecCurrentChanged(QString value);
 	void volumeChanged(int64_t value);
 	void mutedChanged(bool value);
+	void chapterChanged(int value);
+	void chapterListCountChanged(int value);
 
 	void mpvUpdated();
 

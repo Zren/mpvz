@@ -104,6 +104,13 @@ Item {
 			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
 			propagateComposedEvents: overlayControls.showOverlay ? false : true
 		}
+
+		ChapterList {
+			anchors.top: parent.top
+			anchors.right: parent.right
+			anchors.bottom: controlBar.top
+			width: 200
+		}
 	}
 
 	Rectangle {
