@@ -88,6 +88,10 @@ signals:
 
 	void mpvUpdated();
 
+	void fileStarted();
+	void fileEnded();
+	void fileLoaded();
+
 private slots:
 	void on_mpv_events();
 	void doUpdate();

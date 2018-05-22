@@ -212,6 +212,18 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 	// See: https://github.com/mpv-player/mpv/blob/master/libmpv/client.h
 
 	switch (event->event_id) {
+	case MPV_EVENT_START_FILE: {
+		Q_EMIT fileStarted();
+		break;
+	}
+	case MPV_EVENT_END_FILE: {
+		Q_EMIT fileEnded();
+		break;
+	}
+	case MPV_EVENT_FILE_LOADED: {
+		Q_EMIT fileLoaded();
+		break;
+	}
 	case MPV_EVENT_PROPERTY_CHANGE: {
 		mpv_event_property *prop = (mpv_event_property *)event->data;
 		if (strcmp(prop->name, "time-pos") == 0 && prop->format == MPV_FORMAT_DOUBLE) {
