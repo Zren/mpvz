@@ -12,6 +12,7 @@ Item {
 	property alias folderModel: folderModel
 
 	property bool autoplayNextFile: true
+	property bool shouldAutoplay: false
 
 	FolderListModel {
 		id: folderModel
@@ -41,10 +42,11 @@ Item {
 			onFileLoaded: {
 				var filePath = mpvObject.path
 				folderModel.setCurrentFile(filePath)
+				mpvPlayer.shouldAutoplay = true
 			}
 			onFileEnded: {
 				console.log('onFileEnded')
-				if (mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile) {
+				if (mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile && shouldAutoplay) {
 					console.log('mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile')
 					var currentFilePath = folderModel.folder + '/' + folderModel.currentFileName
 					console.log('currentFilePath', currentFilePath)
@@ -52,6 +54,7 @@ Item {
 					console.log('currentFileIndex', currentFileIndex)
 					if (currentFileIndex >= 0 && currentFileIndex < folderModel.count-1) {
 						var nextFilePath = folderModel.get(currentFileIndex+1, 'filePath')
+						mpvPlayer.shouldAutoplay = false
 						mpvObject.loadFile(nextFilePath)
 					}
 				}
@@ -141,6 +144,14 @@ Item {
 		anchors.fill: parent
 		property bool showOverlay: controlBar.containsMouse || sidebar.containsMouse || hideCursorTimeout.running
 		readonly property bool isVisible: opacity > 0
+
+		onIsVisibleChanged: {
+			if (isVisible) {
+				mpvObject.setProperty('sub-margin-y', controlBar.height + 22)
+			} else {
+				mpvObject.setProperty('sub-margin-y', 22)
+			}
+		}
 		
 
 		opacity: overlayControls.showOverlay ? 1 : 0
