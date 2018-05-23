@@ -17,8 +17,13 @@ MouseArea {
 		}
 	}
 
-	ChapterList {
-		id: chapterList
+	PlaylistView {
+		id: playlistView
 		anchors.fill: parent
 	}
+
+	// ChapterList {
+	// 	id: chapterList
+	// 	anchors.fill: parent
+	// }
 }

@@ -8,6 +8,7 @@
 		<file>qml/MpvPlayer.qml</file>
 		<file>qml/Sidebar.qml</file>
 		<file>qml/AppScrollView.qml</file>
+		<file>qml/PlaylistView.qml</file>
 		<file>qml/ChapterList.qml</file>
 		<file>qml/ControlBar.qml</file>
 		<file>qml/ControlBarButton.qml</file>

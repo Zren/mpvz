@@ -107,6 +107,8 @@ MpvObject::MpvObject(QQuickItem * parent)
 	mpv_observe_property(mpv, 0, "hwdec-current", MPV_FORMAT_STRING);
 	mpv_observe_property(mpv, 0, "volume", MPV_FORMAT_INT64);
 	mpv_observe_property(mpv, 0, "mute", MPV_FORMAT_FLAG);
+	mpv_observe_property(mpv, 0, "playlist-pos", MPV_FORMAT_INT64);
+	mpv_observe_property(mpv, 0, "playlist/count", MPV_FORMAT_INT64);
 	mpv_observe_property(mpv, 0, "chapter", MPV_FORMAT_INT64);
 	mpv_observe_property(mpv, 0, "chapter-list/count", MPV_FORMAT_INT64);
 	
@@ -259,6 +261,12 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			if (strcmp(prop->name, "volume") == 0) {
 				int64_t value = getProperty("volume").toInt();
 				Q_EMIT volumeChanged(value);
+			} else if (strcmp(prop->name, "playlist-pos") == 0) {
+				int64_t value = getProperty("playlist-pos").toInt();
+				Q_EMIT playlistPosChanged(value);
+			} else if (strcmp(prop->name, "playlist/count") == 0) {
+				int64_t value = getProperty("playlist/count").toInt();
+				Q_EMIT playlistCountChanged(value);
 			} else if (strcmp(prop->name, "chapter") == 0) {
 				int64_t value = getProperty("chapter").toInt();
 				Q_EMIT chapterChanged(value);
