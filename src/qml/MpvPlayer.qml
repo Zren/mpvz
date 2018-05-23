@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+import Qt.labs.folderlistmodel 2.1
 
 import mpvz 1.0
 
@@ -8,6 +9,55 @@ Item {
 	id: mpvPlayer
 	objectName: "mpvPlayer"
 	property alias mpvObject: mpvObject
+	property alias folderModel: folderModel
+
+	property bool autoplayNextFile: true
+
+	FolderListModel {
+		id: folderModel
+		// File ext list from: https://github.com/mpv-player/mpv/blob/master/TOOLS/lua/autoload.lua
+		nameFilters: [ "*.3gp", "*.avi", "*.flac", "*.flv", "*.m4a", "*.m4v", "*.mkv", "*.mp3", "*.mp4", "*.mpeg", "*.mpg", "*.ogg", "*.ogm", "*.ogv", "*.opus", "*.rmvb", "*.wav", "*.webm", "*.wma", "*.wmv" ]
+		sortField :  "Name"
+		showDotAndDotDot: false
+		showDirs: false
+
+		property string currentFileName: ""
+		function setCurrentFile(filePath) {
+			console.log('filePath', filePath)
+			var dirPath = getDirPath(filePath)
+			console.log('getDirPath', dirPath)
+			folderModel.folder = dirPath
+			var fileName = basename(filePath)
+			console.log('basename', fileName)
+			folderModel.currentFileName = fileName
+		}
+
+		onCountChanged: {
+			console.log('folderModel.count', count)
+		}
+
+		property var mpvConnection: Connections {
+			target: mpvObject
+			onFileLoaded: {
+				var filePath = mpvObject.getProperty('path')
+				folderModel.setCurrentFile(filePath)
+			}
+			onFileEnded: {
+				console.log('onFileEnded')
+				if (mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile) {
+					console.log('mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile')
+					var currentFilePath = folderModel.folder + '/' + folderModel.currentFileName
+					console.log('currentFilePath', currentFilePath)
+					var currentFileIndex = folderModel.indexOf(currentFilePath)
+					console.log('currentFileIndex', currentFileIndex)
+					if (currentFileIndex >= 0 && currentFileIndex < folderModel.count-1) {
+						var nextFilePath = folderModel.get(currentFileIndex+1, 'filePath')
+						mpvObject.loadFile(nextFilePath)
+					}
+				}
+			}
+		}
+	}
 
 	MpvObject {
 		id: mpvObject
@@ -124,8 +174,8 @@ Item {
 			anchors.top: parent.top
 			anchors.right: parent.right
 			anchors.rightMargin: open ? 0 : -width
-			// anchors.bottom: controlBar.top
-			anchors.bottom: parent.bottom
+			anchors.bottom: controlBar.top
+			// anchors.bottom: parent.bottom
 			width: 240
 			
 			property bool open: true
@@ -137,7 +187,7 @@ Item {
 				target: overlayControls
 				onIsVisibleChanged: {
 					if (!overlayControls.isVisible) {
-						sidebar.open = false
+						// sidebar.open = false
 					}
 				}
 			}
@@ -210,6 +260,19 @@ Item {
 		} else {
 			return minutes + ":" + zeroPad(seconds)
 		}
+	}
+
+	function getDirPath(str) {
+		var lastSlash = str.lastIndexOf("/")
+		if (lastSlash == -1) {
+			return 'file://./'
+		} else {
+			return 'file://' + str.substr(0, lastSlash+1)
+		}
+	}
+
+	function basename(str) {
+		return (str.slice(str.lastIndexOf("/")+1))
 	}
 
 

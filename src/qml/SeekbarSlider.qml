@@ -15,6 +15,11 @@ AppSlider {
 
 	Connections {
 		target: mpvObject
+		onFileLoaded: {
+			seekbar.ignoreValueChange = true
+			seekSlider.value = 0
+			seekbar.ignoreValueChange = false
+		}
 		onPositionChanged: {
 			// console.log('onPositionChanged', mpvObject.position, seekSlider.value)
 			if (mpvObject.duration > 0 && !seekSlider.pressed && !seekDebounce.running) {
