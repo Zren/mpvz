@@ -5,6 +5,8 @@ import QtQuick.Controls.Private 1.0
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
+import mpvz 1.0
+
 // Fork Slider so that mouseArea is exposed because using a child MouseArea conflicts.
 // https://github.com/qt/qtquickcontrols/blob/dev/src/controls/Slider.qml
 AppSlider {
@@ -66,11 +68,11 @@ AppSlider {
 	mouseArea.hoverEnabled: true
 	mouseArea.onPositionChanged: {
 		// console.log('onPositionChanged', mouse.x, mouseArea.width)
-		// thumbnail.show(mouse.x)
+		thumbnail.show(mouse.x)
 	}
 	mouseArea.onContainsMouseChanged: {
 		if (!mouseArea.containsMouse) {
-			// thumbnail.hide()
+			thumbnail.hide()
 		}
 	}
 
@@ -148,6 +150,69 @@ AppSlider {
 				radius: control.handleSize
 				Behavior on size {
 					NumberAnimation { duration: 400 }
+				}
+			}
+		}
+	}
+
+	Rectangle {
+		id: thumbnail
+		property int borderWidth: 2
+		border.width: borderWidth
+		border.color: "#0e1115"
+
+		gradient: Gradient {
+			GradientStop { position: 0.0; color: "#19181a" }
+			GradientStop { position: 1.0; color: "#0e1115" }
+		}
+
+		width: 200 + border.width*4
+		property int contentHeight: Math.ceil(200 * mpvObject.dheight / mpvObject.dwidth) + border.width*2
+		height: contentHeight + border.width*2
+		anchors.bottom: parent.top
+		visible: false
+		property real positionRatio: 0
+		readonly property double videoPosition: mpvObject.duration * positionRatio
+		// onPositionChanged: thumbnailVideo.seekToPosition()
+		property int mouseX: 0
+		x: Math.max(0, Math.min(mouseX - (width / 2), parent.width - width))
+
+		function show(mouseX) {
+			thumbnail.mouseX = mouseX
+			thumbnail.positionRatio = thumbnail.mouseX / mouseArea.width
+			thumbnail.visible = true
+		}
+
+		function hide() {
+			thumbnail.visible = false
+		}
+
+		Rectangle {
+			anchors.fill: parent
+			border.width: thumbnail.border.width
+			border.color: thumbnail.border.color
+			color: "#000"
+
+			// MpvThumb {
+			// 	id: mpvThumb
+			// 	anchors.fill: parent
+			// 	anchors.margins: parent.border.width
+			// }
+
+			Rectangle {
+				anchors.horizontalCenter: parent.horizontalCenter
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: 4
+
+				color: "#88000000"
+
+				width: thumbPosText.implicitWidth
+				height: thumbPosText.implicitHeight
+
+				Text {
+					id: thumbPosText
+					text: mpvPlayer.formatShortTime(thumbnail.videoPosition)
+					color: "#FFFFFF"
 				}
 			}
 		}

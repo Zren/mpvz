@@ -36,12 +36,15 @@ class MpvObject : public QQuickItem
 	MpvRenderer *renderer;
 	bool killOnce;
 
+	Q_PROPERTY(bool enableAudio READ enableAudio WRITE setEnableAudio NOTIFY enableAudioChanged)
 
 	Q_PROPERTY(bool paused READ paused NOTIFY pausedChanged)
 	Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
 	Q_PROPERTY(double position READ position NOTIFY positionChanged)
 	Q_PROPERTY(QString path READ path NOTIFY pathChanged)
 	Q_PROPERTY(QString mediaTitle READ mediaTitle NOTIFY mediaTitleChanged)
+	Q_PROPERTY(int dwidth READ dwidth NOTIFY dwidthChanged)
+	Q_PROPERTY(int dheight READ dheight NOTIFY dheightChanged)
 	Q_PROPERTY(QString hwdecCurrent READ hwdecCurrent NOTIFY hwdecCurrentChanged)
 	Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
 	Q_PROPERTY(bool muted READ muted WRITE setMuted NOTIFY mutedChanged)
@@ -75,11 +78,21 @@ public slots:
 	void seek(double pos);
 	void loadFile(QVariant urls);
 
+	bool enableAudio() const { return m_enableAudio; }
+	void setEnableAudio(bool value) {
+		m_enableAudio = value;
+		if (!m_enableAudio) {
+			mpv::qt::set_option_variant(mpv, "ao", "null");
+		}
+	}
+
 	bool paused() const { return m_paused; }
 	double duration() const { return m_duration; }
 	double position() const { return m_position; }
 	QString path() const { return getProperty("path").toString(); }
 	QString mediaTitle() const { return m_mediaTitle; }
+	int dwidth() const { return getProperty("dwidth").toInt(); }
+	int dheight() const { return getProperty("dheight").toInt(); }
 	QString hwdecCurrent() const { return m_hwdecCurrent; }
 	int volume() const { return getProperty("volume").toInt(); }
 	bool muted() const { return getProperty("mute").toBool(); }
@@ -95,11 +108,15 @@ public slots:
 	void setPlaylistPos(int value) { setProperty("playlist-pos", value); }
 
 signals:
+	void enableAudioChanged(bool value);
+
 	void pausedChanged(bool value);
 	void durationChanged(double value); // Unit: seconds
 	void positionChanged(double value); // Unit: seconds
 	void pathChanged(QString value);
 	void mediaTitleChanged(QString value);
+	void dwidthChanged(int value);
+	void dheightChanged(int value);
 	void hwdecCurrentChanged(QString value);
 	void volumeChanged(int64_t value);
 	void mutedChanged(bool value);
@@ -124,6 +141,7 @@ private:
 	static void on_update(void *ctx);
 
 	bool m_paused;
+	bool m_enableAudio;
 	double m_duration;
 	double m_position;
 	QString m_mediaTitle;

@@ -63,6 +63,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	, mpv_gl(0)
 	, renderer(0)
 	, killOnce(false)
+	, m_enableAudio(true)
 	, m_duration(0)
 	, m_position(0)
 {
@@ -104,6 +105,8 @@ MpvObject::MpvObject(QQuickItem * parent)
 	mpv_observe_property(mpv, 0, "time-pos", MPV_FORMAT_DOUBLE);
 	mpv_observe_property(mpv, 0, "pause", MPV_FORMAT_FLAG);
 	mpv_observe_property(mpv, 0, "media-title", MPV_FORMAT_STRING);
+	mpv_observe_property(mpv, 0, "dwidth", MPV_FORMAT_INT64);
+	mpv_observe_property(mpv, 0, "dheight", MPV_FORMAT_INT64);
 	mpv_observe_property(mpv, 0, "hwdec-current", MPV_FORMAT_STRING);
 	mpv_observe_property(mpv, 0, "volume", MPV_FORMAT_INT64);
 	mpv_observe_property(mpv, 0, "mute", MPV_FORMAT_FLAG);
@@ -278,6 +281,12 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			} else if (strcmp(prop->name, "chapter-list/count") == 0) {
 				int64_t value = getProperty("chapter-list/count").toInt();
 				Q_EMIT chapterListCountChanged(value);
+			} else if (strcmp(prop->name, "dwidth") == 0) {
+				int64_t value = getProperty("dwidth").toInt();
+				Q_EMIT dwidthChanged(value);
+			} else if (strcmp(prop->name, "dheight") == 0) {
+				int64_t value = getProperty("dheight").toInt();
+				Q_EMIT dheightChanged(value);
 			}
 		}
 		break;

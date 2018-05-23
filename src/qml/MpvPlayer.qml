@@ -189,7 +189,7 @@ Item {
 			// anchors.bottom: parent.bottom
 			width: 240
 			
-			property bool open: true
+			property bool open: false
 			Behavior on anchors.rightMargin {
 				NumberAnimation { duration: 200 }
 			}
@@ -198,7 +198,7 @@ Item {
 				target: overlayControls
 				onIsVisibleChanged: {
 					if (!overlayControls.isVisible) {
-						// sidebar.open = false
+						sidebar.open = false
 					}
 				}
 			}
