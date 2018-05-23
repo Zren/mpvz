@@ -39,23 +39,29 @@ Item {
 
 		property var mpvConnection: Connections {
 			target: mpvObject
+			onFileStarted: {
+				console.log('onFileStarted')
+			}
 			onFileLoaded: {
+				console.log('onFileLoaded')
 				var filePath = mpvObject.path
 				folderModel.setCurrentFile(filePath)
 				mpvPlayer.shouldAutoplay = true
 			}
 			onFileEnded: {
-				console.log('onFileEnded')
-				if (mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile && shouldAutoplay) {
-					console.log('mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile')
-					var currentFilePath = folderModel.folder + '/' + folderModel.currentFileName
-					console.log('currentFilePath', currentFilePath)
-					var currentFileIndex = folderModel.indexOf(currentFilePath)
-					console.log('currentFileIndex', currentFileIndex)
-					if (currentFileIndex >= 0 && currentFileIndex < folderModel.count-1) {
-						var nextFilePath = folderModel.get(currentFileIndex+1, 'filePath')
-						mpvPlayer.shouldAutoplay = false
-						mpvObject.loadFile(nextFilePath)
+				console.log('onFileEnded', reason)
+				if (reason == "eof") {
+					if (mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile && shouldAutoplay) {
+						console.log('mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile')
+						var currentFilePath = folderModel.folder + '/' + folderModel.currentFileName
+						console.log('currentFilePath', currentFilePath)
+						var currentFileIndex = folderModel.indexOf(currentFilePath)
+						console.log('currentFileIndex', currentFileIndex)
+						if (currentFileIndex >= 0 && currentFileIndex < folderModel.count-1) {
+							var nextFilePath = folderModel.get(currentFileIndex+1, 'filePath')
+							mpvPlayer.shouldAutoplay = false
+							mpvObject.loadFile(nextFilePath)
+						}
 					}
 				}
 			}

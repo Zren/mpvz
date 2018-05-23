@@ -128,7 +128,7 @@ signals:
 	void mpvUpdated();
 
 	void fileStarted();
-	void fileEnded();
+	void fileEnded(QString reason);
 	void fileLoaded();
 
 private slots:

@@ -15,8 +15,24 @@ AppWindow {
 	objectName: "mainWindow"
 	property var commandLineUrls: []
 
-	width: 1280
-	height: 720
+	width: {
+		if (videoLoaded) {
+			return videoWidth
+		} else {
+			return 1280
+		}
+	}
+	height: {
+		if (videoLoaded) {
+			return videoHeight + (menuBarVisible ? menuBar.__contentItem.height : 0)
+		} else {
+			return 720
+		}
+	}
+	property bool videoLoaded: mpvPlayer.mpvObject.playlistCount >= 1
+	property int videoWidth: mpvPlayer.mpvObject.dwidth
+	property int videoHeight: mpvPlayer.mpvObject.dheight
+
 	visible: true
 
 	title: {
@@ -38,7 +54,7 @@ AppWindow {
 	
 	property bool intialized: false
 	menuBarVisible: !hideMenuBar && !isFullscreen
-	property bool hideMenuBar: false
+	property bool hideMenuBar: true
 
 	property bool bordersVisible: true
 	property string alwaysOnTop: 'never' // 'never', 'always', 'whilePlaying'

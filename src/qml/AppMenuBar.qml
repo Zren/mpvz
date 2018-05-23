@@ -54,11 +54,7 @@ MenuBar {
 				shortcut: "1"
 				onTriggered: {
 					window.bordersVisible = false
-					window.titleBarVisible = false
 					window.menuBarVisible = false
-					window.seekBarVisible = false
-					window.controlBarVisible = false
-					window.statusBarVisible = false
 				}
 			}
 
@@ -67,11 +63,7 @@ MenuBar {
 				shortcut: "2"
 				onTriggered: {
 					window.bordersVisible = true
-					window.titleBarVisible = false
 					window.menuBarVisible = false
-					window.seekBarVisible = false
-					window.controlBarVisible = true
-					window.statusBarVisible = false
 				}
 			}
 
@@ -80,11 +72,7 @@ MenuBar {
 				shortcut: "3"
 				onTriggered: {
 					window.bordersVisible = true
-					window.titleBarVisible = true
 					window.menuBarVisible = true
-					window.seekBarVisible = true
-					window.controlBarVisible = true
-					window.statusBarVisible = true
 				}
 			}
 		}

@@ -217,6 +217,7 @@ void MpvObject::on_mpv_events()
 void MpvObject::handle_mpv_event(mpv_event *event)
 {
 	// See: https://github.com/mpv-player/mpv/blob/master/libmpv/client.h
+	// See: https://github.com/mpv-player/mpv/blob/master/player/lua.c#L471
 
 	switch (event->event_id) {
 	case MPV_EVENT_START_FILE: {
@@ -224,7 +225,18 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 		break;
 	}
 	case MPV_EVENT_END_FILE: {
-		Q_EMIT fileEnded();
+		mpv_event_end_file *eef = (mpv_event_end_file *)event->data;
+		const char *reason;
+		switch (eef->reason) {
+		case MPV_END_FILE_REASON_EOF: reason = "eof"; break;
+		case MPV_END_FILE_REASON_STOP: reason = "stop"; break;
+		case MPV_END_FILE_REASON_QUIT: reason = "quit"; break;
+		case MPV_END_FILE_REASON_ERROR: reason = "error"; break;
+		case MPV_END_FILE_REASON_REDIRECT: reason = "redirect"; break;
+		default:
+			reason = "unknown";
+		}
+		Q_EMIT fileEnded(QString(reason));
 		break;
 	}
 	case MPV_EVENT_FILE_LOADED: {
