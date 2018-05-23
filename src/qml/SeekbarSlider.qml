@@ -205,12 +205,16 @@ AppSlider {
 				anchors.bottomMargin: 4
 
 				color: "#88000000"
+				radius: 4
 
-				width: thumbPosText.implicitWidth
-				height: thumbPosText.implicitHeight
+				property int padding: 4
+				width: padding + thumbPosText.implicitWidth + padding
+				height: padding + thumbPosText.implicitHeight + padding
 
 				Text {
 					id: thumbPosText
+					x: parent.padding
+					y: parent.padding
 					text: mpvPlayer.formatShortTime(thumbnail.videoPosition)
 					color: "#FFFFFF"
 				}
