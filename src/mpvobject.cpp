@@ -230,14 +230,16 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 	}
 	case MPV_EVENT_PROPERTY_CHANGE: {
 		mpv_event_property *prop = (mpv_event_property *)event->data;
-		if (strcmp(prop->name, "time-pos") == 0 && prop->format == MPV_FORMAT_DOUBLE) {
-			double time = *(double *)prop->data;
-			m_position = time;
-			Q_EMIT positionChanged(time);
-		} else if (strcmp(prop->name, "duration") == 0 && prop->format == MPV_FORMAT_DOUBLE) {
-			double time = *(double *)prop->data;
-			m_duration = time;
-			Q_EMIT durationChanged(time);
+		if (prop->format == MPV_FORMAT_DOUBLE) {
+			if (strcmp(prop->name, "time-pos") == 0) {
+				double time = *(double *)prop->data;
+				m_position = time;
+				Q_EMIT positionChanged(time);
+			} else if (strcmp(prop->name, "duration") == 0) {
+				double time = *(double *)prop->data;
+				m_duration = time;
+				Q_EMIT durationChanged(time);
+			}
 		} else if (prop->format == MPV_FORMAT_FLAG) {
 			if (strcmp(prop->name, "pause") == 0) {
 				bool value = *(bool *)prop->data;
