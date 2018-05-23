@@ -154,12 +154,12 @@ AppSlider {
 	}
 
 	onPressedChanged: {
-		seekToValue()
-		
 		if (pressed) {
 			playingOnPressed = !mpvObject.paused
-			mpvObject.pause()
-		} else if (!pressed && playingOnPressed) {
+			// mpvObject.pause()
+		}
+		seekToValue()
+		if (!pressed && playingOnPressed) {
 			mpvObject.play()
 		}
 	}
