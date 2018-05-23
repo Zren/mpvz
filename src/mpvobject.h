@@ -40,6 +40,7 @@ class MpvObject : public QQuickItem
 	Q_PROPERTY(bool paused READ paused NOTIFY pausedChanged)
 	Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
 	Q_PROPERTY(double position READ position NOTIFY positionChanged)
+	Q_PROPERTY(QString path READ path NOTIFY pathChanged)
 	Q_PROPERTY(QString mediaTitle READ mediaTitle NOTIFY mediaTitleChanged)
 	Q_PROPERTY(QString hwdecCurrent READ hwdecCurrent NOTIFY hwdecCurrentChanged)
 	Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
@@ -77,6 +78,7 @@ public slots:
 	bool paused() const { return m_paused; }
 	double duration() const { return m_duration; }
 	double position() const { return m_position; }
+	QString path() const { return getProperty("path").toString(); }
 	QString mediaTitle() const { return m_mediaTitle; }
 	QString hwdecCurrent() const { return m_hwdecCurrent; }
 	int volume() const { return getProperty("volume").toInt(); }
@@ -96,6 +98,7 @@ signals:
 	void pausedChanged(bool value);
 	void durationChanged(double value); // Unit: seconds
 	void positionChanged(double value); // Unit: seconds
+	void pathChanged(QString value);
 	void mediaTitleChanged(QString value);
 	void hwdecCurrentChanged(QString value);
 	void volumeChanged(int64_t value);

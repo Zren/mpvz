@@ -39,7 +39,7 @@ Item {
 		property var mpvConnection: Connections {
 			target: mpvObject
 			onFileLoaded: {
-				var filePath = mpvObject.getProperty('path')
+				var filePath = mpvObject.path
 				folderModel.setCurrentFile(filePath)
 			}
 			onFileEnded: {

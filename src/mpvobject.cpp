@@ -248,7 +248,10 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 				Q_EMIT mutedChanged(value);
 			}
 		} else if (prop->format == MPV_FORMAT_STRING) {
-			if (strcmp(prop->name, "media-title") == 0) {
+			if (strcmp(prop->name, "path") == 0) {
+				QString value = getProperty("path").toString();
+				Q_EMIT pathChanged(value);
+			} else if (strcmp(prop->name, "media-title") == 0) {
 				QString value = getProperty("media-title").toString();
 				m_mediaTitle = value;
 				Q_EMIT mediaTitleChanged(value);
