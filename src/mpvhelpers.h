@@ -41,6 +41,14 @@
 		double varName() { return getProperty(p).toDouble(); } \
 	Q_SIGNALS: \
 		void varName##Changed(double value);
+#define WRITABLE_PROP_DOUBLE(p, varName) \
+	public: \
+		Q_PROPERTY(double varName READ varName WRITE set_##varName NOTIFY varName##Changed) \
+	public Q_SLOTS: \
+		double varName() { return getProperty(p).toDouble(); } \
+		void set_##varName(double value) { setProperty(p, value); } \
+	Q_SIGNALS: \
+		void varName##Changed(double value);
 
 #define READONLY_PROP_STRING(p, varName) \
 	public: \

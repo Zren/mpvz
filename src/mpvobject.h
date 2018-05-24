@@ -62,7 +62,7 @@ class MpvObject : public QQuickItem
 	READONLY_PROP_DOUBLE("estimated-display-fps", estimatedDisplayFps)
 	READONLY_PROP_DOUBLE("estimated-vf-fps", estimatedVfFps)
 	READONLY_PROP_DOUBLE("fps", fps) // Deprecated, use "container-fps"
-	READONLY_PROP_DOUBLE("speed", speed)
+	WRITABLE_PROP_DOUBLE("speed", speed)
 	READONLY_PROP_DOUBLE("video-bitrate", videoBitrate)
 	READONLY_PROP_STRING("audio-codec", audioCodec)
 	READONLY_PROP_STRING("audio-codec-name", audioCodecName)

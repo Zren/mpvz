@@ -40,6 +40,31 @@ QtObject {
 		onTriggered: mpvPlayer.nextVideo()
 	}
 
+	//--- Play > Speed
+	property Action resetSpeedAction: Action {
+		text: "Reset"
+		shortcut: "Backspace"
+		onTriggered: {
+			mpvObject.speed = 1
+		}
+	}
+
+	property Action playFasterAction: Action {
+		text: "+10%"
+		shortcut: "+"
+		onTriggered: {
+			mpvObject.speed += 0.1
+		}
+	}
+
+	property Action playSlowerAction: Action {
+		text: "-10%"
+		shortcut: "-"
+		onTriggered: {
+			mpvObject.speed -= 0.1
+		}
+	}
+
 	//--- Play > Seek
 	property Action seekBeginningAction: Action {
 		text: "Beginning"
