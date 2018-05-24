@@ -88,6 +88,7 @@ public:
 
 	Q_INVOKABLE void setProperty(const QString& name, const QVariant& value);
 	Q_INVOKABLE QVariant getProperty(const QString& name) const;
+	Q_INVOKABLE void setOption(const QString& name, const QVariant& value);
 
 	Q_INVOKABLE QString getPlaylistFilename(int playlistIndex) const { return getProperty(QString("playlist/%1/filename").arg(playlistIndex)).toString(); }
 	Q_INVOKABLE QString getPlaylistTitle(int playlistIndex) const { return getProperty(QString("playlist/%1/title").arg(playlistIndex)).toString(); }

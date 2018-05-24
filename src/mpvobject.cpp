@@ -217,6 +217,11 @@ QVariant MpvObject::getProperty(const QString &name) const
 	return mpv::qt::get_property_variant(mpv, name);
 }
 
+void MpvObject::setOption(const QString& name, const QVariant& value)
+{
+	mpv::qt::set_option_variant(mpv, name, value);
+}
+
 void MpvObject::reinitRenderer()
 {
 	// Don't make it stop playback if the VO dies.
