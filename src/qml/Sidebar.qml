@@ -6,6 +6,8 @@ MouseArea {
 	id: sidebar
 	hoverEnabled: true
 
+	property bool open: false
+
 	Rectangle {
 		anchors.fill: parent
 		color: "#88111111"
@@ -26,4 +28,16 @@ MouseArea {
 	// 	id: chapterList
 	// 	anchors.fill: parent
 	// }
+
+	function close() {
+		sidebar.open = false
+	}
+
+	function togglePlaylist() {
+		if (sidebar.open && true) {
+			sidebar.close()
+		} else {
+			sidebar.open = true
+		}
+	}
 }

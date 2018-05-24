@@ -76,6 +76,12 @@ Menu {
 	Menu {
 		title: "Tools"
 
+		Menu {
+			title: "Playlist"
+
+			MenuItem { action: appActions.togglePlaylistAction }
+		}
+
 		MenuItem { action: appActions.togglePlaybackInfoAction }
 	}
 

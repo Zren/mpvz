@@ -9,6 +9,7 @@ Item {
 	id: mpvPlayer
 	objectName: "mpvPlayer"
 	property alias mpvObject: mpvObject
+	property alias sidebar: sidebar
 	property alias folderModel: folderModel
 
 	property bool shouldAutoplay: false
@@ -193,12 +194,11 @@ Item {
 			id: sidebar
 			anchors.top: parent.top
 			anchors.right: parent.right
-			anchors.rightMargin: open ? 0 : -width
+			anchors.rightMargin: sidebar.open ? 0 : -width
 			anchors.bottom: controlBar.top
 			// anchors.bottom: parent.bottom
 			width: 240
 			
-			property bool open: false
 			Behavior on anchors.rightMargin {
 				NumberAnimation { duration: 200 }
 			}
@@ -207,7 +207,7 @@ Item {
 				target: overlayControls
 				onIsVisibleChanged: {
 					if (!overlayControls.isVisible) {
-						sidebar.open = false
+						sidebar.close()
 					}
 				}
 			}

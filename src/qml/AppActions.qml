@@ -125,6 +125,13 @@ QtObject {
 		onTriggered: config.showPlaybackInfo = !config.showPlaybackInfo
 	}
 
+	//--- Tools > Playlist
+	property Action togglePlaylistAction: Action {
+		text: "Show / Hide"
+		shortcut: "L"
+		onTriggered: sidebar.togglePlaylist()
+	}
+
 	//--- Window
 	property Action toggleFullscreenAction: Action {
 		text: "Toggle Fullscreen"

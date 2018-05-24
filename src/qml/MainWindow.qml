@@ -54,6 +54,7 @@ AppWindow {
 	}
 
 	readonly property alias mpvObject: mpvPlayer.mpvObject
+	readonly property alias sidebar: mpvPlayer.sidebar
 	readonly property bool isFullscreen: visibility == 5 // QWindow::FullScreen
 	readonly property bool isPlaying: !mpvPlayer.mpvObject.paused
 

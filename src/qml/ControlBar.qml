@@ -41,8 +41,13 @@ MouseArea {
 			}
 
 			ControlBarButton {
+				iconName: "playlist"
+				onClicked: appActions.togglePlaylistAction.trigger()
+			}
+
+			ControlBarButton {
 				iconName: window.isFullscreen ? "fs-checked" : "fs"
-				onClicked: window.toggleFullscreen()
+				onClicked: appActions.toggleFullscreenAction.trigger()
 			}
 
 		}

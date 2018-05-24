@@ -207,6 +207,7 @@ void MpvObject::command(const QVariant& params)
 {
 	mpv::qt::command_variant(mpv, params);
 }
+
 void MpvObject::setProperty(const QString& name, const QVariant& value)
 {
 	mpv::qt::set_property_variant(mpv, name, value);

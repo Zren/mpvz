@@ -31,5 +31,8 @@
 		<file>icons/Tethys/play-hovered.png</file>
 		<file>icons/Tethys/play-pressed.png</file>
 		<file>icons/Tethys/play.png</file>
+		<file>icons/Tethys/playlist-hovered.png</file>
+		<file>icons/Tethys/playlist-pressed.png</file>
+		<file>icons/Tethys/playlist.png</file>
 	</qresource>
 </RCC>
