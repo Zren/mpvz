@@ -1,6 +1,8 @@
 #ifndef MPVRENDERER_H_
 #define MPVRENDERER_H_
 
+#include "mpvhelpers.h"
+
 #include <QtQuick/QQuickItem>
 
 #include <mpv/client.h>
@@ -38,20 +40,22 @@ class MpvObject : public QQuickItem
 
 	Q_PROPERTY(bool enableAudio READ enableAudio WRITE setEnableAudio NOTIFY enableAudioChanged)
 
-	Q_PROPERTY(bool paused READ paused NOTIFY pausedChanged)
+	WRITABLE_PROP_BOOL("mute", muted)
+	READONLY_PROP_BOOL("pause", paused)
+	READONLY_PROP_INT("chapter", chapter)
+	READONLY_PROP_INT("chapter-list/count", chapterListCount) // OR "chapters"
+	READONLY_PROP_INT("dheight", dheight)
+	READONLY_PROP_INT("dwidth", dwidth)
+	WRITABLE_PROP_INT("playlist-pos", playlistPos)
+	READONLY_PROP_INT("playlist/count", playlistCount)
+	WRITABLE_PROP_INT("volume", volume)
+	READONLY_PROP_STRING("hwdec-current", hwdecCurrent)
+	READONLY_PROP_STRING("media-title", mediaTitle)
+	READONLY_PROP_STRING("path", path)
+
+public:
 	Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
 	Q_PROPERTY(double position READ position NOTIFY positionChanged)
-	Q_PROPERTY(QString path READ path NOTIFY pathChanged)
-	Q_PROPERTY(QString mediaTitle READ mediaTitle NOTIFY mediaTitleChanged)
-	Q_PROPERTY(int dwidth READ dwidth NOTIFY dwidthChanged)
-	Q_PROPERTY(int dheight READ dheight NOTIFY dheightChanged)
-	Q_PROPERTY(QString hwdecCurrent READ hwdecCurrent NOTIFY hwdecCurrentChanged)
-	Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
-	Q_PROPERTY(bool muted READ muted WRITE setMuted NOTIFY mutedChanged)
-	Q_PROPERTY(int playlistPos READ playlistPos WRITE setPlaylistPos NOTIFY playlistPosChanged)
-	Q_PROPERTY(int playlistCount READ playlistCount NOTIFY playlistCountChanged)
-	Q_PROPERTY(int chapter READ chapter NOTIFY chapterChanged)
-	Q_PROPERTY(int chapterListCount READ chapterListCount NOTIFY chapterListCountChanged)
 
 public:
 	MpvObject(QQuickItem * parent = 0);
@@ -86,44 +90,14 @@ public slots:
 		}
 	}
 
-	bool paused() const { return m_paused; }
 	double duration() const { return m_duration; }
 	double position() const { return m_position; }
-	QString path() const { return getProperty("path").toString(); }
-	QString mediaTitle() const { return m_mediaTitle; }
-	int dwidth() const { return getProperty("dwidth").toInt(); }
-	int dheight() const { return getProperty("dheight").toInt(); }
-	QString hwdecCurrent() const { return m_hwdecCurrent; }
-	int volume() const { return getProperty("volume").toInt(); }
-	bool muted() const { return getProperty("mute").toBool(); }
-
-	int playlistPos() const { return getProperty("playlist-pos").toInt(); }
-	int playlistCount() const { return getProperty("playlist/count").toInt(); }
-
-	int chapter() const { return getProperty("chapter").toInt(); }
-	int chapterListCount() const { return getProperty("chapter-list/count").toInt(); } // OR "chapters"
-
-	void setVolume(int value) { setProperty("volume", value); }
-	void setMuted(bool value) { setProperty("mute", value); }
-	void setPlaylistPos(int value) { setProperty("playlist-pos", value); }
 
 signals:
 	void enableAudioChanged(bool value);
 
-	void pausedChanged(bool value);
 	void durationChanged(double value); // Unit: seconds
 	void positionChanged(double value); // Unit: seconds
-	void pathChanged(QString value);
-	void mediaTitleChanged(QString value);
-	void dwidthChanged(int value);
-	void dheightChanged(int value);
-	void hwdecCurrentChanged(QString value);
-	void volumeChanged(int64_t value);
-	void mutedChanged(bool value);
-	void chapterChanged(int value);
-	void chapterListCountChanged(int value);
-	void playlistPosChanged(int value);
-	void playlistCountChanged(int value);
 
 	void mpvUpdated();
 
@@ -140,12 +114,9 @@ private:
 	void handle_mpv_event(mpv_event *event);
 	static void on_update(void *ctx);
 
-	bool m_paused;
 	bool m_enableAudio;
 	double m_duration;
 	double m_position;
-	QString m_mediaTitle;
-	QString m_hwdecCurrent;
 };
 
 #endif

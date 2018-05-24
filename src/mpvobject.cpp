@@ -101,19 +101,20 @@ MpvObject::MpvObject(QQuickItem * parent)
 	connect(this, &QQuickItem::windowChanged,
 			this, &MpvObject::handleWindowChanged);
 
-	mpv_observe_property(mpv, 0, "duration", MPV_FORMAT_DOUBLE);
-	mpv_observe_property(mpv, 0, "time-pos", MPV_FORMAT_DOUBLE);
-	mpv_observe_property(mpv, 0, "pause", MPV_FORMAT_FLAG);
-	mpv_observe_property(mpv, 0, "media-title", MPV_FORMAT_STRING);
-	mpv_observe_property(mpv, 0, "dwidth", MPV_FORMAT_INT64);
-	mpv_observe_property(mpv, 0, "dheight", MPV_FORMAT_INT64);
-	mpv_observe_property(mpv, 0, "hwdec-current", MPV_FORMAT_STRING);
-	mpv_observe_property(mpv, 0, "volume", MPV_FORMAT_INT64);
-	mpv_observe_property(mpv, 0, "mute", MPV_FORMAT_FLAG);
-	mpv_observe_property(mpv, 0, "playlist-pos", MPV_FORMAT_INT64);
-	mpv_observe_property(mpv, 0, "playlist/count", MPV_FORMAT_INT64);
-	mpv_observe_property(mpv, 0, "chapter", MPV_FORMAT_INT64);
-	mpv_observe_property(mpv, 0, "chapter-list/count", MPV_FORMAT_INT64);
+	WATCH_PROP_BOOL("mute")
+	WATCH_PROP_BOOL("pause")
+	WATCH_PROP_INT("chapter")
+	WATCH_PROP_INT("chapter-list/count")
+	WATCH_PROP_INT("dheight")
+	WATCH_PROP_INT("dwidth")
+	WATCH_PROP_INT("playlist-pos")
+	WATCH_PROP_INT("playlist/count")
+	WATCH_PROP_INT("volume")
+	WATCH_PROP_DOUBLE("duration")
+	WATCH_PROP_DOUBLE("time-pos")
+	WATCH_PROP_STRING("hwdec-current")
+	WATCH_PROP_STRING("media-title")
+	WATCH_PROP_STRING("path")
 	
 	mpv_set_wakeup_callback(mpv, wakeup, this);
 }
@@ -255,51 +256,24 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 				m_duration = time;
 				Q_EMIT durationChanged(time);
 			}
+
 		} else if (prop->format == MPV_FORMAT_FLAG) {
-			if (strcmp(prop->name, "pause") == 0) {
-				bool value = *(bool *)prop->data;
-				m_paused = value;
-				Q_EMIT pausedChanged(value);
-			} else if (strcmp(prop->name, "mute") == 0) {
-				bool value = *(bool *)prop->data;
-				Q_EMIT mutedChanged(value);
-			}
+			if HANDLE_PROP_BOOL("mute", muted)
+			else if HANDLE_PROP_BOOL("pause", paused)
+
 		} else if (prop->format == MPV_FORMAT_STRING) {
-			if (strcmp(prop->name, "path") == 0) {
-				QString value = getProperty("path").toString();
-				Q_EMIT pathChanged(value);
-			} else if (strcmp(prop->name, "media-title") == 0) {
-				QString value = getProperty("media-title").toString();
-				m_mediaTitle = value;
-				Q_EMIT mediaTitleChanged(value);
-			} else if (strcmp(prop->name, "hwdec-current") == 0) {
-				QString value = getProperty("hwdec-current").toString();
-				m_hwdecCurrent = value;
-				Q_EMIT hwdecCurrentChanged(value);
-			}
+			if HANDLE_PROP_STRING("hwdec-current", hwdecCurrent)
+			else if HANDLE_PROP_STRING("media-title", mediaTitle)
+			else if HANDLE_PROP_STRING("path", path)
+
 		} else if (prop->format == MPV_FORMAT_INT64) {
-			if (strcmp(prop->name, "volume") == 0) {
-				int64_t value = getProperty("volume").toInt();
-				Q_EMIT volumeChanged(value);
-			} else if (strcmp(prop->name, "playlist-pos") == 0) {
-				int64_t value = getProperty("playlist-pos").toInt();
-				Q_EMIT playlistPosChanged(value);
-			} else if (strcmp(prop->name, "playlist/count") == 0) {
-				int64_t value = getProperty("playlist/count").toInt();
-				Q_EMIT playlistCountChanged(value);
-			} else if (strcmp(prop->name, "chapter") == 0) {
-				int64_t value = getProperty("chapter").toInt();
-				Q_EMIT chapterChanged(value);
-			} else if (strcmp(prop->name, "chapter-list/count") == 0) {
-				int64_t value = getProperty("chapter-list/count").toInt();
-				Q_EMIT chapterListCountChanged(value);
-			} else if (strcmp(prop->name, "dwidth") == 0) {
-				int64_t value = getProperty("dwidth").toInt();
-				Q_EMIT dwidthChanged(value);
-			} else if (strcmp(prop->name, "dheight") == 0) {
-				int64_t value = getProperty("dheight").toInt();
-				Q_EMIT dheightChanged(value);
-			}
+			if HANDLE_PROP_INT("chapter", chapter)
+			else if HANDLE_PROP_INT("chapter-list/count", chapterListCount)
+			else if HANDLE_PROP_INT("dwidth", dwidth)
+			else if HANDLE_PROP_INT("dheight", dheight)
+			else if HANDLE_PROP_INT("playlist-pos", playlistPos)
+			else if HANDLE_PROP_INT("playlist/count", playlistCount)
+			else if HANDLE_PROP_INT("volume", volume)
 		}
 		break;
 	}
@@ -310,21 +284,21 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 
 void MpvObject::play()
 {
-	if (m_paused) {
+	if (paused()) {
 		setProperty("pause", false);
 	}
 }
 
 void MpvObject::pause()
 {
-	if (!m_paused) {
+	if (!paused()) {
 		setProperty("pause", true);
 	}
 }
 
 void MpvObject::playPause()
 {
-	setProperty("pause", !m_paused);
+	setProperty("pause", !paused());
 }
 
 void MpvObject::seek(double pos)
