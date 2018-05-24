@@ -29,7 +29,7 @@ AppWindow {
 			return 720
 		}
 	}
-	property bool videoLoaded: mpvPlayer.mpvObject.playlistCount >= 1
+	property bool videoLoaded: mpvPlayer.mpvObject.playlistCount >= 1 && videoWidth > 0 && videoHeight > 0
 	property int videoWidth: mpvPlayer.mpvObject.dwidth
 	property int videoHeight: mpvPlayer.mpvObject.dheight
 
