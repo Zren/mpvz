@@ -114,10 +114,8 @@ AppWindow {
 		running: true
 		interval: 50
 		onTriggered: {
-			console.log('app.urls', app.urls)
 			if (app.urls.length >= 1) {
 				mpvPlayer.mpvObject.loadFile(app.urls[0])
-				console.log('loadFile', app.urls[0])
 			}
 		}
 	}
