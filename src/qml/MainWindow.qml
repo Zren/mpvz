@@ -37,6 +37,7 @@ AppWindow {
 		id: config
 		property bool autoplayNextFile: true
 		property bool showPlaybackInfo: false
+		property bool do60fps: true
 	}
 
 	visible: true

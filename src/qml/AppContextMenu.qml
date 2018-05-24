@@ -47,6 +47,8 @@ Menu {
 
 	Menu {
 		title: "Video"
+
+		MenuItem { action: appActions.toggle60fpsAction }
 	}
 
 	Menu {

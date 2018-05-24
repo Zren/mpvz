@@ -84,6 +84,19 @@ QtObject {
 		onTriggered: mpvPlayer.seekForward()
 	}
 
+	//--- Video
+	property Action toggle60fpsAction: Action {
+		text: "60fps"
+		onTriggered: {
+			if (config.do60fps) {
+				mpvObject.command(["vf", "clr", ""])
+			} else {
+				mpvObject.command(["vf", "set", "lavfi=\"fps=fps=60:round=down\""])
+			}
+			config.do60fps = !config.do60fps
+		}
+	}
+
 	//--- Audio > Volume
 	property Action volumeMuteAction: Action {
 		text: "Mute"
