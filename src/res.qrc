@@ -7,6 +7,8 @@
 		<file>qml/AppContextMenu.qml</file>
 		<file>qml/MpvPlayer.qml</file>
 		<file>qml/Sidebar.qml</file>
+		<file>qml/SidebarListView.qml</file>
+		<file>qml/SidebarListItem.qml</file>
 		<file>qml/AppScrollView.qml</file>
 		<file>qml/PlaylistView.qml</file>
 		<file>qml/ChapterList.qml</file>
