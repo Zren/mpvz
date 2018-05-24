@@ -1,20 +1,35 @@
 QT += qml quick
-
-HEADERS += src/mpvapp.h \
-	src/mpvobject.h
-SOURCES += src/main.cpp \
-	src/mpvapp.cpp \
-	src/mpvobject.cpp
-
 CONFIG += c++14
 CONFIG += debug
 
+unix {
+	isEmpty(PREFIX) {
+		PREFIX=/usr
+	}
+	target.path = $$PREFIX/bin
+
+	shortcut.files = mpvz.desktop
+	shortcut.path = $$PREFIX/share/applications/
+
+	logo.files = mpvz.png
+	logo.path = $$PREFIX/share/icons/hicolor/48x48/apps/
+
+	INSTALLS += target shortcut logo
+}
+
 LIBS += -lmpv
 
-RESOURCES += src/res.qrc
+HEADERS += \
+	src/mpvhelpers.h \
+	src/mpvapp.h \
+	src/mpvobject.h 
+SOURCES += \
+	src/main.cpp \
+	src/mpvapp.cpp \
+	src/mpvobject.cpp
 
-OTHER_FILES += src/qml/MainWindow.qml \
-	src/qml/MpvPlayer.qml \
-	src/icons/media-playback-pause.png \
-	src/icons/media-playback-start.png
+RESOURCES += \
+	src/res.qrc
 
+DISTFILES += \
+	mpvz.desktop
