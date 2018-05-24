@@ -78,6 +78,15 @@ QtObject {
 		onTriggered: mpvObject.volumeDown()
 	}
 
+	//--- Tools
+	property Action togglePlaybackInfoAction: Action {
+		text: "Playback Information"
+		shortcut: "Tab"
+		checkable: true
+		checked: config.showPlaybackInfo
+		onTriggered: config.showPlaybackInfo = !config.showPlaybackInfo
+	}
+
 	//--- Window
 	property Action toggleFullscreenAction: Action {
 		text: "Toggle Fullscreen"

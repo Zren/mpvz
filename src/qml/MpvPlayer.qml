@@ -11,7 +11,6 @@ Item {
 	property alias mpvObject: mpvObject
 	property alias folderModel: folderModel
 
-	property bool autoplayNextFile: true
 	property bool shouldAutoplay: false
 
 	FolderListModel {
@@ -51,7 +50,7 @@ Item {
 			onFileEnded: {
 				console.log('onFileEnded', reason)
 				if (reason == "eof") {
-					if (mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile && shouldAutoplay) {
+					if (mpvObject.playlistCount == 1 && folderModel.count >= 2 && config.autoplayNextFile && shouldAutoplay) {
 						console.log('mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile')
 						var currentFilePath = folderModel.folder + '/' + folderModel.currentFileName
 						console.log('currentFilePath', currentFilePath)
@@ -218,11 +217,13 @@ Item {
 		}
 	}
 
-	PlaybackInfoView {
+	Loader {
 		id: playbackInfo
 		anchors.left: parent.left
 		anchors.top: parent.top
 		anchors.margins: 10
+		source: "PlaybackInfoView.qml"
+		active: config.showPlaybackInfo
 	}
 
 	Rectangle {

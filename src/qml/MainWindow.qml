@@ -33,6 +33,12 @@ AppWindow {
 	property int videoWidth: mpvPlayer.mpvObject.dwidth
 	property int videoHeight: mpvPlayer.mpvObject.dheight
 
+	QtObject {
+		id: config
+		property bool autoplayNextFile: true
+		property bool showPlaybackInfo: false
+	}
+
 	visible: true
 
 	title: {

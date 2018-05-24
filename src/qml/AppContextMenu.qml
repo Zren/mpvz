@@ -54,5 +54,19 @@ Menu {
 	Menu {
 		title: "Subtitle"
 	}
+	
+	MenuSeparator {}
 
+
+	Menu {
+		title: "Tools"
+
+		MenuItem { action: appActions.togglePlaybackInfoAction }
+	}
+
+	Menu {
+		title: "Window"
+
+		MenuItem { action: appActions.toggleFullscreenAction }
+	}
 }
