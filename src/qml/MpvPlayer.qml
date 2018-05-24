@@ -96,6 +96,10 @@ Item {
 			volume = Math.max(0, volume - 2)
 			osd.show("Volume: " + volume + " %")
 		}
+
+		readonly property real positionRatio: position / duration
+		readonly property string positionStr: formatShortTime(position)
+		readonly property string durationStr: formatShortTime(duration)
 	}
 
 	MouseArea {
@@ -212,6 +216,13 @@ Item {
 			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
 			propagateComposedEvents: overlayControls.showOverlay ? false : true
 		}
+	}
+
+	PlaybackInfoView {
+		id: playbackInfo
+		anchors.left: parent.left
+		anchors.top: parent.top
+		anchors.margins: 10
 	}
 
 	Rectangle {

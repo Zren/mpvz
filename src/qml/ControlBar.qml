@@ -32,7 +32,7 @@ MouseArea {
 
 			Label {
 				Layout.fillWidth: true
-				text: "" + mpvPlayer.formatShortTime(mpvObject.position) + " / " + mpvPlayer.formatShortTime(mpvObject.duration)
+				text: "" + mpvObject.positionStr + " / " + mpvObject.durationStr
 				horizontalAlignment: Text.AlignHCenter
 				color: "#FFFFFF"
 				style: Text.Raised
