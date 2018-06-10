@@ -13,6 +13,9 @@ SidebarListView {
 		text: itemFileBasename
 		isCurrentItem: mpvObject.playlistPos == index
 
-		onClicked: mpvObject.playlistPos = index
+		onClicked: {
+			mpvObject.playlistPos = index
+			mpvObject.play()
+		}
 	}
 }
