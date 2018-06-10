@@ -26,7 +26,7 @@ MouseArea {
 			spacing: 2
 			
 			ControlBarButton {
-				iconName: mpvObject.paused ? "play" : "pause"
+				iconName: mpvObject.isPlaying ? "pause" : "play"
 				onClicked: mpvObject.playPause()
 			}
 

@@ -66,6 +66,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	, m_enableAudio(true)
 	, m_duration(0)
 	, m_position(0)
+	, m_isPlaying(false)
 {
 	mpv = mpv::qt::Handle::FromRawHandle(mpv_create());
 	if (!mpv)
@@ -144,6 +145,11 @@ MpvObject::MpvObject(QQuickItem * parent)
 	WATCH_PROP_STRING("path")
 	WATCH_PROP_STRING("video-codec")
 	WATCH_PROP_STRING("video-format")
+
+	connect(this, &MpvObject::idleChanged,
+			this, &MpvObject::updateState);
+	connect(this, &MpvObject::pausedChanged,
+			this, &MpvObject::updateState);
 	
 	mpv_set_wakeup_callback(mpv, wakeup, this);
 }
@@ -350,24 +356,24 @@ void MpvObject::play()
 	if (idle() && playlistCount() >= 1) { // File has finished playing.
 		set_playlistPos(playlistPos()); // Reload and play file again.
 	}
-	if (paused()) {
+	if (!isPlaying()) {
 		set_paused(false);
 	}
 }
 
 void MpvObject::pause()
 {
-	if (!paused()) {
+	if (isPlaying()) {
 		set_paused(true);
 	}
 }
 
 void MpvObject::playPause()
 {
-	if (paused()) {
-		play();
-	} else {
+	if (isPlaying()) {
 		pause();
+	} else {
+		play();
 	}
 }
 
@@ -380,3 +386,14 @@ void MpvObject::loadFile(QVariant urls)
 {
 	command(QVariantList() << "loadfile" << urls);
 }
+
+
+void MpvObject::updateState()
+{
+	bool isNowPlaying = !idle() && !paused();
+	if (m_isPlaying != isNowPlaying) {
+		m_isPlaying = isNowPlaying;
+		emit isPlayingChanged(m_isPlaying);
+	}
+}
+

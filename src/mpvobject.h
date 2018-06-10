@@ -80,6 +80,7 @@ class MpvObject : public QQuickItem
 	READONLY_PROP_STRING("video-format", videoFormat)
 
 public:
+	Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged)
 	Q_PROPERTY(double duration READ duration NOTIFY durationChanged)
 	Q_PROPERTY(double position READ position NOTIFY positionChanged)
 
@@ -117,11 +118,15 @@ public slots:
 		}
 	}
 
+	bool isPlaying() const { return m_isPlaying; }
+	void updateState();
+
 	double duration() const { return m_duration; }
 	double position() const { return m_position; }
 
 signals:
 	void enableAudioChanged(bool value);
+	void isPlayingChanged(bool value);
 
 	void durationChanged(double value); // Unit: seconds
 	void positionChanged(double value); // Unit: seconds
@@ -144,6 +149,7 @@ private:
 	bool m_enableAudio;
 	double m_duration;
 	double m_position;
+	bool m_isPlaying;
 };
 
 #endif
