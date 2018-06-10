@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 SidebarListView {
+	title: "Chapters"
 	model: mpvObject.chapterListCount
 	delegate: SidebarListItem {
 		readonly property string chapterTitle: mpvObject.getChapterTitle(index)

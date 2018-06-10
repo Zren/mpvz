@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 SidebarListView {
+	title: "Playlist"
 	model: mpvObject.playlistCount
 	delegate: SidebarListItem {
 		function basename(str) {
