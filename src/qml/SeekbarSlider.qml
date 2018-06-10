@@ -179,7 +179,7 @@ AppSlider {
 
 		function show(mouseX) {
 			thumbnail.mouseX = mouseX
-			thumbnail.positionRatio = thumbnail.mouseX / mouseArea.width
+			thumbnail.positionRatio = Math.max(0, Math.min(thumbnail.mouseX / mouseArea.width, 1))
 			thumbnail.visible = true
 		}
 
