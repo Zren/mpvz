@@ -6,7 +6,7 @@ ColumnLayout {
 	spacing: 0
 
 	PlaybackInfoText { text: mpvObject.filename }
-	PlaybackInfoText { text: "State: " + mpvObject.positionStr + "/" + mpvObject.durationStr + "(" + Math.round(mpvObject.positionRatio * 100).toFixed(1) + "%), " + mpvObject.speed.toFixed(2) + "x" }
+	PlaybackInfoText { text: "State: " + mpvObject.positionStr + "/" + mpvObject.durationStr + "(" + Math.round(mpvObject.positionRatio * 100).toFixed(1) + "%), " + mpvObject.speed.toFixed(2) + "x [" + mpvObject.stateStr + "]" }
 	PlaybackInfoText { text: "Audio/Video Sync: ±" + Math.round(mpvObject.avsync * 1000) + "ms" }
 	PlaybackInfoText { text: "" }
 	PlaybackInfoText { text: "Video Track #1: " + mpvObject.videoCodec }

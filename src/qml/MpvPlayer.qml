@@ -100,6 +100,15 @@ Item {
 		readonly property real positionRatio: position / duration
 		readonly property string positionStr: formatShortTime(position)
 		readonly property string durationStr: formatShortTime(duration)
+		readonly property string stateStr: {
+			if (idle) {
+				return "Idle"
+			} else if (paused) {
+				return "Paused"
+			} else {
+				return "Playing"
+			}
+		}
 	}
 
 	MouseArea {
