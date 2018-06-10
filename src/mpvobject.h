@@ -40,8 +40,9 @@ class MpvObject : public QQuickItem
 
 	Q_PROPERTY(bool enableAudio READ enableAudio WRITE setEnableAudio NOTIFY enableAudioChanged)
 
+	READONLY_PROP_BOOL("idle", idle)
 	WRITABLE_PROP_BOOL("mute", muted)
-	READONLY_PROP_BOOL("pause", paused)
+	WRITABLE_PROP_BOOL("pause", paused)
 	READONLY_PROP_BOOL("paused-for-cache", pausedForCache)
 	READONLY_PROP_BOOL("seekable", seekable)
 	READONLY_PROP_INT("chapter", chapter)

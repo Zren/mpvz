@@ -104,6 +104,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	connect(this, &QQuickItem::windowChanged,
 			this, &MpvObject::handleWindowChanged);
 
+	WATCH_PROP_BOOL("idle")
 	WATCH_PROP_BOOL("mute")
 	WATCH_PROP_BOOL("pause")
 	WATCH_PROP_BOOL("paused-for-cache")
@@ -300,7 +301,8 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			else if HANDLE_PROP_DOUBLE("video-bitrate", videoBitrate)
 
 		} else if (prop->format == MPV_FORMAT_FLAG) {
-			if HANDLE_PROP_BOOL("mute", muted)
+			if HANDLE_PROP_BOOL("idle", idle)
+			else if HANDLE_PROP_BOOL("mute", muted)
 			else if HANDLE_PROP_BOOL("pause", paused)
 			else if HANDLE_PROP_BOOL("paused-for-cache", pausedForCache)
 			else if HANDLE_PROP_BOOL("seekable", seekable)
@@ -345,21 +347,28 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 
 void MpvObject::play()
 {
+	if (idle() && playlistCount() >= 1) { // File has finished playing.
+		set_playlistPos(playlistPos()); // Reload and play file again.
+	}
 	if (paused()) {
-		setProperty("pause", false);
+		set_paused(false);
 	}
 }
 
 void MpvObject::pause()
 {
 	if (!paused()) {
-		setProperty("pause", true);
+		set_paused(true);
 	}
 }
 
 void MpvObject::playPause()
 {
-	setProperty("pause", !paused());
+	if (paused()) {
+		play();
+	} else {
+		pause();
+	}
 }
 
 void MpvObject::seek(double pos)
