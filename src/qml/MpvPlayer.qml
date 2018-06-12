@@ -109,6 +109,11 @@ Item {
 				return "Playing"
 			}
 		}
+
+		onPausedChanged: console.log('onPausedChanged', paused)
+		onIdleChanged: console.log('onIdleChanged', idle)
+		onIsPlayingChanged: console.log('onIsPlayingChanged', isPlaying)
+		onStateStrChanged: console.log('onStateStrChanged', stateStr)
 	}
 
 	MouseArea {
