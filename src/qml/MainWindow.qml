@@ -42,6 +42,8 @@ AppWindow {
 
 	visible: true
 
+	color: "#000"
+
 	title: {
 		var s = "";
 		if (mpvObject.mediaTitle) {
