@@ -4,39 +4,21 @@
 #include "mpvhelpers.h"
 
 #include <QtQuick/QQuickItem>
+#include <QtQuick/QQuickFramebufferObject>
 
 #include <mpv/client.h>
 #include <mpv/opengl_cb.h>
 #include <mpv/qthelper.hpp>
 
 
-
-class MpvRenderer : public QObject
-{
-	Q_OBJECT
-	mpv::qt::Handle mpv;
-	mpv_opengl_cb_context *mpv_gl;
-	QQuickWindow *window;
-	QSize size;
-
-	friend class MpvObject;
-public:
-	MpvRenderer(mpv::qt::Handle a_mpv, mpv_opengl_cb_context *a_mpv_gl);
-	virtual ~MpvRenderer();
-public slots:
-	void paint();
-};
+class MpvRenderer;
 
 
-
-class MpvObject : public QQuickItem
+class MpvObject : public QQuickFramebufferObject
 {
 	Q_OBJECT
 
-	mpv::qt::Handle mpv;
-	mpv_opengl_cb_context *mpv_gl;
-	MpvRenderer *renderer;
-	bool killOnce;
+	friend class MpvRenderer;
 
 	Q_PROPERTY(bool enableAudio READ enableAudio WRITE setEnableAudio NOTIFY enableAudioChanged)
 
@@ -88,6 +70,8 @@ public:
 	MpvObject(QQuickItem * parent = 0);
 	virtual ~MpvObject();
 
+	virtual Renderer *createRenderer() const;
+
 	Q_INVOKABLE void setProperty(const QString& name, const QVariant& value);
 	Q_INVOKABLE QVariant getProperty(const QString& name) const;
 	Q_INVOKABLE void setOption(const QString& name, const QVariant& value);
@@ -99,10 +83,6 @@ public:
 
 public slots:
 	void command(const QVariant& params);
-	void sync();
-	void swapped();
-	void cleanup();
-	void reinitRenderer();
 
 	void playPause();
 	void play();
@@ -140,7 +120,10 @@ signals:
 private slots:
 	void on_mpv_events();
 	void doUpdate();
-	void handleWindowChanged(QQuickWindow *win);
+
+protected:
+	mpv::qt::Handle mpv;
+	mpv_opengl_cb_context *mpv_gl;
 
 private:
 	void handle_mpv_event(mpv_event *event);
