@@ -14,6 +14,7 @@
 		<file>qml/ChapterList.qml</file>
 		<file>qml/ControlBar.qml</file>
 		<file>qml/ControlBarButton.qml</file>
+		<file>qml/ControlBarText.qml</file>
 		<file>qml/SeekbarSlider.qml</file>
 		<file>qml/AppSlider.qml</file>
 		<file>qml/AppSliderStyle.qml</file>

@@ -30,14 +30,21 @@ MouseArea {
 				onClicked: mpvObject.playPause()
 			}
 
-			Label {
+			ControlBarText {
 				Layout.fillWidth: true
 				text: "" + mpvObject.positionStr + " / " + mpvObject.durationStr
-				horizontalAlignment: Text.AlignHCenter
-				color: "#FFFFFF"
-				style: Text.Raised
-				styleColor: "#111111"
+			}
 
+			ControlBarButton {
+				iconSource: ""
+				text: "" + mpvObject.aid + " / " + mpvObject.numAudioTracks
+				onClicked: mpvObject.nextAudioTrack()
+			}
+
+			ControlBarButton {
+				iconSource: ""
+				text: "" + mpvObject.sid + " / " + mpvObject.numSubTracks
+				onClicked: mpvObject.nextSubTrack()
 			}
 
 			ControlBarButton {

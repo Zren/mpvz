@@ -114,6 +114,45 @@ Item {
 		onIdleActiveChanged: console.log('onIdleActiveChanged', idleActive)
 		onIsPlayingChanged: console.log('onIsPlayingChanged', isPlaying)
 		onStateStrChanged: console.log('onStateStrChanged', stateStr)
+
+		property int numVideoTracks: 0
+		property int numAudioTracks: 0
+		property int numSubTracks: 0
+
+		function updateTrackStatus() {
+			var trackList = mpvObject.getProperty("track-list")
+			// console.log('trackList', JSON.stringify(trackList, null, '\t'))
+
+			var nv = 0, na = 0, ns = 0
+			for (var i = 0; i < trackList.length; i++) {
+				var track = trackList[i]
+				if (track.type == "video") {
+					nv += 1
+				} else if (track.type == "audio") {
+					na += 1
+				} else if (track.type == "sub") {
+					ns += 1
+				}
+			}
+			numVideoTracks = nv
+			numAudioTracks = na
+			numSubTracks = ns
+		}
+
+		function nextAudioTrack() {
+			var nextTrack = ((mpvObject.aid - 1 + 1) % mpvObject.numAudioTracks) + 1
+			console.log('aid', mpvObject.aid, '=>', nextTrack)
+			mpvObject.setProperty("aid", nextTrack)
+		}
+		function nextSubTrack() {
+			var nextTrack = ((mpvObject.sid - 1 + 1) % mpvObject.numSubTracks) + 1
+			console.log('sid', mpvObject.sid, '=>', nextTrack)
+			mpvObject.setProperty("sid", nextTrack)
+		}
+
+		onFileLoaded: {
+			updateTrackStatus()
+		}
 	}
 
 	MouseArea {
