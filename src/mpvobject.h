@@ -22,7 +22,7 @@ class MpvObject : public QQuickFramebufferObject
 
 	Q_PROPERTY(bool enableAudio READ enableAudio WRITE setEnableAudio NOTIFY enableAudioChanged)
 
-	READONLY_PROP_BOOL("idle", idle)
+	READONLY_PROP_BOOL("idle-active", idleActive)
 	WRITABLE_PROP_BOOL("mute", muted)
 	WRITABLE_PROP_BOOL("pause", paused)
 	READONLY_PROP_BOOL("paused-for-cache", pausedForCache)

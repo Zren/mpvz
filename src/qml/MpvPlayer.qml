@@ -101,7 +101,7 @@ Item {
 		readonly property string positionStr: formatShortTime(position)
 		readonly property string durationStr: formatShortTime(duration)
 		readonly property string stateStr: {
-			if (idle) {
+			if (idleActive) {
 				return "Idle"
 			} else if (paused) {
 				return "Paused"
@@ -111,7 +111,7 @@ Item {
 		}
 
 		onPausedChanged: console.log('onPausedChanged', paused)
-		onIdleChanged: console.log('onIdleChanged', idle)
+		onIdleActiveChanged: console.log('onIdleActiveChanged', idleActive)
 		onIsPlayingChanged: console.log('onIsPlayingChanged', isPlaying)
 		onStateStrChanged: console.log('onStateStrChanged', stateStr)
 	}

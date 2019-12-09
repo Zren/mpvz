@@ -14,7 +14,7 @@
 #include <QtQuick/QQuickFramebufferObject>
 #include <QtGui/QOpenGLFramebufferObject>
 
-
+#include <QDebug>
 
 class MpvRenderer : public QQuickFramebufferObject::Renderer
 {
@@ -126,7 +126,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	connect(this, &MpvObject::mpvUpdated, this, &MpvObject::doUpdate,
 			Qt::QueuedConnection);
 
-	WATCH_PROP_BOOL("idle")
+	WATCH_PROP_BOOL("idle-active")
 	WATCH_PROP_BOOL("mute")
 	WATCH_PROP_BOOL("pause")
 	WATCH_PROP_BOOL("paused-for-cache")
@@ -167,7 +167,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	WATCH_PROP_STRING("video-codec")
 	WATCH_PROP_STRING("video-format")
 
-	connect(this, &MpvObject::idleChanged,
+	connect(this, &MpvObject::idleActiveChanged,
 			this, &MpvObject::updateState);
 	connect(this, &MpvObject::pausedChanged,
 			this, &MpvObject::updateState);
@@ -284,7 +284,7 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			else if HANDLE_PROP_DOUBLE("video-bitrate", videoBitrate)
 
 		} else if (prop->format == MPV_FORMAT_FLAG) {
-			if HANDLE_PROP_BOOL("idle", idle)
+			if HANDLE_PROP_BOOL("idle-active", idleActive)
 			else if HANDLE_PROP_BOOL("mute", muted)
 			else if HANDLE_PROP_BOOL("pause", paused)
 			else if HANDLE_PROP_BOOL("paused-for-cache", pausedForCache)
@@ -330,17 +330,22 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 
 void MpvObject::play()
 {
-	if (idle() && playlistCount() >= 1) { // File has finished playing.
+	qDebug() << "play";
+	if (idleActive() && playlistCount() >= 1) { // File has finished playing.
+		qDebug() << "\treload";
 		set_playlistPos(playlistPos()); // Reload and play file again.
 	}
 	if (!isPlaying()) {
+		qDebug() << "\t!isPlaying";
 		set_paused(false);
 	}
 }
 
 void MpvObject::pause()
 {
+	qDebug() << "pause";
 	if (isPlaying()) {
+		qDebug() << "!isPlaying";
 		set_paused(true);
 	}
 }
@@ -356,6 +361,7 @@ void MpvObject::playPause()
 
 void MpvObject::seek(double pos)
 {
+	qDebug() << "seek" << pos;
 	command(QVariantList() << "seek" << pos << "absolute");
 }
 
@@ -367,7 +373,7 @@ void MpvObject::loadFile(QVariant urls)
 
 void MpvObject::updateState()
 {
-	bool isNowPlaying = !idle() && !paused();
+	bool isNowPlaying = !idleActive() && !paused();
 	if (m_isPlaying != isNowPlaying) {
 		m_isPlaying = isNowPlaying;
 		emit isPlayingChanged(m_isPlaying);
