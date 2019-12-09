@@ -46,9 +46,11 @@ public:
 
 	void render() {
 		QOpenGLFramebufferObject *fbo = framebufferObject();
+		// fbo->bind();
 		window->resetOpenGLState();
 		mpv_opengl_cb_draw(mpv_gl, fbo->handle(), fbo->width(), fbo->height());
 		window->resetOpenGLState();
+		// fbo->release();
 	}
 
 private:
@@ -96,6 +98,23 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 	// Request hw decoding by default
 	mpv::qt::set_option_variant(mpv, "hwdec", "auto");
+
+	// mpv::qt::set_option_variant(mpv, "aid", "no");
+	// mpv::qt::set_option_variant(mpv, "sid", "no");
+	// mpv::qt::set_option_variant(mpv, "audio-file-auto", "no");
+	// mpv::qt::set_option_variant(mpv, "sub-auto", "no");
+	// mpv::qt::set_option_variant(mpv, "osd-level", "0");
+	// mpv::qt::set_option_variant(mpv, "quiet", "yes");
+	// mpv::qt::set_option_variant(mpv, "title", "\"\"");
+	// mpv::qt::set_option_variant(mpv, "audio-pitch-correction", "no");
+	// mpv::qt::set_option_variant(mpv, "pause", "yes");
+	// mpv::qt::set_option_variant(mpv, "keep-open", "always");
+	// mpv::qt::set_option_variant(mpv, "vd-lavc-skiploopfilter", "all");
+	// mpv::qt::set_option_variant(mpv, "use-text-osd", "no");
+	// mpv::qt::set_option_variant(mpv, "audio-display", "no");
+	// mpv::qt::set_option_variant(mpv, "access-references", "no");
+	// mpv::qt::set_option_variant(mpv, "frames", "1");
+
 
 	// Setup the callback that will make QtQuick update and redraw if there
 	// is a new video frame. Use a queued connection: this makes sure the

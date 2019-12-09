@@ -180,12 +180,26 @@ AppSlider {
 		function show(mouseX) {
 			thumbnail.mouseX = mouseX
 			thumbnail.positionRatio = Math.max(0, Math.min(thumbnail.mouseX / mouseArea.width, 1))
+			// thumbLoader.active = true
+			// if (mpvThumb.path != mpvObject.path) {
+			// 	mpvThumb.loadFile(mpvObject.path)
+			// }
+			// mpvThumb.pause()
+			// var thumbPosition = Math.floor(thumbnail.videoPosition) // 1 second interval
+			// var thumbPosition = thumbnail.videoPosition
+			// mpvThumb.seek(thumbPosition)
+			// mpvThumb.play()
 			thumbnail.visible = true
 		}
 
 		function hide() {
 			thumbnail.visible = false
+			// mpvThumb.command("stop")
+			// mpvThumb.loadFile("")
+			// thumbLoader.active = false
 		}
+
+		property alias mpvThumb: thumbLoader.item
 
 		Rectangle {
 			anchors.fill: parent
@@ -198,6 +212,13 @@ AppSlider {
 			// 	anchors.fill: parent
 			// 	anchors.margins: parent.border.width
 			// }
+
+			Loader {
+				id: thumbLoader
+				anchors.fill: parent
+				active: false
+				source: "ThumbnailItem.qml"
+			}
 
 			Rectangle {
 				anchors.horizontalCenter: parent.horizontalCenter
