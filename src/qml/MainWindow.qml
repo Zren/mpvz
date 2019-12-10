@@ -71,10 +71,11 @@ AppWindow {
 	onIsPlayingChanged: updateAlwaysOnTopFlag()
 	
 	property bool intialized: false
-	menuBarVisible: !hideMenuBar && !isFullscreen
+	menuBarVisible: !hideMenuBar && !isFullscreen && !pictureInPicture
 	property bool hideMenuBar: true
 
-	property bool bordersVisible: true
+	readonly property bool bordersVisible: !hideBorders && !pictureInPicture
+	property bool hideBorders: false
 	property string alwaysOnTop: 'never' // 'never', 'always', 'whilePlaying'
 
 	property bool pictureInPicture: false
