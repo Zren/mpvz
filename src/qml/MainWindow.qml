@@ -81,17 +81,18 @@ AppWindow {
 	property int pipWidth: videoLoaded ? pipHeight * videoWidth/videoHeight : 480
 	property int pipHeight: 270
 	property int pipMargin: 10
-	property rect beforePipRect: Qt.rect(0, 0, 0, 0)
+	property point beforePipPoint: Qt.point(0, 0)
 	onPictureInPictureChanged: {
 		if (pictureInPicture) {
-			beforePipRect = Qt.rect(x, y, 0, 0)
+			beforePipPoint = Qt.point(x, y)
 			x = Screen.desktopAvailableWidth - pipWidth - pipMargin
 			y = Screen.desktopAvailableHeight - pipHeight - pipMargin
 		} else {
-			x = beforePipRect.x
-			y = beforePipRect.y
-			beforePipRect = Qt.rect(0, 0, 0, 0)
+			x = beforePipPoint.x
+			y = beforePipPoint.y
+			beforePipPoint = Qt.point(0, 0)
 		}
+		updateAlwaysOnTopFlag()
 	}
 
 	onAlwaysOnTopChanged: updateAlwaysOnTopFlag()
@@ -107,7 +108,9 @@ AppWindow {
 
 	function updateAlwaysOnTopFlag() {
 		var flagIt;
-		if (alwaysOnTop == 'never') {
+		if (pictureInPicture) {
+			flagIt = true;
+		} else if (alwaysOnTop == 'never') {
 			flagIt = false;
 		} else if (alwaysOnTop == 'always') {
 			flagIt = true;
