@@ -53,6 +53,7 @@ MenuBar {
 				text: "Minimal"
 				shortcut: "1"
 				onTriggered: {
+					window.pictureInPicture = false
 					window.bordersVisible = false
 					window.menuBarVisible = false
 				}
@@ -62,6 +63,7 @@ MenuBar {
 				text: "Compact"
 				shortcut: "2"
 				onTriggered: {
+					window.pictureInPicture = false
 					window.bordersVisible = true
 					window.menuBarVisible = false
 				}
@@ -71,8 +73,19 @@ MenuBar {
 				text: "Normal"
 				shortcut: "3"
 				onTriggered: {
+					window.pictureInPicture = false
 					window.bordersVisible = true
 					window.menuBarVisible = true
+				}
+			}
+
+			MenuItem {
+				text: "Picture In Picture"
+				shortcut: "4"
+				onTriggered: {
+					window.bordersVisible = false
+					window.menuBarVisible = false
+					window.pictureInPicture = true
 				}
 			}
 		}

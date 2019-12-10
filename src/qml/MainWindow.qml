@@ -17,14 +17,22 @@ AppWindow {
 
 	width: {
 		if (videoLoaded) {
-			return videoWidth
+			if (pictureInPicture) {
+				return pipWidth
+			} else {
+				return videoWidth
+			}
 		} else {
 			return 1280
 		}
 	}
 	height: {
 		if (videoLoaded) {
-			return videoHeight + (menuBarVisible ? menuBar.__contentItem.height : 0)
+			if (pictureInPicture) {
+				return pipHeight
+			} else {
+				return videoHeight + (menuBarVisible ? menuBar.__contentItem.height : 0)
+			}
 		} else {
 			return 720
 		}
@@ -68,7 +76,24 @@ AppWindow {
 
 	property bool bordersVisible: true
 	property string alwaysOnTop: 'never' // 'never', 'always', 'whilePlaying'
-	
+
+	property bool pictureInPicture: false
+	property int pipWidth: videoLoaded ? pipHeight * videoWidth/videoHeight : 480
+	property int pipHeight: 270
+	property int pipMargin: 10
+	property rect beforePipRect: Qt.rect(0, 0, 0, 0)
+	onPictureInPictureChanged: {
+		if (pictureInPicture) {
+			beforePipRect = Qt.rect(x, y, 0, 0)
+			x = Screen.desktopAvailableWidth - pipWidth - pipMargin
+			y = Screen.desktopAvailableHeight - pipHeight - pipMargin
+		} else {
+			x = beforePipRect.x
+			y = beforePipRect.y
+			beforePipRect = Qt.rect(0, 0, 0, 0)
+		}
+	}
+
 	onAlwaysOnTopChanged: updateAlwaysOnTopFlag()
 	onBordersVisibleChanged: setWindowFlag(!bordersVisible, Qt.FramelessWindowHint)
 	
