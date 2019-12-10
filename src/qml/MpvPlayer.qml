@@ -150,6 +150,11 @@ Item {
 			return null
 		}
 
+		function formatTrackLabel(track) {
+			var label = (track.lang ? " [" + track.lang + "]" : "") + (track.title ? " " + track.title : "")
+			return label.trim()
+		}
+
 		function nextAudioTrack() {
 			var nextTrack = ((mpvObject.aid + 1) % (mpvObject.numAudioTracks + 1))
 			// console.log('aid', mpvObject.aid, '=>', nextTrack)
@@ -158,7 +163,7 @@ Item {
 			var trackMsg = ""
 			if (mpvObject.aid > 0) {
 				var track = getTrack("audio", mpvObject.aid)
-				trackMsg = "" + mpvObject.aid + "/" + mpvObject.numAudioTracks + " [" + track.lang + "] " + track.title
+				trackMsg = "" + mpvObject.aid + "/" + mpvObject.numAudioTracks + " " + formatTrackLabel(track)
 			} else {
 				trackMsg = "none"
 			}
@@ -172,7 +177,7 @@ Item {
 			var trackMsg = ""
 			if (mpvObject.sid > 0) {
 				var track = getTrack("sub", mpvObject.sid)
-				trackMsg = "" + mpvObject.sid + "/" + mpvObject.numSubTracks + " [" + track.lang + "] " + track.title
+				trackMsg = "" + mpvObject.sid + "/" + mpvObject.numSubTracks + " " + formatTrackLabel(track)
 			} else {
 				trackMsg = "none"
 			}
