@@ -139,15 +139,44 @@ Item {
 			numSubTracks = ns
 		}
 
+		function getTrack(type, id) {
+			var trackList = mpvObject.getProperty("track-list")
+			for (var i = 0; i < trackList.length; i++) {
+				var track = trackList[i]
+				if (track.type == type && track.id == id) {
+					return track
+				}
+			}
+			return null
+		}
+
 		function nextAudioTrack() {
-			var nextTrack = ((mpvObject.aid - 1 + 1) % mpvObject.numAudioTracks) + 1
-			console.log('aid', mpvObject.aid, '=>', nextTrack)
+			var nextTrack = ((mpvObject.aid + 1) % (mpvObject.numAudioTracks + 1))
+			// console.log('aid', mpvObject.aid, '=>', nextTrack)
 			mpvObject.setProperty("aid", nextTrack)
+
+			var trackMsg = ""
+			if (mpvObject.aid > 0) {
+				var track = getTrack("audio", mpvObject.aid)
+				trackMsg = "" + mpvObject.aid + "/" + mpvObject.numAudioTracks + " [" + track.lang + "] " + track.title
+			} else {
+				trackMsg = "none"
+			}
+			osd.show("Audio Track: " + trackMsg)
 		}
 		function nextSubTrack() {
-			var nextTrack = ((mpvObject.sid - 1 + 1) % mpvObject.numSubTracks) + 1
-			console.log('sid', mpvObject.sid, '=>', nextTrack)
+			var nextTrack = ((mpvObject.sid + 1) % (mpvObject.numSubTracks + 1))
+			// console.log('sid', mpvObject.sid, '=>', nextTrack)
 			mpvObject.setProperty("sid", nextTrack)
+
+			var trackMsg = ""
+			if (mpvObject.sid > 0) {
+				var track = getTrack("sub", mpvObject.sid)
+				trackMsg = "" + mpvObject.sid + "/" + mpvObject.numSubTracks + " [" + track.lang + "] " + track.title
+			} else {
+				trackMsg = "none"
+			}
+			osd.show("Subtitle Track: " + trackMsg)
 		}
 
 		onFileLoaded: {
