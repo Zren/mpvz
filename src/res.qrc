@@ -22,6 +22,9 @@
 		<file>qml/PlaybackInfoText.qml</file>
 		<file>qml/ThumbnailItem.qml</file>
 
+		<file>icons/Tethys/audio-hovered.png</file>
+		<file>icons/Tethys/audio-pressed.png</file>
+		<file>icons/Tethys/audio.png</file>
 		<file>icons/Tethys/fs-checked-hovered.png</file>
 		<file>icons/Tethys/fs-checked-pressed.png</file>
 		<file>icons/Tethys/fs-checked.png</file>
@@ -38,5 +41,8 @@
 		<file>icons/Tethys/playlist-hovered.png</file>
 		<file>icons/Tethys/playlist-pressed.png</file>
 		<file>icons/Tethys/playlist.png</file>
+		<file>icons/Tethys/sub-hovered.png</file>
+		<file>icons/Tethys/sub-pressed.png</file>
+		<file>icons/Tethys/sub.png</file>
 	</qresource>
 </RCC>

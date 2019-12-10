@@ -36,13 +36,13 @@ MouseArea {
 			}
 
 			ControlBarButton {
-				iconSource: ""
+				iconName: "audio"
 				text: "" + mpvObject.aid + " / " + mpvObject.numAudioTracks
 				onClicked: mpvObject.nextAudioTrack()
 			}
 
 			ControlBarButton {
-				iconSource: ""
+				iconName: "sub"
 				text: "" + mpvObject.sid + " / " + mpvObject.numSubTracks
 				onClicked: mpvObject.nextSubTrack()
 			}
