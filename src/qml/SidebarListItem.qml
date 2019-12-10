@@ -5,7 +5,8 @@ MouseArea {
 	id: sidebarListItem
 	Layout.fillWidth: true
 	property int padding: 4
-	Layout.preferredHeight: padding + buttonContents.implicitHeight + padding
+	implicitWidth: padding + buttonContents.implicitWidth + padding
+	implicitHeight: padding + buttonContents.implicitHeight + padding
 
 	property alias text: line1.text
 	property alias description: line2.text
@@ -21,21 +22,21 @@ MouseArea {
 
 	RowLayout {
 		id: buttonContents
-		x: sidebarListItem.padding
-		y: sidebarListItem.padding
+		anchors.fill: parent
+		anchors.margins: sidebarListItem.padding
 		spacing: 0
 
 		Item {
-			Layout.preferredWidth: 36
-			Layout.preferredHeight: 36
+			implicitWidth: 36
+			implicitHeight: 36
 
 			Image {
 				anchors.fill: parent
 				visible: isCurrentItem
 				source: "qrc:icons/Tethys/play.png"
 			}
-			
 		}
+
 		ColumnLayout {
 			spacing: 0
 			Text {
@@ -44,7 +45,8 @@ MouseArea {
 				font.pixelSize: 14
 				font.weight: Font.Bold
 				maximumLineCount: 1
-				elide: Text.ElideRight
+				elide: Text.ElideMiddle
+				Layout.fillWidth: true
 			}
 			Text {
 				id: line2
@@ -54,7 +56,8 @@ MouseArea {
 				font.weight: Font.Bold
 				opacity: 0.6
 				maximumLineCount: 1
-				elide: Text.ElideRight
+				elide: Text.ElideMiddle
+				Layout.fillWidth: true
 			}
 		}
 	}

@@ -18,6 +18,7 @@ ColumnLayout {
 	
 	AppScrollView {
 		id: scrollView
+		Layout.fillWidth: true
 		Layout.fillHeight: true
 
 		Repeater {

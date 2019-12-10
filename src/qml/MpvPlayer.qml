@@ -284,7 +284,7 @@ Item {
 			anchors.rightMargin: sidebar.open ? 0 : -width
 			anchors.bottom: controlBar.top
 			// anchors.bottom: parent.bottom
-			width: 240
+			width: Math.max(240, Math.min(Math.round(parent.width/3), 600))
 			
 			Behavior on anchors.rightMargin {
 				NumberAnimation { duration: 200 }
