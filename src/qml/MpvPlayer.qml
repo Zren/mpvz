@@ -404,4 +404,12 @@ Item {
 	function seekForward() {
 		controlBar.seekSlider.increment()
 	}
+
+	function previousVideo() {
+		mpvObject.command(["playlist-prev"])
+	}
+
+	function nextVideo() {
+		mpvObject.command(["playlist-next"])
+	}
 }
