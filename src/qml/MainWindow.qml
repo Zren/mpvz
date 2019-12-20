@@ -65,6 +65,7 @@ AppWindow {
 
 	readonly property alias mpvObject: mpvPlayer.mpvObject
 	readonly property alias sidebar: mpvPlayer.sidebar
+	readonly property bool isMaximized: visibility == 4 // QWindow::Maximized
 	readonly property bool isFullscreen: visibility == 5 // QWindow::FullScreen
 	readonly property bool isPlaying: !mpvPlayer.mpvObject.paused
 
@@ -83,15 +84,20 @@ AppWindow {
 	property int pipHeight: 270
 	property int pipMargin: 10
 	property point beforePipPoint: Qt.point(0, 0)
+	property int beforePipVisibility: 0
 	onPictureInPictureChanged: {
 		if (pictureInPicture) {
+			beforePipVisibility = visibility
+			visibility = 2 // QWindow::Windowed
 			beforePipPoint = Qt.point(x, y)
 			x = Screen.desktopAvailableWidth - pipWidth - pipMargin
 			y = Screen.desktopAvailableHeight - pipHeight - pipMargin
 		} else {
+			visibility = beforePipVisibility
 			x = beforePipPoint.x
 			y = beforePipPoint.y
 			beforePipPoint = Qt.point(0, 0)
+			beforePipVisibility = 0
 		}
 		updateAlwaysOnTopFlag()
 	}
