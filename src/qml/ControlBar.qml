@@ -27,17 +27,17 @@ MouseArea {
 
 			ControlBarButton {
 				iconName: mpvObject.isPlaying ? "pause" : "play"
-				onClicked: mpvObject.playPause()
+				action: appActions.playPauseAction
 			}
 
 			ControlBarButton {
 				iconName: "previous"
-				onClicked: mpvPlayer.previousVideo()
+				action: appActions.previousVideoAction
 			}
 
 			ControlBarButton {
 				iconName: "next"
-				onClicked: mpvPlayer.nextVideo()
+				action: appActions.nextVideoAction
 			}
 
 			ControlBarText {

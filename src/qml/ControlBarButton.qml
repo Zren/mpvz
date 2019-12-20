@@ -19,6 +19,8 @@ ToolButton {
 	implicitHeight: 36
 	Layout.minimumWidth: 36
 
+	text: ""
+
 	opacity: hovered ? 1 : 0.75
 	style: ButtonStyle {
 		background: Item {}
@@ -46,6 +48,31 @@ ToolButton {
 					styleColor: "#111111"
 				}
 			}
+		}
+	}
+
+	property alias tooltipText: tooltipLabel.text
+	Rectangle {
+		id: tooltip
+
+		property int seekbarSpacing: 4
+		y: -seekSlider.implicitHeight - seekbarSpacing - tooltip.implicitHeight
+		
+		visible: tooltipLabel.text && control.hovered
+		color: "#333333"
+		radius: 4
+
+		property int padding: 6
+		implicitWidth: tooltipLabel.implicitWidth + padding * 2
+		implicitHeight: tooltipLabel.implicitHeight + padding * 2
+
+		Text {
+			id: tooltipLabel
+			anchors.centerIn: parent
+			text: control.action ? control.action.text + " (" + control.action.shortcut + ")" : ""
+			color: "#FFFFFF"
+			style: Text.Raised
+			styleColor: "#111111"
 		}
 	}
 }
