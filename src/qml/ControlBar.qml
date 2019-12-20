@@ -40,6 +40,29 @@ MouseArea {
 				action: appActions.nextVideoAction
 			}
 
+			ControlBarButton {
+				iconName: {
+					console.log('mpvObject.volume', mpvObject.volume)
+					if (mpvObject.muted) {
+						return "volume-mute"
+					} else {
+						if (mpvObject.volume >= 100) {
+							return "volume-100"
+						} else if (mpvObject.volume >= 66) {
+							return "volume-high"
+						} else if (mpvObject.volume >= 1) {
+							return "volume-low"
+						} else {
+							return "volume-0"
+						}
+					}
+				}
+				iconSource: {
+					return "qrc:icons/Tethys/" + iconName + ".png"
+				}
+				action: appActions.volumeMuteAction
+			}
+
 			ControlBarText {
 				Layout.fillWidth: true
 				text: "" + mpvObject.positionStr + " / " + mpvObject.durationStr

@@ -50,5 +50,10 @@
 		<file>icons/Tethys/sub-hovered.png</file>
 		<file>icons/Tethys/sub-pressed.png</file>
 		<file>icons/Tethys/sub.png</file>
+		<file>icons/Tethys/volume-0.png</file>
+		<file>icons/Tethys/volume-100.png</file>
+		<file>icons/Tethys/volume-high.png</file>
+		<file>icons/Tethys/volume-low.png</file>
+		<file>icons/Tethys/volume-mute.png</file>
 	</qresource>
 </RCC>
