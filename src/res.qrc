@@ -32,6 +32,9 @@
 		<file>icons/Tethys/fs-pressed.png</file>
 		<file>icons/Tethys/fs.png</file>
 		<file>icons/Tethys/marker.png</file>
+		<file>icons/Tethys/next-hovered.png</file>
+		<file>icons/Tethys/next-pressed.png</file>
+		<file>icons/Tethys/next.png</file>
 		<file>icons/Tethys/pause-hovered.png</file>
 		<file>icons/Tethys/pause-pressed.png</file>
 		<file>icons/Tethys/pause.png</file>
@@ -41,6 +44,9 @@
 		<file>icons/Tethys/playlist-hovered.png</file>
 		<file>icons/Tethys/playlist-pressed.png</file>
 		<file>icons/Tethys/playlist.png</file>
+		<file>icons/Tethys/previous-hovered.png</file>
+		<file>icons/Tethys/previous-pressed.png</file>
+		<file>icons/Tethys/previous.png</file>
 		<file>icons/Tethys/sub-hovered.png</file>
 		<file>icons/Tethys/sub-pressed.png</file>
 		<file>icons/Tethys/sub.png</file>

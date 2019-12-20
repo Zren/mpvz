@@ -24,10 +24,20 @@ MouseArea {
 		RowLayout {
 			Layout.fillWidth: true
 			spacing: 2
-			
+
 			ControlBarButton {
 				iconName: mpvObject.isPlaying ? "pause" : "play"
 				onClicked: mpvObject.playPause()
+			}
+
+			ControlBarButton {
+				iconName: "previous"
+				onClicked: mpvPlayer.previousVideo()
+			}
+
+			ControlBarButton {
+				iconName: "next"
+				onClicked: mpvPlayer.nextVideo()
 			}
 
 			ControlBarText {
