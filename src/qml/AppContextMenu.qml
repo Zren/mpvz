@@ -17,6 +17,8 @@ Menu {
 
 		MenuItem { action: appActions.playPauseAction }
 		MenuItem { action: appActions.stopAction }
+		MenuItem { action: appActions.previousVideoAction }
+		MenuItem { action: appActions.nextVideoAction }
 
 		MenuSeparator {}
 

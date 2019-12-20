@@ -51,17 +51,8 @@ Item {
 			onFileEnded: {
 				console.log('onFileEnded', reason)
 				if (reason == "eof") {
-					if (mpvObject.playlistCount == 1 && folderModel.count >= 2 && config.autoplayNextFile && shouldAutoplay) {
-						console.log('mpvObject.playlistCount == 1 && folderModel.count >= 2 && autoplayNextFile')
-						var currentFilePath = folderModel.folder + '/' + folderModel.currentFileName
-						console.log('currentFilePath', currentFilePath)
-						var currentFileIndex = folderModel.indexOf(currentFilePath)
-						console.log('currentFileIndex', currentFileIndex)
-						if (currentFileIndex >= 0 && currentFileIndex < folderModel.count-1) {
-							var nextFilePath = folderModel.get(currentFileIndex+1, 'filePath')
-							mpvPlayer.shouldAutoplay = false
-							mpvObject.loadFile(nextFilePath)
-						}
+					if (mpvPlayer.isAutoplayingFolder()) {
+						mpvPlayer.playNextFileInFolder()
 					}
 				}
 			}
@@ -406,10 +397,52 @@ Item {
 	}
 
 	function previousVideo() {
-		mpvObject.command(["playlist-prev"])
+		if (isAutoplayingFolder()) {
+			playPrevFileInFolder()
+		} else {
+			mpvObject.command(["playlist-prev"])
+		}
 	}
 
 	function nextVideo() {
-		mpvObject.command(["playlist-next"])
+		if (isAutoplayingFolder()) {
+			playNextFileInFolder()
+		} else {
+			mpvObject.command(["playlist-next"])
+		}
+	}
+
+	function isAutoplayingFolder() {
+		return mpvObject.playlistCount == 1 && folderModel.count >= 2 && config.autoplayNextFile && mpvPlayer.shouldAutoplay
+	}
+	function playPrevFileInFolder() {
+		if (isAutoplayingFolder()) {
+			var currentFilePath = folderModel.folder + '/' + folderModel.currentFileName
+			console.log('currentFilePath', currentFilePath)
+			var currentFileIndex = folderModel.indexOf(currentFilePath)
+			console.log('currentFileIndex', currentFileIndex)
+			if (currentFileIndex >= 0 && currentFileIndex > 0) {
+				var prevFilePath = folderModel.get(currentFileIndex-1, 'filePath')
+				mpvPlayer.shouldAutoplay = false
+				mpvObject.loadFile(prevFilePath)
+				return true
+			}
+		}
+		return false
+	}
+	function playNextFileInFolder() {
+		if (isAutoplayingFolder()) {
+			var currentFilePath = folderModel.folder + '/' + folderModel.currentFileName
+			console.log('currentFilePath', currentFilePath)
+			var currentFileIndex = folderModel.indexOf(currentFilePath)
+			console.log('currentFileIndex', currentFileIndex)
+			if (currentFileIndex >= 0 && currentFileIndex < folderModel.count-1) {
+				var nextFilePath = folderModel.get(currentFileIndex+1, 'filePath')
+				mpvPlayer.shouldAutoplay = false
+				mpvObject.loadFile(nextFilePath)
+				return true
+			}
+		}
+		return false
 	}
 }
