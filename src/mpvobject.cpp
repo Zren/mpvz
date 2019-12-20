@@ -81,6 +81,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 	mpv_set_option_string(mpv, "terminal", "yes");
 	mpv_set_option_string(mpv, "msg-level", "all=warn,ao/alsa=error"); // all=no OR all=v
+	// mpv_set_option_string(mpv, "msg-level", "all=debug");
 
 	if (mpv_initialize(mpv) < 0)
 		throw std::runtime_error("could not initialize mpv context");
@@ -89,15 +90,22 @@ MpvObject::MpvObject(QQuickItem * parent)
 	mpv::qt::set_option_variant(mpv, "audio-client-name", "mpvz");
 
 	// Make use of the MPV_SUB_API_OPENGL_CB API.
-	mpv::qt::set_option_variant(mpv, "vo", "opengl-cb");
+	// mpv::qt::set_option_variant(mpv, "vo", "opengl-cb");
 
 	// Not sure how
-	// mpv::qt::set_option_variant(mpv, "vo", "opengl-cb:interpolation");
-	// mpv_set_option_string(mpv, "video-sync", "display-resample");
+	mpv::qt::set_option_variant(mpv, "vo", "opengl-cb:interpolation");
+	mpv::qt::set_option_variant(mpv, "video-syn", "display-resample");
 	// mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
 
 	// Request hw decoding by default
-	mpv::qt::set_option_variant(mpv, "hwdec", "auto");
+	// mpv::qt::set_option_variant(mpv, "hwdec", "auto");
+	// mpv::qt::set_option_variant(mpv, "hwdec-codecs", "all");
+	// mpv::qt::set_option_variant(mpv, "hwdec", "auto-copy");
+
+	// Testing
+	// mpv::qt::set_option_variant(mpv, "vo", "vaapi");
+	// mpv::qt::set_option_variant(mpv, "hwdec", "vaapi-copy");
+	// mpv::qt::set_option_variant(mpv, "hwdec", "h264-vaapi-copy");
 
 	// mpv::qt::set_option_variant(mpv, "aid", "no");
 	// mpv::qt::set_option_variant(mpv, "sid", "no");
