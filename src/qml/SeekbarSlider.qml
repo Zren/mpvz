@@ -68,11 +68,11 @@ AppSlider {
 	mouseArea.hoverEnabled: true
 	mouseArea.onPositionChanged: {
 		// console.log('onPositionChanged', mouse.x, mouseArea.width)
-		// thumbnail.show(mouse.x)
+		thumbnail.show(mouse.x)
 	}
 	mouseArea.onContainsMouseChanged: {
 		if (!mouseArea.containsMouse) {
-			// thumbnail.hide()
+			thumbnail.hide()
 		}
 	}
 
@@ -196,7 +196,7 @@ AppSlider {
 			thumbnail.visible = false
 			// mpvThumb.command("stop")
 			// mpvThumb.loadFile("")
-			// thumbLoader.active = false
+			thumbLoader.active = false
 		}
 
 		property alias mpvThumb: thumbLoader.item
@@ -217,7 +217,7 @@ AppSlider {
 				id: thumbLoader
 				anchors.fill: parent
 				active: false
-				// source: "ThumbnailItem.qml"
+				source: "ThumbnailItem.qml"
 			}
 
 			Rectangle {
