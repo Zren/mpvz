@@ -9,6 +9,7 @@ MpvObject {
 
 	Component.onCompleted: {
 		mpvThumb.setOption("sid", "no") // Hide subs
+		// mpvThumb.setOption("hr-seek", "no") // Don't use precise seek
 		// mpvThumb.setOption("frames", "1")
 		// mpvThumb.setOption("of", "image2")
 		// mpvThumb.setOption("ovc", "rawvideo")
