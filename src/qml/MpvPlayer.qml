@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.7
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import Qt.labs.folderlistmodel 2.1
@@ -202,38 +202,58 @@ Item {
 		}
 		
 		cursorShape: Qt.ArrowCursor
-		property point prevPos: null
-		property point cursorHiddenPos: null
+		property point prevPos: Qt.point(0, 0)
+		property point cursorHiddenPos: Qt.point(0, 0)
+		property point clickedWinPos: Qt.point(0, 0)
+		property point clickedMousePos: Qt.point(0, 0)
 		onEntered: {
 			prevPos = Qt.point(mouseX, mouseY)
 		}
-		onPositionChanged: {
-			// var delta = Qt.point(mouse.x - prevPos.x, mouse.y - prevPos.y)
-			// console.log('mouse', mouse.x, mouse.y, 'delta', delta)
-			// var isMovingAway = overlayControls.isVisible && delta.y < 0 // Moving upwards
-			// if (!isMovingAway) {
-			var curPos = Qt.point(mouse.x, mouse.y)
-			var dist = 0
-			if (cursorHiddenPos) {
-				var delta = Qt.point(curPos.x - cursorHiddenPos.x, curPos.y - cursorHiddenPos.y)
-				dist = Math.abs(delta.x) + Math.abs(delta.y) // manhattanLength()
+		onPressed: {
+			if (mouse.buttons & Qt.LeftButton == Qt.LeftButton) {
+				clickedMousePos = mapToGlobal(mouseX, mouseY)
+				clickedWinPos = Qt.point(window.x, window.y)
 			}
-			var moveThreshold = 30
-			var shouldShowOverlay = cursorHiddenPos ? dist > moveThreshold : true
-			// console.log('curPos', curPos, 'dist', dist, 'shouldShowOverlay', shouldShowOverlay)
-			if (shouldShowOverlay) {
+		}
+		onReleased: {
+			clickedMousePos = Qt.point(0, 0)
+			clickedWinPos = Qt.point(0, 0)
+			if (videoMouseArea.cursorShape == Qt.DragMoveCursor) {
 				videoMouseArea.cursorShape = Qt.ArrowCursor
-				hideCursorTimeout.restart()
 			}
+		}
+		onPositionChanged: {
+			var curPos = Qt.point(mouse.x, mouse.y)
+			if (mouse.buttons & Qt.LeftButton == Qt.LeftButton) {
+				var globalCurPos = mapToGlobal(mouse.x, mouse.y)
+				var delta = Qt.point(globalCurPos.x - clickedMousePos.x, globalCurPos.y - clickedMousePos.y)
+				var dist = Math.abs(delta.x) + Math.abs(delta.y) // manhattanLength()
+				var dragThreshold = 30
+				if (dist >= dragThreshold) {
+					// videoMouseArea.cursorShape = Qt.DragMoveCursor
+					// window.x = clickedWinPos.x + delta.x
+					// window.y = clickedWinPos.y + delta.y
+
+					// app.moveWindow()
+				}
+			} else {
+				var delta = Qt.point(curPos.x - cursorHiddenPos.x, curPos.y - cursorHiddenPos.y)
+				var dist = Math.abs(delta.x) + Math.abs(delta.y) // manhattanLength()
+				var moveThreshold = 30
+				if (dist >= moveThreshold) {
+					videoMouseArea.cursorShape = Qt.ArrowCursor
+					hideCursorTimeout.restart()
+				}
+			}
+
 			prevPos = curPos
 		}
 		onExited: {
-			prevPos = null
+			prevPos = Qt.point(0, 0)
 		}
 		Timer {
 			id: hideCursorTimeout
 			interval: 700
-			property point cursorHiddenPos: null
 			onTriggered: {
 				videoMouseArea.cursorShape = Qt.BlankCursor
 				videoMouseArea.cursorHiddenPos = Qt.point(videoMouseArea.mouseX, videoMouseArea.mouseY)
