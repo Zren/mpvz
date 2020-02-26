@@ -166,8 +166,9 @@ AppSlider {
 			GradientStop { position: 1.0; color: "#0e1115" }
 		}
 
-		width: 200 + border.width*4
-		property int contentHeight: Math.ceil(200 * mpvObject.dheight / mpvObject.dwidth) + border.width*2
+		property int contentWidth: 200
+		property int contentHeight: Math.ceil(contentWidth * (mpvObject.dheight / mpvObject.dwidth))
+		width: contentWidth + border.width*2
 		height: contentHeight + border.width*2
 		anchors.bottom: parent.top
 		visible: false
@@ -216,6 +217,7 @@ AppSlider {
 			Loader {
 				id: thumbLoader
 				anchors.fill: parent
+				anchors.margins: thumbnail.border.width
 				active: false
 				source: "ThumbnailItem.qml"
 			}
