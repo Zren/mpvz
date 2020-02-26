@@ -196,7 +196,7 @@ AppSlider {
 			thumbnail.visible = false
 			// mpvThumb.command("stop")
 			// mpvThumb.loadFile("")
-			thumbLoader.active = false
+			// thumbLoader.active = false
 		}
 
 		property alias mpvThumb: thumbLoader.item
