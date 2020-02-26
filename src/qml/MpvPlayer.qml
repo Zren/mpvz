@@ -202,14 +202,42 @@ Item {
 		}
 		
 		cursorShape: Qt.ArrowCursor
+		property point prevPos: null
+		property point cursorHiddenPos: null
+		onEntered: {
+			prevPos = Qt.point(mouseX, mouseY)
+		}
 		onPositionChanged: {
-			videoMouseArea.cursorShape = Qt.ArrowCursor
-			hideCursorTimeout.restart()
+			// var delta = Qt.point(mouse.x - prevPos.x, mouse.y - prevPos.y)
+			// console.log('mouse', mouse.x, mouse.y, 'delta', delta)
+			// var isMovingAway = overlayControls.isVisible && delta.y < 0 // Moving upwards
+			// if (!isMovingAway) {
+			var curPos = Qt.point(mouse.x, mouse.y)
+			var dist = 0
+			if (cursorHiddenPos) {
+				var delta = Qt.point(curPos.x - cursorHiddenPos.x, curPos.y - cursorHiddenPos.y)
+				dist = Math.abs(delta.x) + Math.abs(delta.y) // manhattanLength()
+			}
+			var moveThreshold = 30
+			var shouldShowOverlay = cursorHiddenPos ? dist > moveThreshold : true
+			// console.log('curPos', curPos, 'dist', dist, 'shouldShowOverlay', shouldShowOverlay)
+			if (shouldShowOverlay) {
+				videoMouseArea.cursorShape = Qt.ArrowCursor
+				hideCursorTimeout.restart()
+			}
+			prevPos = curPos
+		}
+		onExited: {
+			prevPos = null
 		}
 		Timer {
 			id: hideCursorTimeout
 			interval: 700
-			onTriggered: videoMouseArea.cursorShape = Qt.BlankCursor
+			property point cursorHiddenPos: null
+			onTriggered: {
+				videoMouseArea.cursorShape = Qt.BlankCursor
+				videoMouseArea.cursorHiddenPos = Qt.point(videoMouseArea.mouseX, videoMouseArea.mouseY)
+			}
 		}
 	}
 
