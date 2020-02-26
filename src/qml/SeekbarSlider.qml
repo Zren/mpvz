@@ -180,7 +180,7 @@ AppSlider {
 		function show(mouseX) {
 			thumbnail.mouseX = mouseX
 			thumbnail.positionRatio = Math.max(0, Math.min(thumbnail.mouseX / mouseArea.width, 1))
-			// thumbLoader.active = true
+			thumbLoader.active = true
 			// if (mpvThumb.path != mpvObject.path) {
 			// 	mpvThumb.loadFile(mpvObject.path)
 			// }

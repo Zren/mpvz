@@ -123,13 +123,6 @@ MpvObject::MpvObject(QQuickItem * parent)
 	// mpv::qt::set_option_variant(mpv, "access-references", "no");
 	// mpv::qt::set_option_variant(mpv, "frames", "1");
 
-	if (!m_enableAudio) {
-		mpv::qt::set_option_variant(mpv, "ao", "null");
-		mpv::qt::set_option_variant(mpv, "frames", "1");
-		mpv::qt::set_option_variant(mpv, "of", "image2");
-		mpv::qt::set_option_variant(mpv, "ovc", "rawvideo");
-	}
-
 
 	// Setup the callback that will make QtQuick update and redraw if there
 	// is a new video frame. Use a queued connection: this makes sure the
