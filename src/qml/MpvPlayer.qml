@@ -259,6 +259,19 @@ Item {
 				videoMouseArea.cursorHiddenPos = Qt.point(videoMouseArea.mouseX, videoMouseArea.mouseY)
 			}
 		}
+
+		property int wheelDelta: 0
+		onWheel: {
+			wheelDelta += wheel.angleDelta.y
+			for (; wheelDelta >= 120; wheelDelta -= 120) wheelUpTick()
+			for (; wheelDelta <= -120; wheelDelta += 120) wheelDownTick()
+		}
+		function wheelUpTick() {
+			mpvPlayer.seekBackward()
+		}
+		function wheelDownTick() {
+			mpvPlayer.seekForward()
+		}
 	}
 
 	DropArea {
