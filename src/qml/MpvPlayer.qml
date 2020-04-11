@@ -333,12 +333,12 @@ Item {
 			id: sidebar
 			anchors.top: parent.top
 			anchors.right: parent.right
-			anchors.rightMargin: sidebar.open ? 0 : -width
 			anchors.bottom: controlBar.top
-			// anchors.bottom: parent.bottom
+			anchors.rightMargin: width * rightMarginRatio
+			property real rightMarginRatio: sidebar.open ? 0 : -1
 			width: Math.max(240, Math.min(Math.round(parent.width/3), 600))
 			
-			Behavior on anchors.rightMargin {
+			Behavior on rightMarginRatio {
 				NumberAnimation { duration: 200 }
 			}
 
