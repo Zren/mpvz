@@ -376,6 +376,7 @@ void MpvObject::playPause()
 void MpvObject::seek(double pos)
 {
 	qDebug() << "seek" << pos;
+	pos = qMax(0.0, qMin(pos, m_duration));
 	command(QVariantList() << "seek" << pos << "absolute");
 }
 

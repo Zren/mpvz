@@ -280,9 +280,13 @@ AppSlider {
 
 	property real incrementSize: 5 // 5 seconds
 	function decrement() {
-		mpvObject.seek(seekSlider.value - incrementSize)
+		var nextValue = seekSlider.value - incrementSize
+		nextValue = Math.max(0, Math.min(nextValue, mpvObject.duration))
+		mpvObject.seek(nextValue)
 	}
 	function increment() {
-		mpvObject.seek(seekSlider.value + incrementSize)
+		var nextValue = seekSlider.value + incrementSize
+		nextValue = Math.max(0, Math.min(nextValue, mpvObject.duration))
+		mpvObject.seek(nextValue)
 	}
 }
