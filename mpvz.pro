@@ -1,4 +1,4 @@
-QT += qml quick
+QT += qml quick x11extras
 CONFIG += c++14
 CONFIG += debug
 
@@ -17,7 +17,7 @@ unix {
 	INSTALLS += target shortcut logo
 }
 
-LIBS += -lmpv
+LIBS += -lmpv -lxcb
 
 HEADERS += \
 	src/mpvhelpers.h \

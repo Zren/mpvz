@@ -1,7 +1,14 @@
 #include "mpvapp.h"
 
+// Xcb
+#include <xcb/xproto.h>
+#include <xcb/xcb.h>
+
+// Qt
 #include <QCommandLineParser>
 #include <QQmlContext>
+#include <QX11Info>
+#include <QWindow>
 
 AppObj::AppObj(QObject *parent)
 	: QObject(parent)
@@ -9,6 +16,38 @@ AppObj::AppObj(QObject *parent)
 }
 
 AppObj::~AppObj() {
+}
+
+void AppObj::dragWindow(QWindow* window) {
+	if (window) {
+		WId windowId = window->winId();
+
+		QPoint position(0, 0);
+		QPoint rootPosition(0, 0);
+
+		//--- From: BreezeSizeGrip.cpp
+		// button release event
+		auto connection( QX11Info::connection() );
+		xcb_button_release_event_t releaseEvent;
+		memset(&releaseEvent, 0, sizeof(releaseEvent));
+
+		releaseEvent.response_type = XCB_BUTTON_RELEASE;
+		releaseEvent.event =  windowId;
+		releaseEvent.child = XCB_WINDOW_NONE;
+		releaseEvent.root = QX11Info::appRootWindow();
+		releaseEvent.event_x = position.x();
+		releaseEvent.event_y = position.y();
+		releaseEvent.root_x = rootPosition.x();
+		releaseEvent.root_y = rootPosition.y();
+		releaseEvent.detail = XCB_BUTTON_INDEX_1;
+		releaseEvent.state = XCB_BUTTON_MASK_1;
+		releaseEvent.time = XCB_CURRENT_TIME;
+		releaseEvent.same_screen = true;
+		xcb_send_event( connection, false, windowId, XCB_EVENT_MASK_BUTTON_RELEASE, reinterpret_cast<const char*>(&releaseEvent));
+
+		xcb_ungrab_pointer( connection, XCB_TIME_CURRENT_TIME );
+		//---
+	}
 }
 
 

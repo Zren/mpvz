@@ -18,6 +18,8 @@ public:
 
 	QStringList urls() { return m_urls; };
 
+	Q_INVOKABLE void dragWindow(QWindow* window);
+
 protected:
 	QStringList m_urls;
 

@@ -234,7 +234,7 @@ Item {
 					// window.x = clickedWinPos.x + delta.x
 					// window.y = clickedWinPos.y + delta.y
 
-					// app.moveWindow()
+					app.dragWindow(window)
 				}
 			} else {
 				var delta = Qt.point(curPos.x - cursorHiddenPos.x, curPos.y - cursorHiddenPos.y)
