@@ -51,7 +51,7 @@ MenuBar {
 
 			MenuItem {
 				text: "Minimal"
-				shortcut: "1"
+				shortcut: "F1"
 				onTriggered: {
 					window.pictureInPicture = false
 					window.hideBorders = true
@@ -61,7 +61,7 @@ MenuBar {
 
 			MenuItem {
 				text: "Compact"
-				shortcut: "2"
+				shortcut: "F2"
 				onTriggered: {
 					window.pictureInPicture = false
 					window.hideBorders = false
@@ -71,7 +71,7 @@ MenuBar {
 
 			MenuItem {
 				text: "Normal"
-				shortcut: "3"
+				shortcut: "F3"
 				onTriggered: {
 					window.pictureInPicture = false
 					window.hideBorders = false
@@ -81,7 +81,7 @@ MenuBar {
 
 			MenuItem {
 				text: "Picture In Picture"
-				shortcut: "4"
+				shortcut: "F4"
 				onTriggered: {
 					window.pictureInPicture = true
 				}
