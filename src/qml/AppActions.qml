@@ -155,6 +155,9 @@ QtObject {
 		shortcut: "Down"
 		onTriggered: mpvObject.volumeDown()
 	}
+	property Action volumeUpAction2: Action { shortcut: "0"; onTriggered: volumeUpAction.trigger() }
+	property Action volumeDownAction2: Action { shortcut: "9"; onTriggered: volumeDownAction.trigger() }
+
 
 	//--- Tools
 	property Action togglePlaybackInfoAction: Action {
@@ -180,4 +183,5 @@ QtObject {
 		checked: window.isFullscreen
 		onTriggered: window.toggleFullscreen()
 	}
+	property Action toggleFullscreenAction2: Action { shortcut: "F"; onTriggered: toggleFullscreenAction.trigger() }
 }
