@@ -9,7 +9,8 @@ MpvObject {
 
 	Component.onCompleted: {
 		mpvThumb.setOption("sid", "no") // Hide subs
-		// mpvThumb.setOption("hr-seek", "no") // Don't use precise seek
+		mpvThumb.setOption("hr-seek", "no") // Don't use precise seek
+		mpvThumb.setOption("sstep", "10") // Step every 10 seconds
 		// mpvThumb.setOption("frames", "1")
 		// mpvThumb.setOption("of", "image2")
 		// mpvThumb.setOption("ovc", "rawvideo")
@@ -21,14 +22,20 @@ MpvObject {
 		}
 	}
 
-	Connections {
-		target: thumbnail
-		onVideoPositionChanged: {
-			if (mpvThumb.path != mpvObject.path) {
-				mpvThumb.loadFile(mpvObject.path)
-			}
-			var thumbPosition = Math.floor(thumbnail.videoPosition) // 1 second interval
-			mpvThumb.seek(thumbPosition)
+	readonly property double steppedPos: Math.floor(thumbnail.videoPosition)
+	onSteppedPosChanged: {
+		if (mpvThumb.path != mpvObject.path) {
+			mpvThumb.loadFile(mpvObject.path)
+		}
+		visible = false
+		thumbSeekDebounce.restart()
+	}
+	Timer {
+		id: thumbSeekDebounce
+		interval: 50
+		onTriggered: {
+			mpvThumb.seek(steppedPos)
+			visible = true
 		}
 	}
 }
