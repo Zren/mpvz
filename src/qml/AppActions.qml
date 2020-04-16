@@ -99,42 +99,42 @@ QtObject {
 	property Action contrastDownAction: Action {
 		text: "Contrast Down"
 		shortcut: "1"
-		onTriggered: mpvObject.contrast = mpvObject.contrast - 1
+		onTriggered: mpvObject.contrastDown()
 	}
 	property Action contrastUpAction: Action {
 		text: "Contrast Up"
 		shortcut: "2"
-		onTriggered: mpvObject.contrast = mpvObject.contrast + 1
+		onTriggered: mpvObject.contrastUp()
 	}
 	property Action brightnessDownAction: Action {
 		text: "Brightness Down"
 		shortcut: "3"
-		onTriggered: mpvObject.brightness -= 1
+		onTriggered: mpvObject.brightnessDown()
 	}
 	property Action brightnessUpAction: Action {
 		text: "Brightness Up"
 		shortcut: "4"
-		onTriggered: mpvObject.brightness += 1
+		onTriggered: mpvObject.brightnessUp()
 	}
 	property Action gammaDownAction: Action {
 		text: "Gamma Down"
 		shortcut: "5"
-		onTriggered: mpvObject.gamma -= 1
+		onTriggered: mpvObject.gammaDown()
 	}
 	property Action gammaUpAction: Action {
 		text: "Gamma Up"
 		shortcut: "6"
-		onTriggered: mpvObject.gamma += 1
+		onTriggered: mpvObject.gammaUp()
 	}
 	property Action saturationDownAction: Action {
 		text: "Saturation Down"
 		shortcut: "7"
-		onTriggered: mpvObject.saturation -= 1
+		onTriggered: mpvObject.saturationDown()
 	}
 	property Action saturationUpAction: Action {
 		text: "Saturation Up"
 		shortcut: "8"
-		onTriggered: mpvObject.saturation += 1
+		onTriggered: mpvObject.saturationUp()
 	}
 
 	//--- Audio > Volume

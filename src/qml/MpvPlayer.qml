@@ -71,22 +71,45 @@ Item {
 
 		function toggleMute() {
 			muted = !muted
+			showVolumeOsd()
+		}
+		function showVolumeOsd() {
 			if (muted) {
 				osd.show("Muted")
 			} else {
 				osd.show("Volume: " + volume + " %")
 			}
 		}
-
-		function volumeUp() {
-			volume = Math.min(volume + 2, 100)
-			osd.show("Volume: " + volume + " %")
+		function setVolume(val) {
+			volume = Math.max(0, Math.min(val, 100))
+			if (muted && volume > 0) {
+				muted = false
+			} else if (!muted && volume == 0) {
+				muted = true
+			}
+			showVolumeOsd()
 		}
+		function volumeUp() { setVolume(volume + 2) }
+		function volumeDown() { setVolume(volume - 2) }
 
-		function volumeDown() {
-			volume = Math.max(0, volume - 2)
-			osd.show("Volume: " + volume + " %")
+		function equalizerPropUp(key, label) {
+			mpvObject[key] = Math.min(mpvObject[key] + 1, 100)
+			console.log(key + 'Up', mpvObject[key])
+			equalizer.show(label, mpvObject[key])
 		}
+		function equalizerPropDown(key, label) {
+			mpvObject[key] = Math.max(-100, mpvObject[key] - 1)
+			console.log(key + 'Down', mpvObject[key])
+			equalizer.show(label, mpvObject[key])
+		}
+		function contrastUp() { equalizerPropUp('contrast', 'Contrast') }
+		function contrastDown() { equalizerPropDown('contrast', 'Contrast') }
+		function gammaUp() { equalizerPropUp('gamma', 'Gamma') }
+		function gammaDown() { equalizerPropDown('gamma', 'Gamma') }
+		function brightnessUp() { equalizerPropUp('brightness', 'Brightness') }
+		function brightnessDown() { equalizerPropDown('brightness', 'Brightness') }
+		function saturationUp() { equalizerPropUp('saturation', 'Saturation') }
+		function saturationDown() { equalizerPropDown('saturation', 'Saturation') }
 
 		readonly property real positionRatio: position / duration
 		readonly property string positionStr: formatShortTime(position)
@@ -401,7 +424,14 @@ Item {
 			osdTimeoutTimer.restart()
 		}
 	}
-	
+
+	Item {
+		id: equalizer
+
+		function show(label, value) {
+			osd.show("" + label + ": " + value)
+		}
+	}
 
 
 	function zeroPad(n) {
