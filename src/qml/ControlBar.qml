@@ -3,10 +3,12 @@ import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 
 MouseArea {
+	id: controlBar
 	implicitHeight: columnLayout.implicitHeight
 	hoverEnabled: true
 
 	property alias seekSlider: seekSlider
+	property bool compactMode: width <= 320 // TODO DPI
 
 	ColumnLayout {
 		id: columnLayout
@@ -31,11 +33,13 @@ MouseArea {
 			}
 
 			ControlBarButton {
+				visible: !controlBar.compactMode
 				iconName: "previous"
 				action: appActions.previousVideoAction
 			}
 
 			ControlBarButton {
+				visible: !controlBar.compactMode
 				iconName: "next"
 				action: appActions.nextVideoAction
 			}
@@ -66,21 +70,25 @@ MouseArea {
 			ControlBarText {
 				Layout.fillWidth: true
 				text: "" + mpvObject.positionStr + " / " + mpvObject.durationStr
+				elide: Text.ElideRight
 			}
 
 			ControlBarButton {
+				visible: !controlBar.compactMode
 				iconName: "audio"
 				text: "" + mpvObject.aid + " / " + mpvObject.numAudioTracks
 				onClicked: mpvObject.nextAudioTrack()
 			}
 
 			ControlBarButton {
+				visible: !controlBar.compactMode
 				iconName: "sub"
 				text: "" + mpvObject.sid + " / " + mpvObject.numSubTracks
 				onClicked: mpvObject.nextSubTrack()
 			}
 
 			ControlBarButton {
+				visible: !controlBar.compactMode
 				iconName: "playlist"
 				onClicked: appActions.togglePlaylistAction.trigger()
 			}
