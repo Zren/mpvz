@@ -362,7 +362,7 @@ Item {
 			width: Math.max(240, Math.min(Math.round(parent.width/3), 600))
 			
 			Behavior on rightMarginRatio {
-				NumberAnimation { duration: 200 }
+				NumberAnimation { duration: 100 }
 			}
 
 			Connections {
