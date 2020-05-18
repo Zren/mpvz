@@ -279,7 +279,13 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 	}
 	case MPV_EVENT_PROPERTY_CHANGE: {
 		mpv_event_property *prop = (mpv_event_property *)event->data;
-		if (prop->format == MPV_FORMAT_DOUBLE) {
+
+		if (prop->format == MPV_FORMAT_NONE) {
+			if HANDLE_PROP_INT("vid", vid)
+			else if HANDLE_PROP_INT("aid", aid)
+			else if HANDLE_PROP_INT("sid", sid)
+
+		} else if (prop->format == MPV_FORMAT_DOUBLE) {
 			if (strcmp(prop->name, "time-pos") == 0) {
 				double time = *(double *)prop->data;
 				m_position = time;
