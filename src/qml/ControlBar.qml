@@ -8,7 +8,7 @@ MouseArea {
 	hoverEnabled: true
 
 	property alias seekSlider: seekSlider
-	property bool compactMode: width <= 320 // TODO DPI
+	property bool compactMode: width <= 520 // TODO DPI
 
 	ColumnLayout {
 		id: columnLayout
