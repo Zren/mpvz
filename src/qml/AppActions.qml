@@ -44,25 +44,19 @@ QtObject {
 	property Action resetSpeedAction: Action {
 		text: "Reset"
 		shortcut: "Backspace"
-		onTriggered: {
-			mpvObject.speed = 1
-		}
+		onTriggered: mpvObject.resetSpeed()
 	}
 
 	property Action playFasterAction: Action {
 		text: "+10%"
 		shortcut: "+"
-		onTriggered: {
-			mpvObject.speed += 0.1
-		}
+		onTriggered: mpvObject.speedUp()
 	}
 
 	property Action playSlowerAction: Action {
 		text: "-10%"
 		shortcut: "-"
-		onTriggered: {
-			mpvObject.speed -= 0.1
-		}
+		onTriggered: mpvObject.speedDown()
 	}
 
 	//--- Play > Seek

@@ -111,6 +111,14 @@ Item {
 		function saturationUp() { equalizerPropUp('saturation', 'Saturation') }
 		function saturationDown() { equalizerPropDown('saturation', 'Saturation') }
 
+		function setSpeed(val) {
+			speed = val
+			osd.show("Speed: " + speed.toFixed(2) + "x")
+		}
+		function resetSpeed() { setSpeed(1.0) }
+		function speedUp() { setSpeed(speed + 0.1) }
+		function speedDown() { setSpeed(speed - 0.1) }
+
 		readonly property real positionRatio: position / duration
 		readonly property string positionStr: formatShortTime(position)
 		readonly property string durationStr: formatShortTime(duration)
