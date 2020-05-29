@@ -6,9 +6,6 @@ Qt5/QML based GUI for libmpv. Based on the Tethys theme for [Bomi](http://bomi-p
 
 ![](https://i.imgur.com/57u3fcf.png)
 
-`mpvz https://www.crunchyroll.com/one-piece/episode-892-the-land-of-wano-to-the-samurai-country-where-cherry-blossoms-flutter-786644`
-
-![]()
 
 ## Compile and Install
 
