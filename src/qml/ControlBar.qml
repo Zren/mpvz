@@ -67,6 +67,12 @@ MouseArea {
 				action: appActions.volumeMuteAction
 			}
 
+			VolumeSlider {
+				id: volumeSeekbar
+				visible: !controlBar.compactMode
+			}
+
+
 			ControlBarText {
 				Layout.fillWidth: true
 				text: "" + mpvObject.positionStr + " / " + mpvObject.durationStr

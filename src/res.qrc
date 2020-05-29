@@ -21,6 +21,7 @@
 		<file>qml/PlaybackInfoView.qml</file>
 		<file>qml/PlaybackInfoText.qml</file>
 		<file>qml/ThumbnailItem.qml</file>
+		<file>qml/VolumeSlider.qml</file>
 
 		<file>icons/Tethys/audio-hovered.png</file>
 		<file>icons/Tethys/audio-pressed.png</file>

@@ -10,7 +10,7 @@ import mpvz 1.0
 // Fork Slider so that mouseArea is exposed because using a child MouseArea conflicts.
 // https://github.com/qt/qtquickcontrols/blob/dev/src/controls/Slider.qml
 AppSlider {
-	id: seekbar
+	id: slider
 
 	property bool ignoreValueChange: false
 	property bool playingOnPressed: false
@@ -18,20 +18,20 @@ AppSlider {
 	Connections {
 		target: mpvObject
 		onFileLoaded: {
-			seekbar.ignoreValueChange = true
-			seekSlider.value = 0
-			seekbar.ignoreValueChange = false
+			slider.ignoreValueChange = true
+			slider.value = 0
+			slider.ignoreValueChange = false
 		}
 		onPositionChanged: {
-			// console.log('onPositionChanged', mpvObject.position, seekSlider.value)
-			if (mpvObject.duration > 0 && !seekSlider.pressed && !seekDebounce.running) {
-				seekbar.ignoreValueChange = true
-				seekSlider.value = mpvObject.position
-				seekbar.ignoreValueChange = false
+			// console.log('onPositionChanged', mpvObject.position, slider.value)
+			if (mpvObject.duration > 0 && !slider.pressed && !seekDebounce.running) {
+				slider.ignoreValueChange = true
+				slider.value = mpvObject.position
+				slider.ignoreValueChange = false
 			}
 		}
 		onDurationChanged: {
-			seekSlider.maximumValue = mpvObject.duration
+			slider.maximumValue = mpvObject.duration
 		}
 	}
 	
@@ -41,26 +41,26 @@ AppSlider {
 	WheelArea {
 		id: wheelarea
 		anchors.fill: parent
-		horizontalMinimumValue: seekbar.minimumValue
-		horizontalMaximumValue: seekbar.maximumValue
-		verticalMinimumValue: seekbar.minimumValue
-		verticalMaximumValue: seekbar.maximumValue
+		horizontalMinimumValue: slider.minimumValue
+		horizontalMaximumValue: slider.maximumValue
+		verticalMinimumValue: slider.minimumValue
+		verticalMaximumValue: slider.maximumValue
 
 		onVerticalWheelMoved: {
 			console.log('onVerticalWheelMoved', verticalDelta)
 			if (verticalDelta > 0) { // Scroll up
-				seekbar.decrement()
+				slider.decrement()
 			} else if (verticalDelta < 0) { // Scroll down
-				seekbar.increment()
+				slider.increment()
 			}
 		}
 
 		onHorizontalWheelMoved: {
 			console.log('onHorizontalWheelMoved', horizontalDelta)
 			if (horizontalDelta > 0) { // Scroll ?
-				seekbar.decrement()
+				slider.decrement()
 			} else if (horizontalDelta < 0) { // Scroll ?
-				seekbar.increment()
+				slider.increment()
 			}
 		}
 	}
@@ -128,7 +128,7 @@ AppSlider {
 
 					Image {
 						readonly property double chapterPosition: mpvObject.getChapterTime(index)
-						readonly property double positionRatio: seekbar.maximumValue ? chapterPosition / seekbar.maximumValue : 0
+						readonly property double positionRatio: slider.maximumValue ? chapterPosition / slider.maximumValue : 0
 						x: control.width * positionRatio - width/2
 						y: chapterMarkers.height/2
 						width: 8
@@ -144,7 +144,7 @@ AppSlider {
 
 			Rectangle {
 				anchors.centerIn: parent
-				property int size: seekbar.mouseArea.containsMouse ? control.handleSize : 0
+				property int size: slider.mouseArea.containsMouse ? control.handleSize : 0
 				width: size
 				height: size
 				radius: control.handleSize
@@ -265,28 +265,28 @@ AppSlider {
 	Timer {
 		id: seekDebounce
 		interval: 100
-		running: seekbar.pressed
+		running: slider.pressed
 		onTriggered: {
 			seekToValue()
-			if (seekbar.pressed) {
+			if (slider.pressed) {
 				restart()
 			}
 		}
 	}
 
 	function seekToValue() {
-		mpvObject.seek(seekSlider.value)
+		mpvObject.seek(slider.value)
 	}
 
 	property real incrementSize: 5 // 5 seconds
 	function decrement() {
-		var nextValue = seekSlider.value - incrementSize
-		nextValue = Math.max(0, Math.min(nextValue, mpvObject.duration))
+		var nextValue = slider.value - incrementSize
+		nextValue = Math.max(0, Math.min(nextValue, maximumValue))
 		mpvObject.seek(nextValue)
 	}
 	function increment() {
-		var nextValue = seekSlider.value + incrementSize
-		nextValue = Math.max(0, Math.min(nextValue, mpvObject.duration))
+		var nextValue = slider.value + incrementSize
+		nextValue = Math.max(0, Math.min(nextValue, maximumValue))
 		mpvObject.seek(nextValue)
 	}
 }
