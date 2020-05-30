@@ -94,7 +94,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 	// Not sure how
 	mpv::qt::set_option_variant(mpv, "vo", "opengl-cb:interpolation");
-	mpv::qt::set_option_variant(mpv, "video-syn", "display-resample");
+	mpv::qt::set_option_variant(mpv, "video-sync", "display-resample");
 	// mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
 
 	// Request hw decoding by default
