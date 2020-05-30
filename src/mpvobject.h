@@ -11,7 +11,26 @@
 #include <mpv/qthelper.hpp>
 
 
+class MpvObject;
 class MpvRenderer;
+
+
+
+class MpvRenderer : public QQuickFramebufferObject::Renderer
+{
+	static void* get_proc_address(void *ctx, const char *name);
+
+public:
+	MpvRenderer(const MpvObject *obj);
+	virtual ~MpvRenderer();
+
+	void render();
+
+private:
+	const MpvObject *obj;
+	mpv_render_context *mpv_gl;
+};
+
 
 
 class MpvObject : public QQuickFramebufferObject

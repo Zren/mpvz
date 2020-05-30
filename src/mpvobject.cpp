@@ -20,9 +20,7 @@
 
 #include <QDebug>
 
-class MpvRenderer : public QQuickFramebufferObject::Renderer
-{
-	static void *get_proc_address(void *ctx, const char *name) {
+	void* MpvRenderer::get_proc_address(void *ctx, const char *name) {
 		(void)ctx;
 		QOpenGLContext *glctx = QOpenGLContext::currentContext();
 		if (!glctx)
@@ -30,8 +28,7 @@ class MpvRenderer : public QQuickFramebufferObject::Renderer
 		return reinterpret_cast<void *>(glctx->getProcAddress(QByteArray(name)));
 	}
 
-public:
-	MpvRenderer(const MpvObject *obj)
+	MpvRenderer::MpvRenderer(const MpvObject *obj)
 		: obj(obj)
 		, mpv_gl(nullptr)
 	{
@@ -54,14 +51,14 @@ public:
 		mpv_render_context_set_update_callback(mpv_gl, MpvObject::on_update, (void *)obj);
 	}
 
-	virtual ~MpvRenderer() {
+	MpvRenderer::~MpvRenderer() {
 		if (mpv_gl)
 			mpv_render_context_free(mpv_gl);
 
 		mpv_terminate_destroy(obj->mpv);
 	}
 
-	void render() {
+	void MpvRenderer::render() {
 		QOpenGLFramebufferObject *fbo = framebufferObject();
 		// fbo->bind();
 		obj->window()->resetOpenGLState();
@@ -83,11 +80,6 @@ public:
 		obj->window()->resetOpenGLState();
 		// fbo->release();
 	}
-
-private:
-	const MpvObject *obj;
-	mpv_render_context *mpv_gl;
-};
 
 
 
