@@ -68,10 +68,10 @@ void MpvRenderer::render() {
 
 	// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L133
 	mpv_opengl_fbo mpfbo{
-		(int)fbo->handle(),
-		fbo->width(),
-		fbo->height(),
-		0 // internat_format (0=unknown)
+		.fbo = static_cast<int>(fbo->handle()),
+		.w = fbo->width(),
+		.h = fbo->height(),
+		.internal_format = 0 // 0=unknown
 	};
 	mpv_render_param params[] = {
 		{ MPV_RENDER_PARAM_OPENGL_FBO, &mpfbo },
