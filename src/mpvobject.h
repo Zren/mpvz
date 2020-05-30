@@ -7,7 +7,7 @@
 #include <QtQuick/QQuickFramebufferObject>
 
 #include <mpv/client.h>
-#include <mpv/opengl_cb.h>
+#include <mpv/render_gl.h>
 #include <mpv/qthelper.hpp>
 
 
@@ -132,8 +132,8 @@ private slots:
 	void doUpdate();
 
 protected:
-	mpv::qt::Handle mpv;
-	mpv_opengl_cb_context *mpv_gl;
+	mpv_handle *mpv;
+	mpv_render_context *mpv_gl;
 
 private:
 	void handle_mpv_event(mpv_event *event);

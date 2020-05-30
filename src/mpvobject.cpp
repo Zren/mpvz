@@ -14,6 +14,10 @@
 #include <QtQuick/QQuickFramebufferObject>
 #include <QtGui/QOpenGLFramebufferObject>
 
+#include <mpv/client.h>
+#include <mpv/render_gl.h>
+#include <mpv/qthelper.hpp>
+
 #include <QDebug>
 
 class MpvRenderer : public QQuickFramebufferObject::Renderer
@@ -22,41 +26,72 @@ class MpvRenderer : public QQuickFramebufferObject::Renderer
 		(void)ctx;
 		QOpenGLContext *glctx = QOpenGLContext::currentContext();
 		if (!glctx)
-			return NULL;
-		return (void *)glctx->getProcAddress(QByteArray(name));
+			return nullptr;
+		return reinterpret_cast<void *>(glctx->getProcAddress(QByteArray(name)));
 	}
 
 public:
 	MpvRenderer(const MpvObject *obj)
 		: mpv(obj->mpv)
-		, window(obj->window())
 		, mpv_gl(obj->mpv_gl)
+		, window(obj->window())
 	{
-		int r = mpv_opengl_cb_init_gl(mpv_gl, NULL, get_proc_address, NULL);
-		if (r < 0)
-			throw std::runtime_error("could not initialize OpenGL");
+		// int r = mpv_opengl_cb_init_gl(mpv_gl, NULL, get_proc_address, NULL);
+		// if (r < 0)
+		// 	throw std::runtime_error("could not initialize OpenGL");
+
+		// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L106
+		mpv_opengl_init_params gl_init_params{
+			get_proc_address,
+			nullptr, // get_proc_address_ctx
+			nullptr // extra_exts (deprecated)
+		};
+		mpv_render_param params[]{
+			{ MPV_RENDER_PARAM_API_TYPE, const_cast<char *>(MPV_RENDER_API_TYPE_OPENGL) },
+			{ MPV_RENDER_PARAM_OPENGL_INIT_PARAMS, &gl_init_params },
+			{ MPV_RENDER_PARAM_INVALID, nullptr }
+		};
+
+		if (mpv_render_context_create(&mpv_gl, mpv, params) < 0)
+			throw std::runtime_error("failed to initialize mpv GL context");
 	}
 
 	virtual ~MpvRenderer() {
-		// Until this call is done, we need to make sure the player remains
-		// alive. This is done implicitly with the mpv::qt::Handle instance
-		// in this class.
-		mpv_opengl_cb_uninit_gl(mpv_gl);
+		// mpv_opengl_cb_uninit_gl(mpv_gl);
+
+		mpv_terminate_destroy(mpv);
 	}
 
 	void render() {
 		QOpenGLFramebufferObject *fbo = framebufferObject();
 		// fbo->bind();
 		window->resetOpenGLState();
-		mpv_opengl_cb_draw(mpv_gl, fbo->handle(), fbo->width(), fbo->height());
+		// mpv_opengl_cb_draw(mpv_gl, fbo->handle(), fbo->width(), fbo->height());
+
+		// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L133
+		mpv_opengl_fbo mpfbo{
+			(int)fbo->handle(),
+			fbo->width(),
+			fbo->height(),
+			0 // internat_format (0=unknown)
+		};
+		int flip_y{1};
+		mpv_render_param params[] = {
+			{ MPV_RENDER_PARAM_OPENGL_FBO, &mpfbo },
+			{ MPV_RENDER_PARAM_FLIP_Y, &flip_y },
+			{ MPV_RENDER_PARAM_INVALID, nullptr }
+		};
+		// mpv_render_context_render(mpv_gl, params);
+
+
 		window->resetOpenGLState();
 		// fbo->release();
 	}
 
 private:
-	mpv::qt::Handle mpv;
+	mpv_handle *mpv;
+	mpv_render_context *mpv_gl;
 	QQuickWindow *window;
-	mpv_opengl_cb_context *mpv_gl;
 };
 
 
@@ -75,7 +110,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	, m_position(0)
 	, m_isPlaying(false)
 {
-	mpv = mpv::qt::Handle::FromRawHandle(mpv_create());
+	mpv = mpv_create();
 	if (!mpv)
 		throw std::runtime_error("could not create mpv context");
 
@@ -127,12 +162,16 @@ MpvObject::MpvObject(QQuickItem * parent)
 	// Setup the callback that will make QtQuick update and redraw if there
 	// is a new video frame. Use a queued connection: this makes sure the
 	// doUpdate() function is run on the GUI thread.
-	mpv_gl = (mpv_opengl_cb_context *)mpv_get_sub_api(mpv, MPV_SUB_API_OPENGL_CB);
-	if (!mpv_gl)
-		throw std::runtime_error("OpenGL not compiled in");
-	mpv_opengl_cb_set_update_callback(mpv_gl, MpvObject::on_update, (void *)this);
+	// mpv_gl = (mpv_opengl_cb_context *)mpv_get_sub_api(mpv, MPV_SUB_API_OPENGL_CB);
+	// if (!mpv_gl)
+	// 	throw std::runtime_error("OpenGL not compiled in");
+	// mpv_opengl_cb_set_update_callback(mpv_gl, MpvObject::on_update, (void *)this);
+	// connect(this, &MpvObject::mpvUpdated, this, &MpvObject::doUpdate,
+	// 		Qt::QueuedConnection);
+
+	mpv_render_context_set_update_callback(mpv_gl, MpvObject::on_update, (void *)this);
 	connect(this, &MpvObject::mpvUpdated, this, &MpvObject::doUpdate,
-			Qt::QueuedConnection);
+		Qt::QueuedConnection);
 
 	WATCH_PROP_BOOL("idle-active")
 	WATCH_PROP_BOOL("mute")
@@ -192,8 +231,11 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 MpvObject::~MpvObject()
 {
+	// if (mpv_gl)
+	// 	mpv_opengl_cb_set_update_callback(mpv_gl, NULL, NULL);
+
 	if (mpv_gl)
-		mpv_opengl_cb_set_update_callback(mpv_gl, NULL, NULL);
+		mpv_render_context_free(mpv_gl);
 }
 
 QQuickFramebufferObject::Renderer *MpvObject::createRenderer() const
