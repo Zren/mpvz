@@ -135,12 +135,7 @@ MenuBar {
 		title: "Play"
 
 		MenuItem { action: appActions.playPauseAction }
-
-		MenuItem {
-			text: "Stop"
-			shortcut: "."
-			// onTriggered: mpvObject.stop()
-		}
+		MenuItem { action: appActions.stopAction }
 
 		MenuSeparator {}
 
@@ -169,6 +164,11 @@ MenuBar {
 
 		MenuItem { action: appActions.seekBackwardAction }
 		MenuItem { action: appActions.seekForwardAction }
+
+		MenuSeparator {}
+
+		MenuItem { action: appActions.stepBackwardAction }
+		MenuItem { action: appActions.stepForwardAction }
 	}
 
 

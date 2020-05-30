@@ -24,8 +24,8 @@ QtObject {
 
 	property Action stopAction: Action {
 		text: "Stop"
-		shortcut: "."
-		// onTriggered: mpvObject.stop()
+		// shortcut: "."
+		onTriggered: mpvObject.stop()
 	}
 
 	property Action previousVideoAction: Action {
@@ -76,6 +76,18 @@ QtObject {
 		text: "+5 sec"
 		shortcut: "Right"
 		onTriggered: mpvPlayer.seekForward()
+	}
+
+	property Action stepBackwardAction: Action {
+		text: "Prev Frame"
+		shortcut: ","
+		onTriggered: mpvObject.stepBackward()
+	}
+
+	property Action stepForwardAction: Action {
+		text: "Next Frame"
+		shortcut: "."
+		onTriggered: mpvObject.stepForward()
 	}
 
 	//--- Video

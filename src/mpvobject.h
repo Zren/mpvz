@@ -94,6 +94,9 @@ public slots:
 	void playPause();
 	void play();
 	void pause();
+	void stop();
+	void stepBackward();
+	void stepForward();
 	void seek(double pos);
 	void loadFile(QVariant urls);
 

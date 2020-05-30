@@ -386,6 +386,21 @@ void MpvObject::playPause()
 	}
 }
 
+void MpvObject::stop()
+{
+	command(QVariantList() << "stop" << "keep-playlist");
+}
+
+void MpvObject::stepBackward()
+{
+	command(QVariantList() << "frame-back-step");
+}
+
+void MpvObject::stepForward()
+{
+	command(QVariantList() << "frame-step");
+}
+
 void MpvObject::seek(double pos)
 {
 	qDebug() << "seek" << pos;
