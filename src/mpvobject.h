@@ -133,7 +133,6 @@ private slots:
 
 protected:
 	mpv_handle *mpv;
-	mpv_render_context *mpv_gl;
 
 private:
 	void handle_mpv_event(mpv_event *event);

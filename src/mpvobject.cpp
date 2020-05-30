@@ -32,13 +32,9 @@ class MpvRenderer : public QQuickFramebufferObject::Renderer
 
 public:
 	MpvRenderer(const MpvObject *obj)
-		: mpv(obj->mpv)
-		, mpv_gl(obj->mpv_gl)
-		, window(obj->window())
+		: obj(obj)
+		, mpv_gl(nullptr)
 	{
-		// int r = mpv_opengl_cb_init_gl(mpv_gl, NULL, get_proc_address, NULL);
-		// if (r < 0)
-		// 	throw std::runtime_error("could not initialize OpenGL");
 
 		// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L106
 		mpv_opengl_init_params gl_init_params{
@@ -52,21 +48,23 @@ public:
 			{ MPV_RENDER_PARAM_INVALID, nullptr }
 		};
 
-		if (mpv_render_context_create(&mpv_gl, mpv, params) < 0)
+		if (mpv_render_context_create(&mpv_gl, obj->mpv, params) < 0)
 			throw std::runtime_error("failed to initialize mpv GL context");
+
+		mpv_render_context_set_update_callback(mpv_gl, MpvObject::on_update, (void *)obj);
 	}
 
 	virtual ~MpvRenderer() {
-		// mpv_opengl_cb_uninit_gl(mpv_gl);
+		if (mpv_gl)
+			mpv_render_context_free(mpv_gl);
 
-		mpv_terminate_destroy(mpv);
+		mpv_terminate_destroy(obj->mpv);
 	}
 
 	void render() {
 		QOpenGLFramebufferObject *fbo = framebufferObject();
 		// fbo->bind();
-		window->resetOpenGLState();
-		// mpv_opengl_cb_draw(mpv_gl, fbo->handle(), fbo->width(), fbo->height());
+		obj->window()->resetOpenGLState();
 
 		// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L133
 		mpv_opengl_fbo mpfbo{
@@ -75,23 +73,20 @@ public:
 			fbo->height(),
 			0 // internat_format (0=unknown)
 		};
-		int flip_y{1};
 		mpv_render_param params[] = {
 			{ MPV_RENDER_PARAM_OPENGL_FBO, &mpfbo },
-			{ MPV_RENDER_PARAM_FLIP_Y, &flip_y },
 			{ MPV_RENDER_PARAM_INVALID, nullptr }
 		};
-		// mpv_render_context_render(mpv_gl, params);
+		mpv_render_context_render(mpv_gl, params);
 
 
-		window->resetOpenGLState();
+		obj->window()->resetOpenGLState();
 		// fbo->release();
 	}
 
 private:
-	mpv_handle *mpv;
+	const MpvObject *obj;
 	mpv_render_context *mpv_gl;
-	QQuickWindow *window;
 };
 
 
@@ -104,7 +99,6 @@ static void wakeup(void *ctx)
 
 MpvObject::MpvObject(QQuickItem * parent)
 	: QQuickFramebufferObject(parent)
-	, mpv_gl(0)
 	, m_enableAudio(true)
 	, m_duration(0)
 	, m_position(0)
@@ -124,11 +118,8 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 	mpv::qt::set_option_variant(mpv, "audio-client-name", "mpvz");
 
-	// Make use of the MPV_SUB_API_OPENGL_CB API.
-	// mpv::qt::set_option_variant(mpv, "vo", "opengl-cb");
-
-	// Not sure how
-	mpv::qt::set_option_variant(mpv, "vo", "opengl-cb:interpolation");
+	//--- 60fps Interpolation
+	mpv::qt::set_option_variant(mpv, "interpolation", "yes");
 	mpv::qt::set_option_variant(mpv, "video-sync", "display-resample");
 	// mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
 
@@ -162,16 +153,11 @@ MpvObject::MpvObject(QQuickItem * parent)
 	// Setup the callback that will make QtQuick update and redraw if there
 	// is a new video frame. Use a queued connection: this makes sure the
 	// doUpdate() function is run on the GUI thread.
-	// mpv_gl = (mpv_opengl_cb_context *)mpv_get_sub_api(mpv, MPV_SUB_API_OPENGL_CB);
-	// if (!mpv_gl)
-	// 	throw std::runtime_error("OpenGL not compiled in");
-	// mpv_opengl_cb_set_update_callback(mpv_gl, MpvObject::on_update, (void *)this);
-	// connect(this, &MpvObject::mpvUpdated, this, &MpvObject::doUpdate,
-	// 		Qt::QueuedConnection);
-
-	mpv_render_context_set_update_callback(mpv_gl, MpvObject::on_update, (void *)this);
-	connect(this, &MpvObject::mpvUpdated, this, &MpvObject::doUpdate,
-		Qt::QueuedConnection);
+	// * MpvRender binds mpv_gl update function to MpvObject::on_update
+	// * MpvObject::on_update will emit MpvObject::mpvUpdated
+	connect(this, &MpvObject::mpvUpdated,
+			this, &MpvObject::doUpdate,
+			Qt::QueuedConnection);
 
 	WATCH_PROP_BOOL("idle-active")
 	WATCH_PROP_BOOL("mute")
@@ -231,11 +217,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 MpvObject::~MpvObject()
 {
-	// if (mpv_gl)
-	// 	mpv_opengl_cb_set_update_callback(mpv_gl, NULL, NULL);
 
-	if (mpv_gl)
-		mpv_render_context_free(mpv_gl);
 }
 
 QQuickFramebufferObject::Renderer *MpvObject::createRenderer() const
