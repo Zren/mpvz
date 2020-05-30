@@ -20,70 +20,73 @@
 
 #include <QDebug>
 
-	void* MpvRenderer::get_proc_address(void *ctx, const char *name) {
-		(void)ctx;
-		QOpenGLContext *glctx = QOpenGLContext::currentContext();
-		if (!glctx)
-			return nullptr;
-		return reinterpret_cast<void *>(glctx->getProcAddress(QByteArray(name)));
-	}
-
-	MpvRenderer::MpvRenderer(const MpvObject *obj)
-		: obj(obj)
-		, mpv_gl(nullptr)
-	{
-
-		// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L106
-		mpv_opengl_init_params gl_init_params{
-			get_proc_address,
-			nullptr, // get_proc_address_ctx
-			nullptr // extra_exts (deprecated)
-		};
-		mpv_render_param params[]{
-			{ MPV_RENDER_PARAM_API_TYPE, const_cast<char *>(MPV_RENDER_API_TYPE_OPENGL) },
-			{ MPV_RENDER_PARAM_OPENGL_INIT_PARAMS, &gl_init_params },
-			{ MPV_RENDER_PARAM_INVALID, nullptr }
-		};
-
-		if (mpv_render_context_create(&mpv_gl, obj->mpv, params) < 0)
-			throw std::runtime_error("failed to initialize mpv GL context");
-
-		mpv_render_context_set_update_callback(mpv_gl, MpvObject::on_update, (void *)obj);
-	}
-
-	MpvRenderer::~MpvRenderer() {
-		if (mpv_gl)
-			mpv_render_context_free(mpv_gl);
-
-		mpv_terminate_destroy(obj->mpv);
-	}
-
-	void MpvRenderer::render() {
-		QOpenGLFramebufferObject *fbo = framebufferObject();
-		// fbo->bind();
-		obj->window()->resetOpenGLState();
-
-		// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L133
-		mpv_opengl_fbo mpfbo{
-			(int)fbo->handle(),
-			fbo->width(),
-			fbo->height(),
-			0 // internat_format (0=unknown)
-		};
-		mpv_render_param params[] = {
-			{ MPV_RENDER_PARAM_OPENGL_FBO, &mpfbo },
-			{ MPV_RENDER_PARAM_INVALID, nullptr }
-		};
-		mpv_render_context_render(mpv_gl, params);
 
 
-		obj->window()->resetOpenGLState();
-		// fbo->release();
-	}
+//--- MpvRenderer
+void* MpvRenderer::get_proc_address(void *ctx, const char *name) {
+	(void)ctx;
+	QOpenGLContext *glctx = QOpenGLContext::currentContext();
+	if (!glctx)
+		return nullptr;
+	return reinterpret_cast<void *>(glctx->getProcAddress(QByteArray(name)));
+}
+
+MpvRenderer::MpvRenderer(const MpvObject *obj)
+	: obj(obj)
+	, mpv_gl(nullptr)
+{
+
+	// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L106
+	mpv_opengl_init_params gl_init_params{
+		get_proc_address,
+		nullptr, // get_proc_address_ctx
+		nullptr // extra_exts (deprecated)
+	};
+	mpv_render_param params[]{
+		{ MPV_RENDER_PARAM_API_TYPE, const_cast<char *>(MPV_RENDER_API_TYPE_OPENGL) },
+		{ MPV_RENDER_PARAM_OPENGL_INIT_PARAMS, &gl_init_params },
+		{ MPV_RENDER_PARAM_INVALID, nullptr }
+	};
+
+	if (mpv_render_context_create(&mpv_gl, obj->mpv, params) < 0)
+		throw std::runtime_error("failed to initialize mpv GL context");
+
+	mpv_render_context_set_update_callback(mpv_gl, MpvObject::on_update, (void *)obj);
+}
+
+MpvRenderer::~MpvRenderer() {
+	if (mpv_gl)
+		mpv_render_context_free(mpv_gl);
+
+	mpv_terminate_destroy(obj->mpv);
+}
+
+void MpvRenderer::render() {
+	QOpenGLFramebufferObject *fbo = framebufferObject();
+	// fbo->bind();
+	obj->window()->resetOpenGLState();
+
+	// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L133
+	mpv_opengl_fbo mpfbo{
+		(int)fbo->handle(),
+		fbo->width(),
+		fbo->height(),
+		0 // internat_format (0=unknown)
+	};
+	mpv_render_param params[] = {
+		{ MPV_RENDER_PARAM_OPENGL_FBO, &mpfbo },
+		{ MPV_RENDER_PARAM_INVALID, nullptr }
+	};
+	mpv_render_context_render(mpv_gl, params);
+
+
+	obj->window()->resetOpenGLState();
+	// fbo->release();
+}
 
 
 
-
+//--- MpvObject
 static void wakeup(void *ctx)
 {
 	QMetaObject::invokeMethod((MpvObject*)ctx, "on_mpv_events", Qt::QueuedConnection);
