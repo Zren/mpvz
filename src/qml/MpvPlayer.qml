@@ -180,6 +180,21 @@ Item {
 			return label.trim()
 		}
 
+		function nextVideoTrack() {
+			var nextTrack = ((mpvObject.vid + 1) % (mpvObject.numVideoTracks + 1))
+			// console.log('vid', mpvObject.vid, '=>', nextTrack)
+			mpvObject.setProperty("vid", nextTrack)
+
+			var trackMsg = ""
+			if (mpvObject.aid > 0) {
+				var track = getTrack("video", mpvObject.vid)
+				trackMsg = "" + mpvObject.vid + "/" + mpvObject.numVideoTracks + " " + formatTrackLabel(track)
+			} else {
+				trackMsg = "none"
+			}
+			osd.show("Video Track: " + trackMsg)
+		}
+
 		function nextAudioTrack() {
 			var nextTrack = ((mpvObject.aid + 1) % (mpvObject.numAudioTracks + 1))
 			// console.log('aid', mpvObject.aid, '=>', nextTrack)
