@@ -192,6 +192,8 @@ MpvObject::MpvObject(QQuickItem * parent)
 	WATCH_PROP_STRING("path")
 	WATCH_PROP_STRING("video-codec")
 	WATCH_PROP_STRING("video-format")
+	WATCH_PROP_STRING("video-params/pixelformat")
+	WATCH_PROP_STRING("video-out-params/pixelformat")
 
 	connect(this, &MpvObject::idleActiveChanged,
 			this, &MpvObject::updateState);
@@ -336,6 +338,8 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			else if HANDLE_PROP_STRING("path", path)
 			else if HANDLE_PROP_STRING("video-codec", videoCodec)
 			else if HANDLE_PROP_STRING("video-format", videoFormat)
+			else if HANDLE_PROP_STRING("video-params/pixelformat", videoParamsPixelformat)
+			else if HANDLE_PROP_STRING("video-out-params/pixelformat", videoOutParamsPixelformat)
 
 
 		} else if (prop->format == MPV_FORMAT_INT64) {

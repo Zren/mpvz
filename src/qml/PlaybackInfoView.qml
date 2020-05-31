@@ -32,6 +32,7 @@ ColumnLayout {
 		PlaybackInfoText { key: "Dropped Frames"; value: '' + mpvObject.decoderFrameDropCount + ' (decoder) ' + mpvObject.frameDropCount + ' (output)' }
 		PlaybackInfoText { key: "Delayed Frames"; value: mpvObject.voDelayedFrameCount }
 		PlaybackInfoText { key: "Hardware Acceleration"; value: mpvObject.hwdec + '[' + (mpvObject.hwdecCurrent || '--') + ']' }
+		PlaybackInfoText { key: "Pixel Format"; value: mpvObject.videoParamsPixelformat || mpvObject.videoOutParamsPixelformat }
 	}
 
 	PlaybackInfoSection {
