@@ -46,7 +46,7 @@ MouseArea {
 
 			ControlBarButton {
 				iconName: {
-					console.log('mpvObject.volume', mpvObject.volume)
+					// console.log('mpvObject.volume', mpvObject.volume)
 					if (mpvObject.muted) {
 						return "volume-mute"
 					} else {

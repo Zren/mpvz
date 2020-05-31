@@ -66,8 +66,8 @@ Item {
 
 		// onMpvUpdated: console.log('onMpvUpdated', Date.now())
 		// onPositionChanged: console.log('onPositionChanged', value)
-		onDurationChanged: console.log('onDurationChanged', value)
-		onVolumeChanged: console.log('onVolumeChanged', value)
+		// onDurationChanged: console.log('onDurationChanged', value)
+		// onVolumeChanged: console.log('onVolumeChanged', value)
 
 		function toggleMute() {
 			muted = !muted
@@ -132,10 +132,13 @@ Item {
 			}
 		}
 
-		onPausedChanged: console.log('onPausedChanged', paused)
-		onIdleActiveChanged: console.log('onIdleActiveChanged', idleActive)
-		onIsPlayingChanged: console.log('onIsPlayingChanged', isPlaying)
-		onStateStrChanged: console.log('onStateStrChanged', stateStr)
+		// onPausedChanged: console.log('onPausedChanged', paused)
+		// onIdleActiveChanged: console.log('onIdleActiveChanged', idleActive)
+		// onIsPlayingChanged: console.log('onIsPlayingChanged', isPlaying)
+		// onStateStrChanged: console.log('onStateStrChanged', stateStr)
+		// onHwdecChanged: console.log('hwdec', hwdec)
+		// onHwdecCurrentChanged: console.log('hwdecCurrent', hwdecCurrent)
+		// onHwdecInteropChanged: console.log('hwdecInterop', hwdecInterop)
 
 		property int numVideoTracks: 0
 		property int numAudioTracks: 0
