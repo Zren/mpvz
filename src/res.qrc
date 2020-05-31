@@ -19,6 +19,7 @@
 		<file>qml/AppSlider.qml</file>
 		<file>qml/AppSliderStyle.qml</file>
 		<file>qml/PlaybackInfoView.qml</file>
+		<file>qml/PlaybackInfoSection.qml</file>
 		<file>qml/PlaybackInfoText.qml</file>
 		<file>qml/ThumbnailItem.qml</file>
 		<file>qml/VolumeSlider.qml</file>
