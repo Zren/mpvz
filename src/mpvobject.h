@@ -74,6 +74,10 @@ class MpvObject : public QQuickFramebufferObject
 	READONLY_PROP_DOUBLE("fps", fps) // Deprecated, use "container-fps"
 	WRITABLE_PROP_DOUBLE("speed", speed)
 	READONLY_PROP_DOUBLE("video-bitrate", videoBitrate)
+	READONLY_PROP_DOUBLE("video-params/aspect", videoParamsAspect)
+	READONLY_PROP_DOUBLE("video-out-params/aspect", videoOutParamsAspect)
+	WRITABLE_PROP_DOUBLE("window-scale", windowScale)
+	READONLY_PROP_DOUBLE("current-window-scale", currentWindowScale)
 	READONLY_PROP_STRING("audio-codec", audioCodec)
 	READONLY_PROP_STRING("audio-codec-name", audioCodecName)
 	READONLY_PROP_STRING("filename", filename)
