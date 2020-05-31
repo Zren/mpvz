@@ -117,32 +117,11 @@ MpvObject::MpvObject(QQuickItem * parent)
 	mpv::qt::set_option_variant(mpv, "interpolation", "yes");
 	mpv::qt::set_option_variant(mpv, "video-sync", "display-resample");
 	// mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
+	// mpv::qt::set_option_variant(mpv, "override-display-fps", "60");
 
-	// Request hw decoding by default
-	// mpv::qt::set_option_variant(mpv, "hwdec", "auto");
-	// mpv::qt::set_option_variant(mpv, "hwdec-codecs", "all");
-	// mpv::qt::set_option_variant(mpv, "hwdec", "auto-copy");
-
-	// Testing
-	// mpv::qt::set_option_variant(mpv, "vo", "vaapi");
-	// mpv::qt::set_option_variant(mpv, "hwdec", "vaapi-copy");
-	// mpv::qt::set_option_variant(mpv, "hwdec", "h264-vaapi-copy");
-
-	// mpv::qt::set_option_variant(mpv, "aid", "no");
-	// mpv::qt::set_option_variant(mpv, "sid", "no");
-	// mpv::qt::set_option_variant(mpv, "audio-file-auto", "no");
-	// mpv::qt::set_option_variant(mpv, "sub-auto", "no");
-	// mpv::qt::set_option_variant(mpv, "osd-level", "0");
-	// mpv::qt::set_option_variant(mpv, "quiet", "yes");
-	// mpv::qt::set_option_variant(mpv, "title", "\"\"");
-	// mpv::qt::set_option_variant(mpv, "audio-pitch-correction", "no");
-	// mpv::qt::set_option_variant(mpv, "pause", "yes");
-	// mpv::qt::set_option_variant(mpv, "keep-open", "always");
-	// mpv::qt::set_option_variant(mpv, "vd-lavc-skiploopfilter", "all");
-	// mpv::qt::set_option_variant(mpv, "use-text-osd", "no");
-	// mpv::qt::set_option_variant(mpv, "audio-display", "no");
-	// mpv::qt::set_option_variant(mpv, "access-references", "no");
-	// mpv::qt::set_option_variant(mpv, "frames", "1");
+	//--- Hardware Decoding
+	mpv::qt::set_option_variant(mpv, "hwdec", "auto");
+	mpv::qt::set_option_variant(mpv, "hwdec-codecs", "all");
 
 
 	// Setup the callback that will make QtQuick update and redraw if there
@@ -378,22 +357,22 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 
 void MpvObject::play()
 {
-	qDebug() << "play";
+	// qDebug() << "play";
 	if (idleActive() && playlistCount() >= 1) { // File has finished playing.
-		qDebug() << "\treload";
+		// qDebug() << "\treload";
 		set_playlistPos(playlistPos()); // Reload and play file again.
 	}
 	if (!isPlaying()) {
-		qDebug() << "\t!isPlaying";
+		// qDebug() << "\t!isPlaying";
 		set_paused(false);
 	}
 }
 
 void MpvObject::pause()
 {
-	qDebug() << "pause";
+	// qDebug() << "pause";
 	if (isPlaying()) {
-		qDebug() << "!isPlaying";
+		// qDebug() << "!isPlaying";
 		set_paused(true);
 	}
 }
@@ -424,7 +403,7 @@ void MpvObject::stepForward()
 
 void MpvObject::seek(double pos)
 {
-	qDebug() << "seek" << pos;
+	// qDebug() << "seek" << pos;
 	pos = qMax(0.0, qMin(pos, m_duration));
 	command(QVariantList() << "seek" << pos << "absolute");
 }
