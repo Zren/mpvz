@@ -9,7 +9,7 @@ ColumnLayout {
 		heading.key: "File"
 		heading.value: mpvObject.filename
 
-		PlaybackInfoText { key: "Title"; value: mpvObject.title }
+		PlaybackInfoText { key: "Title"; value: mpvObject.mediaTitle; visible: mpvObject.filename != mpvObject.mediaTitle }
 	}
 
 	PlaybackInfoSection {

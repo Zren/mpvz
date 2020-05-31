@@ -390,6 +390,7 @@ Item {
 	Loader {
 		id: playbackInfo
 		anchors.left: parent.left
+		anchors.right: parent.right
 		anchors.top: parent.top
 		anchors.margins: 10
 		source: "PlaybackInfoView.qml"
