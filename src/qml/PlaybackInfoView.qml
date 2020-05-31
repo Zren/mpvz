@@ -23,6 +23,9 @@ ColumnLayout {
 		heading.key: "Video Track #" + mpvObject.vid
 		heading.value: mpvObject.videoCodec
 
+		// PlaybackInfoText { key: "Display FPS"; value: "" + mpvObject.displayFps.toFixed(3) + "fps (specified) " + mpvObject.estimatedDisplayFps.toFixed(3) + "fps (estimated)" }
+		// PlaybackInfoText { key: "FPS"; value: "" + mpvObject.containerFps.toFixed(3) + "fps (specified) " + mpvObject.estimatedVfFps.toFixed(3) + "fps (estimated)" }
+
 		PlaybackInfoText { key: "Decoder"; value: mpvObject.dwidth + "x" + mpvObject.dheight + " " + (mpvObject.containerFps || mpvObject.fps).toFixed(3) + "fps " + mpvObject.videoBitrate + "bps" }
 		PlaybackInfoText { key: "Output"; value: mpvObject.dwidth + "x" + mpvObject.dheight + " " + mpvObject.estimatedVfFps.toFixed(3) + "fps --bps" }
 		PlaybackInfoText { key: "Est. Frame Number"; value: mpvObject.estimatedFrameNumber + "/" + mpvObject.estimatedFrameCount }
