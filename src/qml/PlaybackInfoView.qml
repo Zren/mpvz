@@ -23,18 +23,18 @@ ColumnLayout {
 		heading.key: "Video Track #" + mpvObject.vid
 		heading.value: mpvObject.videoCodec
 
-		PlaybackInfoText { text: "Decoder: " + mpvObject.dwidth + "x" + mpvObject.dheight + " " + (mpvObject.containerFps || mpvObject.fps).toFixed(3) + "fps " + mpvObject.videoBitrate + "bps" }
-		PlaybackInfoText { text: "Output: " + mpvObject.dwidth + "x" + mpvObject.dheight + " " + mpvObject.estimatedVfFps.toFixed(3) + "fps --bps" }
-		PlaybackInfoText { text: "Est. Frame Number: " + mpvObject.estimatedFrameNumber + "/" + mpvObject.estimatedFrameCount }
-		PlaybackInfoText { text: "Dropped Frames: " + (mpvObject.frameDropCount || mpvObject.decoderFrameDropCount) }
-		PlaybackInfoText { text: "Delayed Frames: " + mpvObject.voDelayedFrameCount }
-		PlaybackInfoText { text: "Hardware Acceleration: " + mpvObject.hwdec + '[' + (mpvObject.hwdecCurrent || '--') + ']' }
+		PlaybackInfoText { key: "Decoder"; value: mpvObject.dwidth + "x" + mpvObject.dheight + " " + (mpvObject.containerFps || mpvObject.fps).toFixed(3) + "fps " + mpvObject.videoBitrate + "bps" }
+		PlaybackInfoText { key: "Output"; value: mpvObject.dwidth + "x" + mpvObject.dheight + " " + mpvObject.estimatedVfFps.toFixed(3) + "fps --bps" }
+		PlaybackInfoText { key: "Est. Frame Number"; value: mpvObject.estimatedFrameNumber + "/" + mpvObject.estimatedFrameCount }
+		PlaybackInfoText { key: "Dropped Frames"; value: (mpvObject.frameDropCount || mpvObject.decoderFrameDropCount) }
+		PlaybackInfoText { key: "Delayed Frames"; value: mpvObject.voDelayedFrameCount }
+		PlaybackInfoText { key: "Hardware Acceleration"; value: mpvObject.hwdec + '[' + (mpvObject.hwdecCurrent || '--') + ']' }
 	}
 
 	PlaybackInfoSection {
 		heading.key: "Audio Track #" + mpvObject.aid
 		heading.value: mpvObject.audioCodec
 
-		PlaybackInfoText { text: "Decoder: " + mpvObject.audioBitrate + "bps" }
+		PlaybackInfoText { key: "Decoder"; value: mpvObject.audioBitrate + "bps" }
 	}
 }
