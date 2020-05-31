@@ -36,6 +36,5 @@ ColumnLayout {
 		heading.value: mpvObject.audioCodec
 
 		PlaybackInfoText { text: "Decoder: " + mpvObject.audioBitrate + "bps" }
-		PlaybackInfoText { text: "Decoder: " + mpvObject.audioBitrate + "bps" }
 	}
 }
