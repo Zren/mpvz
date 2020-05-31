@@ -14,6 +14,8 @@
 #include <QtQuick/QQuickFramebufferObject>
 #include <QtGui/QOpenGLFramebufferObject>
 
+#include <QtX11Extras/QX11Info>
+
 #include <mpv/client.h>
 #include <mpv/render_gl.h>
 #include <mpv/qthelper.hpp>
@@ -42,9 +44,18 @@ MpvRenderer::MpvRenderer(const MpvObject *obj)
 		nullptr, // get_proc_address_ctx
 		nullptr // extra_exts (deprecated)
 	};
+	mpv_render_param display{
+		MPV_RENDER_PARAM_INVALID,
+		nullptr
+	};
+	if (QX11Info::isPlatformX11()) {
+		display.type = MPV_RENDER_PARAM_X11_DISPLAY;
+		display.data = QX11Info::display();
+	}
 	mpv_render_param params[]{
 		{ MPV_RENDER_PARAM_API_TYPE, const_cast<char *>(MPV_RENDER_API_TYPE_OPENGL) },
 		{ MPV_RENDER_PARAM_OPENGL_INIT_PARAMS, &gl_init_params },
+		display,
 		{ MPV_RENDER_PARAM_INVALID, nullptr }
 	};
 
