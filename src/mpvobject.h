@@ -68,6 +68,7 @@ class MpvObject : public QQuickFramebufferObject
 	READONLY_PROP_DOUBLE("audio-bitrate", audioBitrate)
 	READONLY_PROP_DOUBLE("avsync", avsync)
 	READONLY_PROP_DOUBLE("container-fps", containerFps)
+	READONLY_PROP_DOUBLE("display-fps", displayFps)
 	READONLY_PROP_DOUBLE("estimated-display-fps", estimatedDisplayFps)
 	READONLY_PROP_DOUBLE("estimated-vf-fps", estimatedVfFps)
 	READONLY_PROP_DOUBLE("fps", fps) // Deprecated, use "container-fps"
