@@ -87,10 +87,13 @@ AppSlider {
 
 			Rectangle {
 				anchors.centerIn: parent
-				property int size: control.handleSize
+				property int size: slider.mouseArea.containsMouse ? control.handleSize : 0
 				width: size
 				height: size
 				radius: control.handleSize
+				Behavior on size {
+					NumberAnimation { duration: 400 }
+				}
 			}
 		}
 	}
