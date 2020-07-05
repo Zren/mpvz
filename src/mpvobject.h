@@ -1,11 +1,12 @@
-#ifndef MPVRENDERER_H_
-#define MPVRENDERER_H_
+#pragma once
 
 #include "mpvhelpers.h"
 
+// Qt
 #include <QtQuick/QQuickItem>
 #include <QtQuick/QQuickFramebufferObject>
 
+// libmpv
 #include <mpv/client.h>
 #include <mpv/render_gl.h>
 #include <mpv/qthelper.hpp>
@@ -169,5 +170,3 @@ private:
 	double m_position;
 	bool m_isPlaying;
 };
-
-#endif

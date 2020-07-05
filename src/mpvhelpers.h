@@ -1,5 +1,4 @@
-#ifndef MPVHELPERS_H_
-#define MPVHELPERS_H_
+#pragma once
 
 // MpvObject definition
 #define READONLY_PROP_BOOL(p, varName) \
@@ -94,7 +93,3 @@
 		QString value = getProperty(p).toString(); \
 		Q_EMIT varName##Changed(value); \
 	}
-
-
-
-#endif

@@ -1,7 +1,8 @@
-#ifndef MPVAPP_H
-#define MPVAPP_H
+#pragma once
 
 #include "mpvobject.h"
+
+// Qt
 #include <QQmlApplicationEngine>
 
 
@@ -48,5 +49,3 @@ private:
 	QStringList m_customFiles;
 
 };
-
-#endif
