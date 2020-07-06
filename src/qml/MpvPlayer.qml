@@ -412,6 +412,21 @@ Item {
 		anchors.bottomMargin: controlBar.height
 		source: "ConsoleView.qml"
 		active: config.showConsole
+
+		ListModel {
+			id: logModel
+		}
+
+		Connections {
+			target: mpvObject
+			onLogMessage: {
+				logModel.append({
+					prefix: prefix,
+					level: level,
+					text: text.trim(),
+				})
+			}
+		}
 	}
 
 	Loader {

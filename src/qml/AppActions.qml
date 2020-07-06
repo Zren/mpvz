@@ -181,6 +181,13 @@ QtObject {
 
 
 	//--- Tools
+	property Action toggleConsoleViewAction: Action {
+		text: "Console"
+		shortcut: "`"
+		checkable: true
+		checked: config.showConsole
+		onTriggered: config.showConsole = !config.showConsole
+	}
 	property Action togglePlaybackInfoAction: Action {
 		text: "Playback Information"
 		shortcut: "Tab"
