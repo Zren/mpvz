@@ -8,7 +8,7 @@ MouseArea {
 	hoverEnabled: true
 
 	property alias seekSlider: seekSlider
-	property bool compactMode: width <= 520 // TODO DPI
+	property bool compactMode: width <= 580 // TODO DPI
 
 	ColumnLayout {
 		id: columnLayout
@@ -72,12 +72,14 @@ MouseArea {
 				visible: !controlBar.compactMode
 			}
 
+			Item { Layout.fillWidth: true }
 
-			ControlBarText {
-				Layout.fillWidth: true
-				text: "" + mpvObject.positionStr + " / " + mpvObject.durationStr
-				elide: Text.ElideRight
+			ControlBarButton {
+				text: "" + mpvObject.positionStr + " / " + (config.showTimeLeft ? "-" + mpvObject.timeLeftStr : mpvObject.durationStr)
+				onClicked: config.showTimeLeft = !config.showTimeLeft
 			}
+
+			Item { Layout.fillWidth: true }
 
 			ControlBarButton {
 				visible: !controlBar.compactMode

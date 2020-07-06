@@ -47,6 +47,7 @@ AppWindow {
 		property bool showPlaybackInfo: false
 		property bool showConsole: false
 		property bool do60fps: false
+		property bool showTimeLeft: false
 	}
 
 	visible: true

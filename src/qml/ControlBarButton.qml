@@ -8,12 +8,16 @@ ToolButton {
 	id: control
 	property string iconName: ""
 	iconSource: {
-		if (pressed) {
-			return "qrc:icons/Tethys/" + iconName + "-pressed.png"
-		} else if (hovered) {
-			return "qrc:icons/Tethys/" + iconName + "-hovered.png"
+		if (iconName) {
+			if (pressed) {
+				return "qrc:icons/Tethys/" + iconName + "-pressed.png"
+			} else if (hovered) {
+				return "qrc:icons/Tethys/" + iconName + "-hovered.png"
+			} else {
+				return "qrc:icons/Tethys/" + iconName + ".png"
+			}
 		} else {
-			return "qrc:icons/Tethys/" + iconName + ".png"
+			return ""
 		}
 	}
 	implicitHeight: 36
@@ -37,6 +41,7 @@ ToolButton {
 				Image {
 					source: control.iconSource
 					anchors.verticalCenter: parent.verticalCenter
+					visible: status == Image.Ready
 				}
 				Text {
 					id: text

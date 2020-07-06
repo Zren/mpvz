@@ -132,6 +132,7 @@ Item {
 		readonly property real positionRatio: position / duration
 		readonly property string positionStr: formatShortTime(position)
 		readonly property string durationStr: formatShortTime(duration)
+		readonly property string timeLeftStr: formatShortTime(duration - position)
 		readonly property string stateStr: {
 			if (idleActive) {
 				return "Idle"
