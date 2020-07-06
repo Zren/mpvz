@@ -22,6 +22,7 @@
 		<file>qml/ShortcutLabel.qml</file>
 		<file>qml/AppSlider.qml</file>
 		<file>qml/AppSliderStyle.qml</file>
+		<file>qml/ConsoleView.qml</file>
 		<file>qml/PlaybackInfoView.qml</file>
 		<file>qml/PlaybackInfoSection.qml</file>
 		<file>qml/PlaybackInfoText.qml</file>

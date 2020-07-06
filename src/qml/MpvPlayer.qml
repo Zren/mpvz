@@ -406,6 +406,15 @@ Item {
 	}
 
 	Loader {
+		id: consoleView
+		anchors.fill: parent
+		anchors.margins: 10
+		anchors.bottomMargin: controlBar.height
+		source: "ConsoleView.qml"
+		active: config.showConsole
+	}
+
+	Loader {
 		id: playbackInfo
 		anchors.left: parent.left
 		anchors.right: parent.right

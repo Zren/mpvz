@@ -124,6 +124,8 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 	mpv::qt::set_option_variant(mpv, "audio-client-name", "mpvz");
 
+	mpv_request_log_messages(mpv, "terminal-default");
+
 	//--- 60fps Interpolation
 	mpv::qt::set_option_variant(mpv, "interpolation", "yes");
 	mpv::qt::set_option_variant(mpv, "video-sync", "display-resample");
@@ -270,6 +272,15 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 	// See: https://github.com/mpv-player/mpv/blob/master/player/lua.c#L471
 
 	switch (event->event_id) {
+	case MPV_EVENT_LOG_MESSAGE: {
+		mpv_event_log_message *logData = (mpv_event_log_message *)event->data;
+		Q_EMIT logMessage(
+			QString(logData->prefix),
+			QString(logData->level),
+			QString(logData->text)
+		);
+		break;
+	}
 	case MPV_EVENT_START_FILE: {
 		Q_EMIT fileStarted();
 		break;

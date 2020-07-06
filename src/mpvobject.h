@@ -150,6 +150,7 @@ signals:
 
 	void mpvUpdated();
 
+	void logMessage(QString prefix, QString level, QString text);
 	void fileStarted();
 	void fileEnded(QString reason);
 	void fileLoaded();
