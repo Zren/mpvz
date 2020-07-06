@@ -85,7 +85,7 @@ class MpvObject : public QQuickFramebufferObject
 	READONLY_PROP_STRING("file-format", fileFormat)
 	READONLY_PROP_STRING("file-size", fileSize)
 	READONLY_PROP_STRING("audio-format", audioFormat)
-	READONLY_PROP_STRING("hwdec", hwdec)
+	WRITABLE_PROP_STRING("hwdec", hwdec)
 	READONLY_PROP_STRING("hwdec-current", hwdecCurrent)
 	READONLY_PROP_STRING("hwdec-interop", hwdecInterop)
 	READONLY_PROP_STRING("media-title", mediaTitle)

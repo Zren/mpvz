@@ -91,6 +91,17 @@ QtObject {
 	}
 
 	//--- Video
+	property Action toggleHwdecAction: Action {
+		text: "hwdec"
+		shortcut: "Ctrl+H"
+		onTriggered: {
+			if (mpvObject.hwdec != "none") {
+				mpvObject.hwdec = "none"
+			} else {
+				mpvObject.hwdec = "auto"
+			}
+		}
+	}
 	property Action toggle60fpsAction: Action {
 		text: "60fps"
 		onTriggered: {

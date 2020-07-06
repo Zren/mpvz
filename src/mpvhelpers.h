@@ -56,7 +56,14 @@
 		QString varName() { return getProperty(p).toString(); } \
 	Q_SIGNALS: \
 		void varName##Changed(QString value);
-
+#define WRITABLE_PROP_STRING(p, varName) \
+	public: \
+		Q_PROPERTY(QString varName READ varName WRITE set_##varName NOTIFY varName##Changed) \
+	public Q_SLOTS: \
+		QString varName() { return getProperty(p).toString(); } \
+		void set_##varName(QString value) { setProperty(p, value); } \
+	Q_SIGNALS: \
+		void varName##Changed(QString value);
 
 
 
