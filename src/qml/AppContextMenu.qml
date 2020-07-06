@@ -50,6 +50,7 @@ Menu {
 	Menu {
 		title: "Video"
 
+		MenuItem { action: appActions.toggleHwdecAction }
 		MenuItem { action: appActions.toggle60fpsAction }
 	}
 
@@ -85,6 +86,7 @@ Menu {
 		}
 
 		MenuItem { action: appActions.togglePlaybackInfoAction }
+		MenuItem { action: appActions.toggleConsoleViewAction }
 	}
 
 	Menu {
