@@ -18,7 +18,7 @@ Item {
 		id: folderModel
 		// File ext list from: https://github.com/mpv-player/mpv/blob/master/TOOLS/lua/autoload.lua
 		nameFilters: [ "*.3gp", "*.avi", "*.flac", "*.flv", "*.m4a", "*.m4v", "*.mkv", "*.mp3", "*.mp4", "*.mpeg", "*.mpg", "*.ogg", "*.ogm", "*.ogv", "*.opus", "*.rmvb", "*.wav", "*.webm", "*.wma", "*.wmv" ]
-		sortField :  "Name"
+		sortField: "Name"
 		showDotAndDotDot: false
 		showDirs: false
 
