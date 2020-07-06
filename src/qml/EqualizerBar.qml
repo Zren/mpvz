@@ -22,7 +22,6 @@ Item {
 	Rectangle {
 		id: outerOutlineBlack
 		anchors.fill: parent
-		anchors.margins: parent.border.width
 		color: "transparent"
 		border.width: outlineThickness
 		border.color: "#000"
