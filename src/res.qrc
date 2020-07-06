@@ -15,7 +15,11 @@
 		<file>qml/ControlBar.qml</file>
 		<file>qml/ControlBarButton.qml</file>
 		<file>qml/ControlBarText.qml</file>
+		<file>qml/Equalizer.qml</file>
+		<file>qml/EqualizerBar.qml</file>
+		<file>qml/EqualizerLabel.qml</file>
 		<file>qml/SeekbarSlider.qml</file>
+		<file>qml/ShortcutLabel.qml</file>
 		<file>qml/AppSlider.qml</file>
 		<file>qml/AppSliderStyle.qml</file>
 		<file>qml/PlaybackInfoView.qml</file>

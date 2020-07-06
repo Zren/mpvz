@@ -452,11 +452,23 @@ Item {
 		}
 	}
 
-	Item {
+	Equalizer {
 		id: equalizer
+		anchors.verticalCenter: parent.verticalCenter
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.margins: 100
+
+		opacity: equalizerTimeoutTimer.running ? 1 : 0
+
+		Timer {
+			id: equalizerTimeoutTimer
+			interval: 1000
+		}
 
 		function show(label, value) {
 			osd.show("" + label + ": " + value)
+			equalizerTimeoutTimer.restart()
 		}
 	}
 
