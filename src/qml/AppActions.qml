@@ -14,6 +14,11 @@ QtObject {
 		shortcut: "Ctrl+G"
 		// onTriggered: 
 	}
+	property Action exitAction: Action {
+		text: "Exit"
+		shortcut: "Alt+X"
+		onTriggered: Qt.quit()
+	}
 
 	//--- Play
 	property Action playPauseAction: Action {
@@ -206,4 +211,81 @@ QtObject {
 		onTriggered: window.toggleFullscreen()
 	}
 	property Action toggleFullscreenAction2: Action { shortcut: "F"; onTriggered: toggleFullscreenAction.trigger() }
+
+	//--- View
+	property Action hideMenuAction: Action {
+		text: "Hide Menu"
+		shortcut: "Ctrl+0"
+		checkable: true
+		checked: window.hideMenuBar
+		onTriggered: {
+			window.hideMenuBar = !window.hideMenuBar
+		}
+	}
+
+	//--- View > Presets
+	property Action minimalPresetAction: Action {
+		text: "Minimal"
+		shortcut: "F1"
+		onTriggered: {
+			window.pictureInPicture = false
+			window.hideBorders = true
+			window.hideMenuBar = true
+		}
+	}
+	property Action compactPresetAction: Action {
+		text: "Compact"
+		shortcut: "F2"
+		onTriggered: {
+			window.pictureInPicture = false
+			window.hideBorders = false
+			window.hideMenuBar = true
+		}
+	}
+	property Action normalPresetAction: Action {
+		text: "Normal"
+		shortcut: "F3"
+		onTriggered: {
+			window.pictureInPicture = false
+			window.hideBorders = false
+			window.hideMenuBar = false
+		}
+	}
+	property Action pictureInPictureAction: Action {
+		text: "Picture In Picture"
+		shortcut: "F4"
+		onTriggered: {
+			window.pictureInPicture = true
+		}
+	}
+
+	//--- View > On Top
+	property Action neverOnTopAction: Action {
+		text: "Never"
+		shortcut: window.alwaysOnTop == 'always' ? "Ctrl+A" : null
+		checkable: true
+		checked: window.alwaysOnTop == 'never'
+		onTriggered: window.alwaysOnTop = 'never'
+	}
+
+	property Action alwaysOnTopAction: Action {
+		text: "Always"
+		shortcut: window.alwaysOnTop == 'never' ? "Ctrl+A" : null
+		checkable: true
+		checked: window.alwaysOnTop == 'always'
+		onTriggered: window.alwaysOnTop = 'always'
+	}
+
+	property Action onTopWhilePlayingAction: Action {
+		text: "While Playing"
+		checkable: true
+		checked: window.alwaysOnTop == 'whilePlaying'
+		onTriggered: window.alwaysOnTop = 'whilePlaying'
+	}
+
+	//---
+	property Action homePageAction: Action {
+		text: "Home Page"
+		onTriggered: Qt.openUrlExternally('https://github.com/Zren/mpvz')
+	}
 }

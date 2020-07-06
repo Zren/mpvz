@@ -23,11 +23,7 @@ MenuBar {
 		//     shortcut: "Shift+F10"
 		// }
 
-		MenuItem {
-			text: "Exit"
-			shortcut: "Alt+X"
-			onTriggered: Qt.quit()
-		}
+		MenuItem { action: appActions.exitAction }
 	}
 
 
@@ -36,56 +32,15 @@ MenuBar {
 	Menu {
 		title: "View"
 
-		MenuItem {
-			text: "Hide Menu"
-			shortcut: "Ctrl+0"
-			checkable: true
-			checked: window.hideMenuBar
-			onTriggered: {
-				window.hideMenuBar = !window.hideMenuBar
-			}
-		}
+		MenuItem { action: appActions.hideMenuAction }
 
 		Menu {
 			title: "Presets"
 
-			MenuItem {
-				text: "Minimal"
-				shortcut: "F1"
-				onTriggered: {
-					window.pictureInPicture = false
-					window.hideBorders = true
-					window.hideMenuBar = true
-				}
-			}
-
-			MenuItem {
-				text: "Compact"
-				shortcut: "F2"
-				onTriggered: {
-					window.pictureInPicture = false
-					window.hideBorders = false
-					window.hideMenuBar = true
-				}
-			}
-
-			MenuItem {
-				text: "Normal"
-				shortcut: "F3"
-				onTriggered: {
-					window.pictureInPicture = false
-					window.hideBorders = false
-					window.hideMenuBar = false
-				}
-			}
-
-			MenuItem {
-				text: "Picture In Picture"
-				shortcut: "F4"
-				onTriggered: {
-					window.pictureInPicture = true
-				}
-			}
+			MenuItem { action: appActions.minimalPresetAction }
+			MenuItem { action: appActions.compactPresetAction }
+			MenuItem { action: appActions.normalPresetAction }
+			MenuItem { action: appActions.pictureInPictureAction }
 		}
 
 		MenuSeparator {}
@@ -96,29 +51,9 @@ MenuBar {
 
 		Menu {
 			title: "On Top"
-
-			MenuItem {
-				text: "Never"
-				shortcut: window.alwaysOnTop == 'always' ? "Ctrl+A" : null
-				checkable: true
-				checked: window.alwaysOnTop == 'never'
-				onTriggered: window.alwaysOnTop = 'never'
-			}
-
-			MenuItem {
-				text: "Always"
-				shortcut: window.alwaysOnTop == 'never' ? "Ctrl+A" : null
-				checkable: true
-				checked: window.alwaysOnTop == 'always'
-				onTriggered: window.alwaysOnTop = 'always'
-			}
-
-			MenuItem {
-				text: "While Playing"
-				checkable: true
-				checked: window.alwaysOnTop == 'whilePlaying'
-				onTriggered: window.alwaysOnTop = 'whilePlaying'
-			}
+			MenuItem { action: appActions.neverOnTopAction }
+			MenuItem { action: appActions.alwaysOnTopAction }
+			MenuItem { action: appActions.onTopWhilePlayingAction }
 		}
 
 		MenuSeparator {}
@@ -176,9 +111,7 @@ MenuBar {
 	Menu {
 		title: "Help"
 
-		MenuItem {
-			text: "Home Page"
-		}
+		MenuItem { action: appActions.homePageAction }
 
 		MenuSeparator {}
 
