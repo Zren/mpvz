@@ -119,6 +119,16 @@ Item {
 		function speedUp() { setSpeed(speed + 0.1) }
 		function speedDown() { setSpeed(speed - 0.1) }
 
+		readonly property real isUsingHwdec: hwdec != "none"
+		function toggleHwdec() {
+			if (isUsingHwdec) {
+				hwdec = "none"
+			} else {
+				hwdec = "auto"
+			}
+			osd.show("Hardware decoding: " + hwdec + " [" + hwdecCurrent + "]")
+		}
+
 		readonly property real positionRatio: position / duration
 		readonly property string positionStr: formatShortTime(position)
 		readonly property string durationStr: formatShortTime(duration)
