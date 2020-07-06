@@ -94,6 +94,8 @@ QtObject {
 	property Action toggleHwdecAction: Action {
 		text: "hwdec"
 		shortcut: "Ctrl+H"
+		checkable: true
+		checked: mpvObject.hwdec != "none"
 		onTriggered: {
 			if (mpvObject.hwdec != "none") {
 				mpvObject.hwdec = "none"
@@ -104,6 +106,8 @@ QtObject {
 	}
 	property Action toggle60fpsAction: Action {
 		text: "60fps"
+		checkable: true
+		checked: config.do60fps
 		onTriggered: {
 			if (config.do60fps) {
 				mpvObject.command(["vf", "clr", ""])
