@@ -41,6 +41,7 @@ class MpvObject : public QQuickFramebufferObject
 	friend class MpvRenderer;
 
 	Q_PROPERTY(bool enableAudio READ enableAudio WRITE setEnableAudio NOTIFY enableAudioChanged)
+	Q_PROPERTY(bool useHwdec READ useHwdec WRITE setUseHwdec NOTIFY useHwdecChanged)
 
 	READONLY_PROP_BOOL("idle-active", idleActive)
 	WRITABLE_PROP_BOOL("mute", muted)
@@ -129,9 +130,20 @@ public slots:
 
 	bool enableAudio() const { return m_enableAudio; }
 	void setEnableAudio(bool value) {
-		m_enableAudio = value;
+		if (m_enableAudio != value) {
+			m_enableAudio = value;
+			Q_EMIT enableAudioChanged(value);
+		}
 		if (!m_enableAudio) {
 			mpv::qt::set_option_variant(mpv, "ao", "null");
+		}
+	}
+
+	bool useHwdec() const { return m_useHwdec; }
+	void setUseHwdec(bool value) {
+		if (m_useHwdec != value) {
+			m_useHwdec = value;
+			Q_EMIT useHwdecChanged(value);
 		}
 	}
 
@@ -143,6 +155,7 @@ public slots:
 
 signals:
 	void enableAudioChanged(bool value);
+	void useHwdecChanged(bool value);
 	void isPlayingChanged(bool value);
 
 	void durationChanged(double value); // Unit: seconds
@@ -167,6 +180,7 @@ private:
 	static void on_update(void *ctx);
 
 	bool m_enableAudio;
+	bool m_useHwdec;
 	double m_duration;
 	double m_position;
 	bool m_isPlaying;

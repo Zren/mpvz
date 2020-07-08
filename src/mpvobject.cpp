@@ -106,6 +106,7 @@ static void wakeup(void *ctx)
 MpvObject::MpvObject(QQuickItem * parent)
 	: QQuickFramebufferObject(parent)
 	, m_enableAudio(true)
+	, m_useHwdec(true)
 	, m_duration(0)
 	, m_position(0)
 	, m_isPlaying(false)
@@ -133,8 +134,10 @@ MpvObject::MpvObject(QQuickItem * parent)
 	// mpv::qt::set_option_variant(mpv, "override-display-fps", "60");
 
 	//--- Hardware Decoding
-	mpv::qt::set_option_variant(mpv, "hwdec", "auto");
 	mpv::qt::set_option_variant(mpv, "hwdec-codecs", "all");
+	if (m_useHwdec) {
+		mpv::qt::set_option_variant(mpv, "hwdec", "auto");
+	}
 
 
 	// Setup the callback that will make QtQuick update and redraw if there
