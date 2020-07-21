@@ -369,12 +369,13 @@ Item {
 		}
 
 		Rectangle {
-			anchors.fill: parent
-			
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.bottom: parent.bottom
+			height: controlBar.height * 1.3
+
 			gradient: Gradient {
-				GradientStop { position: 0.0; color: "#FF000000" }
-				GradientStop { position: 0.2; color: "#00000000" }
-				GradientStop { position: 0.8; color: "#00000000" }
+				GradientStop { position: 0.0; color: "#00000000" }
 				GradientStop { position: 1.0; color: "#FF000000" }
 			}
 		}
