@@ -212,6 +212,7 @@ QtObject {
 		checked: config.showPlaybackInfo
 		onTriggered: config.showPlaybackInfo = !config.showPlaybackInfo
 	}
+	property Action togglePlaybackInfoAction2: Action { shortcut: "I"; onTriggered: togglePlaybackInfoAction.trigger() }
 
 	//--- Tools > Playlist
 	property Action togglePlaylistAction: Action {
