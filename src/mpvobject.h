@@ -64,6 +64,7 @@ class MpvObject : public QQuickFramebufferObject
 	WRITABLE_PROP_INT("brightness", brightness)
 	WRITABLE_PROP_INT("gamma", gamma)
 	WRITABLE_PROP_INT("saturation", saturation)
+	WRITABLE_PROP_INT("sub-margin-y", subMarginY)
 	READONLY_PROP_INT("vid", vid)
 	READONLY_PROP_INT("aid", aid)
 	READONLY_PROP_INT("sid", sid)

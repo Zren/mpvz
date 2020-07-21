@@ -356,12 +356,11 @@ Item {
 
 		onIsVisibleChanged: {
 			if (isVisible) {
-				mpvObject.setProperty('sub-margin-y', controlBar.height + 22)
+				mpvObject.subMarginY = controlBar.height + 22
 			} else {
-				mpvObject.setProperty('sub-margin-y', 22)
+				mpvObject.subMarginY = 22
 			}
 		}
-		
 
 		opacity: overlayControls.showOverlay ? 1 : 0
 		Behavior on opacity {

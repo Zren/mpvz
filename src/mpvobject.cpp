@@ -173,6 +173,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	WATCH_PROP_INT("brightness")
 	WATCH_PROP_INT("gamma")
 	WATCH_PROP_INT("saturation")
+	WATCH_PROP_INT("sub-margin-y")
 	WATCH_PROP_DOUBLE("audio-bitrate")
 	WATCH_PROP_DOUBLE("avsync")
 	WATCH_PROP_DOUBLE("container-fps")
@@ -384,6 +385,7 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			else if HANDLE_PROP_INT("brightness", brightness)
 			else if HANDLE_PROP_INT("gamma", gamma)
 			else if HANDLE_PROP_INT("saturation", saturation)
+			else if HANDLE_PROP_INT("sub-margin-y", subMarginY)
 		}
 		break;
 	}
