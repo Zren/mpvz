@@ -91,7 +91,17 @@ ToolButton {
 		Text {
 			id: tooltipLabel
 			anchors.centerIn: parent
-			text: control.action ? control.action.text + " (" + control.action.shortcut + ")" : ""
+			text: {
+				if (control.action) {
+					if (control.action.shortcut) {
+						return control.action.text + " (" + control.action.shortcut + ")"
+					} else {
+						return control.action.text
+					}
+				} else {
+					return ""
+				}
+			}
 			color: "#FFFFFF"
 			style: Text.Raised
 			styleColor: "#111111"
