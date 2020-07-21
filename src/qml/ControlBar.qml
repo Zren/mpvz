@@ -85,14 +85,14 @@ MouseArea {
 				visible: !controlBar.compactMode
 				iconName: "audio"
 				text: "" + mpvObject.aid + " / " + mpvObject.numAudioTracks
-				onClicked: mpvObject.nextAudioTrack()
+				action: appActions.nextAudioTrackAction
 			}
 
 			ControlBarButton {
 				visible: !controlBar.compactMode
 				iconName: "sub"
 				text: "" + mpvObject.sid + " / " + mpvObject.numSubTracks
-				onClicked: mpvObject.nextSubTrack()
+				action: appActions.nextSubTrackAction
 			}
 
 			ControlBarButton {

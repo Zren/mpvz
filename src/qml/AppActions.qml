@@ -156,6 +156,18 @@ QtObject {
 		shortcut: "8"
 		onTriggered: mpvObject.saturationUp()
 	}
+	property Action nextVideoTrackAction: Action {
+		text: "Next Audio Track"
+		shortcut: "_"
+		onTriggered: mpvObject.nextVideoTrack()
+	}
+
+	//--- Audio
+	property Action nextAudioTrackAction: Action {
+		text: "Next Audio Track"
+		shortcut: "#"
+		onTriggered: mpvObject.nextAudioTrack()
+	}
 
 	//--- Audio > Volume
 	property Action volumeMuteAction: Action {
@@ -178,6 +190,12 @@ QtObject {
 	property Action volumeUpAction2: Action { shortcut: "0"; onTriggered: volumeUpAction.trigger() }
 	property Action volumeDownAction2: Action { shortcut: "9"; onTriggered: volumeDownAction.trigger() }
 
+	//--- Subtitle
+	property Action nextSubTrackAction: Action {
+		text: "Next Subtitle Track"
+		shortcut: ""
+		onTriggered: mpvObject.nextSubTrack()
+	}
 
 	//--- Tools
 	property Action toggleConsoleViewAction: Action {

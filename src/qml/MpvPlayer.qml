@@ -197,7 +197,7 @@ Item {
 			mpvObject.setProperty("vid", nextTrack)
 
 			var trackMsg = ""
-			if (mpvObject.aid > 0) {
+			if (mpvObject.vid > 0) {
 				var track = getTrack("video", mpvObject.vid)
 				trackMsg = "" + mpvObject.vid + "/" + mpvObject.numVideoTracks + " " + formatTrackLabel(track)
 			} else {
