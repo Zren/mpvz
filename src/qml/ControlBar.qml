@@ -98,12 +98,12 @@ MouseArea {
 			ControlBarButton {
 				visible: !controlBar.compactMode
 				iconName: "playlist"
-				onClicked: appActions.togglePlaylistAction.trigger()
+				action: appActions.togglePlaylistAction
 			}
 
 			ControlBarButton {
 				iconName: window.isFullscreen ? "fs-checked" : "fs"
-				onClicked: appActions.toggleFullscreenAction.trigger()
+				action: appActions.toggleFullscreenAction
 			}
 
 		}
