@@ -55,14 +55,14 @@ AppWindow {
 	color: "#000"
 
 	title: {
-		var s = "";
+		var s = ""
 		if (mpvObject.mediaTitle) {
-			s += mpvObject.mediaTitle;
+			s += mpvObject.mediaTitle
 			s += " - "
 		}
 
-		s += "mpvz";
-		return s;
+		s += "mpvz"
+		return s
 	}
 
 	readonly property alias mpvObject: mpvPlayer.mpvObject
@@ -109,24 +109,24 @@ AppWindow {
 	
 	function setWindowFlag(flagIt, flag) {
 		if (flagIt) {
-			window.flags |= flag; // Add the flag
+			window.flags |= flag // Add the flag
 		} else {
-			window.flags = window.flags & ~flag; // Remove the flag
+			window.flags = window.flags & ~flag // Remove the flag
 		}
 	}
 
 	function updateAlwaysOnTopFlag() {
-		var flagIt;
+		var flagIt
 		if (pictureInPicture) {
-			flagIt = true;
+			flagIt = true
 		} else if (alwaysOnTop == 'never') {
-			flagIt = false;
+			flagIt = false
 		} else if (alwaysOnTop == 'always') {
-			flagIt = true;
+			flagIt = true
 		} else if (isPlaying) { // 'whilePlaying'
-			flagIt = true;
+			flagIt = true
 		} else { // !isPlaying + 'whilePlaying'
-			flagIt = false;
+			flagIt = false
 		}
 
 		setWindowFlag(flagIt, Qt.WindowStaysOnTopHint)
