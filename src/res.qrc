@@ -1,31 +1,31 @@
 <RCC>
 	<qresource>
-		<file>qml/MainWindow.qml</file>
-		<file>qml/AppWindow.qml</file>
 		<file>qml/AppActions.qml</file>
-		<file>qml/AppMenuBar.qml</file>
 		<file>qml/AppContextMenu.qml</file>
-		<file>qml/MpvPlayer.qml</file>
-		<file>qml/Sidebar.qml</file>
-		<file>qml/SidebarListView.qml</file>
-		<file>qml/SidebarListItem.qml</file>
+		<file>qml/AppMenuBar.qml</file>
 		<file>qml/AppScrollView.qml</file>
-		<file>qml/PlaylistView.qml</file>
+		<file>qml/AppSlider.qml</file>
+		<file>qml/AppSliderStyle.qml</file>
+		<file>qml/AppWindow.qml</file>
 		<file>qml/ChapterList.qml</file>
+		<file>qml/ConsoleView.qml</file>
 		<file>qml/ControlBar.qml</file>
 		<file>qml/ControlBarButton.qml</file>
 		<file>qml/ControlBarText.qml</file>
 		<file>qml/Equalizer.qml</file>
 		<file>qml/EqualizerBar.qml</file>
 		<file>qml/EqualizerLabel.qml</file>
-		<file>qml/SeekbarSlider.qml</file>
-		<file>qml/ShortcutLabel.qml</file>
-		<file>qml/AppSlider.qml</file>
-		<file>qml/AppSliderStyle.qml</file>
-		<file>qml/ConsoleView.qml</file>
-		<file>qml/PlaybackInfoView.qml</file>
+		<file>qml/MainWindow.qml</file>
+		<file>qml/MpvPlayer.qml</file>
 		<file>qml/PlaybackInfoSection.qml</file>
 		<file>qml/PlaybackInfoText.qml</file>
+		<file>qml/PlaybackInfoView.qml</file>
+		<file>qml/PlaylistView.qml</file>
+		<file>qml/SeekbarSlider.qml</file>
+		<file>qml/ShortcutLabel.qml</file>
+		<file>qml/Sidebar.qml</file>
+		<file>qml/SidebarListItem.qml</file>
+		<file>qml/SidebarListView.qml</file>
 		<file>qml/ThumbnailItem.qml</file>
 		<file>qml/VolumeSlider.qml</file>
 
