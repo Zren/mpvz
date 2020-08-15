@@ -15,6 +15,7 @@
 		<file>qml/Equalizer.qml</file>
 		<file>qml/EqualizerBar.qml</file>
 		<file>qml/EqualizerLabel.qml</file>
+		<file>qml/HeaderBar.qml</file>
 		<file>qml/MainWindow.qml</file>
 		<file>qml/MpvPlayer.qml</file>
 		<file>qml/PlaybackInfoSection.qml</file>
@@ -28,6 +29,8 @@
 		<file>qml/SidebarListView.qml</file>
 		<file>qml/ThumbnailItem.qml</file>
 		<file>qml/VolumeSlider.qml</file>
+
+		<file>icons/window-close.png</file>
 
 		<file>icons/Tethys/audio-hovered.png</file>
 		<file>icons/Tethys/audio-pressed.png</file>

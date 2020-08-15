@@ -351,7 +351,7 @@ Item {
 	Item {
 		id: overlayControls
 		anchors.fill: parent
-		property bool showOverlay: controlBar.containsMouse || sidebar.containsMouse || hideCursorTimeout.running
+		property bool showOverlay: headerBar.containsMouse || controlBar.containsMouse || sidebar.containsMouse || hideCursorTimeout.running
 		readonly property bool isVisible: opacity > 0
 
 		onIsVisibleChanged: {
@@ -368,15 +368,36 @@ Item {
 		}
 
 		Rectangle {
+			id: topGradient
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.top: parent.top
+			height: headerBar.height * 1.3
+			gradient: Gradient {
+				GradientStop { position: 0.0; color: "#FF000000" }
+				GradientStop { position: 1.0; color: "#00000000" }
+			}
+		}
+
+		Rectangle {
+			id: bottomGradient
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
 			height: controlBar.height * 1.3
-
 			gradient: Gradient {
 				GradientStop { position: 0.0; color: "#00000000" }
 				GradientStop { position: 1.0; color: "#FF000000" }
 			}
+		}
+
+		HeaderBar {
+			id: headerBar
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.top: parent.top
+			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
+			propagateComposedEvents: overlayControls.showOverlay ? false : true
 		}
 
 		ControlBar {
@@ -384,7 +405,6 @@ Item {
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-			
 			acceptedButtons: overlayControls.showOverlay ? Qt.AllButtons : Qt.NoButton
 			propagateComposedEvents: overlayControls.showOverlay ? false : true
 		}

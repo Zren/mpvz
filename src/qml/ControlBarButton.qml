@@ -56,29 +56,37 @@ ToolButton {
 		}
 	}
 
+	property bool tooltipAbove: true
 	property alias tooltipText: tooltipLabel.text
 	Rectangle {
 		id: tooltip
 
 		property int seekbarSpacing: 4
 		x: {
-			var parentPos = parent.mapToItem(controlBar, 0, 0)
-			var xOffset = Math.floor((parent.width - tooltip.implicitWidth)/2)
+			var container = tooltipAbove ? controlBar : headerBar
+			var parentPos = control.mapToItem(container, 0, 0)
+			var xOffset = Math.floor((control.width - tooltip.implicitWidth)/2)
 			var offsetPosX = parentPos.x + xOffset
-			if (tooltip.implicitWidth <= parent.width) {
+			if (tooltip.implicitWidth <= control.width) {
 				// Tooltip isn't wider than parent, so there's room.
 				return xOffset
 			} else if (offsetPosX < 0) {
 				// Left align tooltip
 				return 0
-			} else if (offsetPosX + tooltip.implicitWidth > controlBar.width) {
+			} else if (offsetPosX + tooltip.implicitWidth > container.width) {
 				// Right align tooltip
-				return parent.width - tooltip.implicitWidth
+				return control.width - tooltip.implicitWidth
 			} else { // Tooltip fits within window 
 				return xOffset
 			}
 		}
-		y: -seekSlider.implicitHeight - seekbarSpacing - tooltip.implicitHeight
+		y: {
+			if (tooltipAbove) {
+				return -seekSlider.implicitHeight - seekbarSpacing - tooltip.implicitHeight
+			} else {
+				return tooltip.implicitHeight + seekbarSpacing
+			}
+		}
 
 		visible: tooltipLabel.text && control.hovered
 		color: "#333333"
