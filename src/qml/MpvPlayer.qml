@@ -351,7 +351,7 @@ Item {
 	Item {
 		id: overlayControls
 		anchors.fill: parent
-		property bool showOverlay: headerBar.containsMouse || controlBar.containsMouse || sidebar.containsMouse || hideCursorTimeout.running
+		readonly property bool showOverlay: headerBar.isHovered || controlBar.containsMouse || sidebar.containsMouse || hideCursorTimeout.running
 		readonly property bool isVisible: opacity > 0
 
 		onIsVisibleChanged: {
@@ -393,6 +393,9 @@ Item {
 
 		HeaderBar {
 			id: headerBar
+			enabled: !window.bordersVisible
+			visible: enabled
+			readonly property bool isHovered: enabled && headerBar.containsMouse
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.top: parent.top
