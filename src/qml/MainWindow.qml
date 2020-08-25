@@ -105,14 +105,22 @@ AppWindow {
 	}
 
 	onAlwaysOnTopChanged: updateAlwaysOnTopFlag()
-	onBordersVisibleChanged: setWindowFlag(!bordersVisible, Qt.FramelessWindowHint)
-	
+	onBordersVisibleChanged: updateFramelessWindowFlag()
+
+	Component.onCompleted: {
+		updateFramelessWindowFlag()
+	}
+
 	function setWindowFlag(flagIt, flag) {
 		if (flagIt) {
 			window.flags |= flag // Add the flag
 		} else {
 			window.flags = window.flags & ~flag // Remove the flag
 		}
+	}
+
+	function updateFramelessWindowFlag() {
+		setWindowFlag(!bordersVisible, Qt.FramelessWindowHint)
 	}
 
 	function updateAlwaysOnTopFlag() {
