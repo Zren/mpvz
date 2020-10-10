@@ -9,9 +9,9 @@
 // libmpv
 #include <mpv/client.h>
 #include <mpv/render_gl.h>
-#include <mpv/qthelper.hpp>
 
-
+// own
+#include "qthelper.hpp"
 class MpvObject;
 class MpvRenderer;
 

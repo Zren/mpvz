@@ -1,8 +1,10 @@
 #include "mpvobject.h"
 
+// std
 #include <stdexcept>
 #include <clocale>
 
+// Qt
 #include <QObject>
 #include <QtGlobal>
 #include <QOpenGLContext>
@@ -16,11 +18,14 @@
 
 #include <QtX11Extras/QX11Info>
 
+#include <QDebug>
+
+// libmpv
 #include <mpv/client.h>
 #include <mpv/render_gl.h>
-#include <mpv/qthelper.hpp>
 
-#include <QDebug>
+// own
+#include "qthelper.hpp"
 
 
 

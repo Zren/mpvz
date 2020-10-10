@@ -1,9 +1,12 @@
+// own
 #include "mpvapp.h"
 #include "mpvobject.h"
 
+// std
 #include <stdexcept>
 #include <clocale>
 
+// Qt
 #include <QGuiApplication>
 #include <QIcon>
 // #include <QtQuick/QQuickWindow>
