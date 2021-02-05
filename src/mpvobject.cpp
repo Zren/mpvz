@@ -124,6 +124,12 @@ MpvObject::MpvObject(QQuickItem * parent)
 	// mpv_set_option_string(mpv, "msg-level", "all=warn,ao/alsa=error");
 	// mpv_set_option_string(mpv, "msg-level", "all=debug");
 
+	//--- Hardware Decoding
+	mpv::qt::set_option_variant(mpv, "hwdec-codecs", "all");
+	if (m_useHwdec) {
+		mpv::qt::set_option_variant(mpv, "hwdec", "auto-copy");
+	}
+
 	if (mpv_initialize(mpv) < 0)
 		throw std::runtime_error("could not initialize mpv context");
 
@@ -137,12 +143,6 @@ MpvObject::MpvObject(QQuickItem * parent)
 	mpv::qt::set_option_variant(mpv, "video-sync", "display-resample");
 	// mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
 	// mpv::qt::set_option_variant(mpv, "override-display-fps", "60");
-
-	//--- Hardware Decoding
-	mpv::qt::set_option_variant(mpv, "hwdec-codecs", "all");
-	if (m_useHwdec) {
-		mpv::qt::set_option_variant(mpv, "hwdec", "auto");
-	}
 
 
 	// Setup the callback that will make QtQuick update and redraw if there

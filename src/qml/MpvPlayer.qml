@@ -124,7 +124,7 @@ Item {
 			if (isUsingHwdec) {
 				hwdec = "none"
 			} else {
-				hwdec = "auto"
+				hwdec = "auto-copy"
 			}
 			osd.show("Hardware decoding: " + hwdec + " [" + hwdecCurrent + "]")
 		}
