@@ -1,6 +1,7 @@
 // own
 #include "mpvapp.h"
 #include "mpvobject.h"
+#include "mpvthumbnail.h"
 
 // std
 #include <stdexcept>
@@ -28,6 +29,7 @@ int main(int argc, char **argv) {
 	std::setlocale(LC_NUMERIC, "C");
 
 	qmlRegisterType<MpvObject>("mpvz", 1, 0, "MpvObject");
+	qmlRegisterType<MpvThumbnail>("mpvz", 1, 0, "MpvThumbnail");
 
 	// QQuickView view;
 	// view.setResizeMode(QQuickView::SizeRootObjectToView);

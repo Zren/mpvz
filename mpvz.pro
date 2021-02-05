@@ -22,11 +22,13 @@ LIBS += -lmpv -lxcb
 HEADERS += \
 	src/mpvhelpers.h \
 	src/mpvapp.h \
-	src/mpvobject.h 
+	src/mpvobject.h \
+	src/mpvthumbnail.h
 SOURCES += \
 	src/main.cpp \
 	src/mpvapp.cpp \
-	src/mpvobject.cpp
+	src/mpvobject.cpp \
+	src/mpvthumbnail.cpp
 
 RESOURCES += \
 	src/res.qrc
