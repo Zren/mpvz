@@ -62,7 +62,7 @@ ToolButton {
 		id: tooltip
 
 		property int seekbarSpacing: 4
-		x: {
+		function calcX() {
 			var container = tooltipAbove ? controlBar : headerBar
 			var parentPos = control.mapToItem(container, 0, 0)
 			var xOffset = Math.floor((control.width - tooltip.implicitWidth)/2)
@@ -80,11 +80,20 @@ ToolButton {
 				return xOffset
 			}
 		}
-		y: {
+		function calcY() {
 			if (tooltipAbove) {
 				return -seekSlider.implicitHeight - seekbarSpacing - tooltip.implicitHeight
 			} else {
 				return tooltip.implicitHeight + seekbarSpacing
+			}
+		}
+		function updatePos() {
+			x = calcX()
+			y = calcY()
+		}
+		onVisibleChanged: {
+			if (visible) {
+				updatePos()
 			}
 		}
 
