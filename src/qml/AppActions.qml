@@ -51,12 +51,14 @@ QtObject {
 		shortcut: "Backspace"
 		onTriggered: mpvObject.resetSpeed()
 	}
+	// property Action resetSpeedAction2: Action { shortcut: "="; onTriggered: mpvObject.resetSpeed(); }
 
 	property Action playFasterAction: Action {
 		text: "+10%"
 		shortcut: "+"
 		onTriggered: mpvObject.speedUp()
 	}
+	property Action playFasterAction2: Action { shortcut: "="; onTriggered: mpvObject.speedUp(); }
 
 	property Action playSlowerAction: Action {
 		text: "-10%"
