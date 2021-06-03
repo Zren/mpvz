@@ -144,6 +144,11 @@ public slots:
 	void setUseHwdec(bool value) {
 		if (m_useHwdec != value) {
 			m_useHwdec = value;
+			if (m_useHwdec) {
+				mpv::qt::set_option_variant(mpv, "hwdec", "auto-copy");
+			} else {
+				mpv::qt::set_option_variant(mpv, "hwdec", "no");
+			}
 			Q_EMIT useHwdecChanged(value);
 		}
 	}

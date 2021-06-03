@@ -62,6 +62,7 @@ Item {
 	MpvObject {
 		id: mpvObject
 		objectName: "mpvObject"
+		useHwdec: true
 		anchors.fill: parent
 
 		// onMpvUpdated: console.log('onMpvUpdated', Date.now())
@@ -119,13 +120,14 @@ Item {
 		function speedUp() { setSpeed(speed + 0.1) }
 		function speedDown() { setSpeed(speed - 0.1) }
 
-		readonly property real isUsingHwdec: hwdec != "none"
+		readonly property real isUsingHwdec: hwdec != "no"
 		function toggleHwdec() {
 			if (isUsingHwdec) {
-				hwdec = "none"
+				hwdec = "no"
 			} else {
 				hwdec = "auto-copy"
 			}
+
 			osd.show("Hardware decoding: " + hwdec + " [" + hwdecCurrent + "]")
 		}
 

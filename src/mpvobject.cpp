@@ -111,7 +111,7 @@ static void wakeup(void *ctx)
 MpvObject::MpvObject(QQuickItem * parent)
 	: QQuickFramebufferObject(parent)
 	, m_enableAudio(true)
-	, m_useHwdec(true)
+	, m_useHwdec(false)
 	, m_duration(0)
 	, m_position(0)
 	, m_isPlaying(false)
@@ -126,9 +126,6 @@ MpvObject::MpvObject(QQuickItem * parent)
 
 	//--- Hardware Decoding
 	mpv::qt::set_option_variant(mpv, "hwdec-codecs", "all");
-	if (m_useHwdec) {
-		mpv::qt::set_option_variant(mpv, "hwdec", "auto-copy");
-	}
 
 	if (mpv_initialize(mpv) < 0)
 		throw std::runtime_error("could not initialize mpv context");
