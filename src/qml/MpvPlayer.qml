@@ -240,6 +240,7 @@ Item {
 		onFileLoaded: {
 			updateTrackStatus()
 		}
+		onTrackListCountChanged: updateTrackStatus()
 	}
 
 	MouseArea {
@@ -342,7 +343,12 @@ Item {
 		onDropped: {
 			if (drop.hasUrls) {
 				if (drop.urls.length >= 1) {
-					mpvObject.loadFile(drop.urls[0])
+					var url = drop.urls[0]
+					if (url.endsWith('.ass')) {
+						mpvObject.subAdd(url)
+					} else {
+						mpvObject.loadFile(url)
+					}
 					drop.accept(Qt.CopyAction)
 				}
 			}

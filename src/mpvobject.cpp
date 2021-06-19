@@ -171,6 +171,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	WATCH_PROP_INT("vid")
 	WATCH_PROP_INT("aid")
 	WATCH_PROP_INT("sid")
+	WATCH_PROP_INT("track-list/count")
 	WATCH_PROP_INT("contrast")
 	WATCH_PROP_INT("brightness")
 	WATCH_PROP_INT("gamma")
@@ -317,6 +318,7 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			if HANDLE_PROP_INT("vid", vid)
 			else if HANDLE_PROP_INT("aid", aid)
 			else if HANDLE_PROP_INT("sid", sid)
+			else if HANDLE_PROP_INT("track-list/count", trackListCount)
 
 		} else if (prop->format == MPV_FORMAT_DOUBLE) {
 			if (strcmp(prop->name, "time-pos") == 0) {
@@ -383,6 +385,7 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			else if HANDLE_PROP_INT("vid", vid)
 			else if HANDLE_PROP_INT("aid", aid)
 			else if HANDLE_PROP_INT("sid", sid)
+			else if HANDLE_PROP_INT("track-list/count", trackListCount)
 			else if HANDLE_PROP_INT("contrast", contrast)
 			else if HANDLE_PROP_INT("brightness", brightness)
 			else if HANDLE_PROP_INT("gamma", gamma)
@@ -452,6 +455,11 @@ void MpvObject::seek(double pos)
 void MpvObject::loadFile(QVariant urls)
 {
 	command(QVariantList() << "loadfile" << urls);
+}
+
+void MpvObject::subAdd(QVariant urls)
+{
+	command(QVariantList() << "sub-add" << urls);
 }
 
 

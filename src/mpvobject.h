@@ -68,6 +68,7 @@ class MpvObject : public QQuickFramebufferObject
 	READONLY_PROP_INT("vid", vid)
 	READONLY_PROP_INT("aid", aid)
 	READONLY_PROP_INT("sid", sid)
+	READONLY_PROP_INT("track-list/count", trackListCount)
 	READONLY_PROP_DOUBLE("audio-bitrate", audioBitrate)
 	READONLY_PROP_DOUBLE("avsync", avsync)
 	READONLY_PROP_DOUBLE("container-fps", containerFps)
@@ -128,6 +129,7 @@ public slots:
 	void stepForward();
 	void seek(double pos);
 	void loadFile(QVariant urls);
+	void subAdd(QVariant urls);
 
 	bool enableAudio() const { return m_enableAudio; }
 	void setEnableAudio(bool value) {
