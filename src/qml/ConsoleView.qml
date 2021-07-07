@@ -23,7 +23,7 @@ ScrollView {
 				}
 			}
 			style: Text.Outline
-			styleColor: "#000"
+			styleColor: "#444"
 			text: '[' + model.prefix + '] ' + model.text
 		}
 

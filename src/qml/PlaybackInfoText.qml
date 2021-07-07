@@ -7,7 +7,7 @@ Text {
 	text: "<b>" + key + ":</b> " + value
 	color: "#FFF"
 	style: Text.Outline
-	styleColor: "#000"
+	styleColor: "#444"
 	font.pixelSize: 14
 	font.family: "Monospace"
 	wrapMode: Text.Wrap
