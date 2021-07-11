@@ -337,6 +337,21 @@ Item {
 		}
 	}
 
+	function isSubExt(url) {
+		// https://github.com/mpv-player/mpv/blob/cb56c2f888dbe86dbc38839c32684d54ea93c63e/player/external_files.c#L35
+		var subExtList = [
+			"utf", "utf8", "utf-8", "idx", "sub",
+			"srt", "rt", "ssa", "ass", "mks", "vtt",
+			"sup", "scc", "smi", "lrc", "pgs",
+		]
+		for (var ext of subExtList) {
+			if (url.endsWith('.' + ext)) {
+				return true
+			}
+		}
+		return false
+	}
+
 	DropArea {
 		id: dropArea
 		anchors.fill: parent
@@ -344,7 +359,7 @@ Item {
 			if (drop.hasUrls) {
 				if (drop.urls.length >= 1) {
 					var url = drop.urls[0]
-					if (url.endsWith('.ass')) {
+					if (isSubExt(url)) {
 						mpvObject.subAdd(url)
 					} else {
 						mpvObject.loadFile(url)
