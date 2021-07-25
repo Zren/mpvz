@@ -47,7 +47,7 @@ AppSlider {
 		verticalMaximumValue: slider.maximumValue
 
 		onVerticalWheelMoved: {
-			console.log('onVerticalWheelMoved', verticalDelta)
+			// console.log('onVerticalWheelMoved', verticalDelta)
 			if (verticalDelta > 0) { // Scroll up
 				slider.decrement()
 			} else if (verticalDelta < 0) { // Scroll down
@@ -56,7 +56,7 @@ AppSlider {
 		}
 
 		onHorizontalWheelMoved: {
-			console.log('onHorizontalWheelMoved', horizontalDelta)
+			// console.log('onHorizontalWheelMoved', horizontalDelta)
 			if (horizontalDelta > 0) { // Scroll ?
 				slider.decrement()
 			} else if (horizontalDelta < 0) { // Scroll ?
