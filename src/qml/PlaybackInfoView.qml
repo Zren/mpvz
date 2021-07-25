@@ -5,15 +5,31 @@ ColumnLayout {
 	id: playbackInfo
 	spacing: 16
 
+	// https://github.com/mpv-player/mpv/blob/master/player/lua/defaults.lua#L775
+	function formatBytesHumanized(b) {
+		var d = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB"]
+		var i = 0
+		while (b >= 1024) {
+			b = b / 1024
+			i = i + 1
+		}
+		var units = d[i] || ('*1024^' + (i-1))
+		return b.toFixed(2) + ' ' + units
+	}
+
+	// https://github.com/mpv-player/mpv/blob/master/player/lua/stats.lua#L602
 	PlaybackInfoSection {
 		heading.key: "File"
 		heading.value: mpvObject.filename
 
 		PlaybackInfoText { key: "Title"; value: mpvObject.mediaTitle; visible: mpvObject.filename != mpvObject.mediaTitle }
 		PlaybackInfoText { key: "Chapter"; value: mpvObject.getChapterTitle(mpvObject.chapter) + " (" + (mpvObject.chapter+1) + " / " + mpvObject.chapterListCount + ")"; visible: mpvObject.chapterListCount >= 1 }
-		PlaybackInfoText { key: "Size"; value: "" }
-		PlaybackInfoText { key: "Format/Protocol"; value: "mov,mp4,m4a,3gp,3g2,mj2" }
-		PlaybackInfoText { key: "Total Cache"; value: "100 MiB (1.0 sec)" }
+		PlaybackInfoText { key: "Size"; value: formatBytesHumanized(mpvObject.fileSize) }
+		PlaybackInfoText { key: "Format/Protocol"; value: mpvObject.fileFormat }
+		PlaybackInfoText { key: "Total Cache"
+			value: formatBytesHumanized(mpvObject.demuxerCacheStateFwBytes) + " (" + mpvObject.demuxerCacheDuration.toFixed(1) + " sec)"
+			// visible: mpvObject.demuxerCacheStateFwBytes + mpvObject.demuxerCacheDuration > 0
+		}
 	}
 
 	PlaybackInfoSection {
@@ -23,6 +39,7 @@ ColumnLayout {
 		PlaybackInfoText { key: "Audio/Video Sync"; value: "±" + Math.round(mpvObject.avsync * 1000) + "ms" }
 	}
 
+	// https://github.com/mpv-player/mpv/blob/master/player/lua/stats.lua#L647
 	PlaybackInfoSection {
 		heading.key: "Video Track #" + mpvObject.vid
 		heading.value: mpvObject.videoCodec
@@ -41,6 +58,7 @@ ColumnLayout {
 		PlaybackInfoText { key: "Pixel Format"; value: mpvObject.videoParamsPixelformat || mpvObject.videoOutParamsPixelformat }
 	}
 
+	// https://github.com/mpv-player/mpv/blob/master/player/lua/stats.lua#L723
 	PlaybackInfoSection {
 		heading.key: "Audio Track #" + mpvObject.aid
 		heading.value: mpvObject.audioCodec
