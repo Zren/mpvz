@@ -65,6 +65,22 @@
 	Q_SIGNALS: \
 		void varName##Changed(QString value);
 
+#define READONLY_PROP_ARRAY(p, varName) \
+	public: \
+		Q_PROPERTY(QVariantList varName READ varName NOTIFY varName##Changed) \
+	public Q_SLOTS: \
+		QVariantList varName() { return getProperty(p).toList(); } \
+	Q_SIGNALS: \
+		void varName##Changed(QVariantList value);
+#define WRITABLE_PROP_ARRAY(p, varName) \
+	public: \
+		Q_PROPERTY(QVariantList varName READ varName WRITE set_##varName NOTIFY varName##Changed) \
+	public Q_SLOTS: \
+		QVariantList varName() { return getProperty(p).toList(); } \
+		void set_##varName(QVariantList value) { setProperty(p, value); } \
+	Q_SIGNALS: \
+		void varName##Changed(QVariantList value);
+
 #define READONLY_PROP_MAP(p, varName) \
 	public: \
 		Q_PROPERTY(QVariantMap varName READ varName NOTIFY varName##Changed) \
@@ -93,6 +109,8 @@
 	mpv_observe_property(mpv, 0, p, MPV_FORMAT_INT64);
 #define WATCH_PROP_STRING(p) \
 	mpv_observe_property(mpv, 0, p, MPV_FORMAT_STRING);
+#define WATCH_PROP_ARRAY(p) \
+	mpv_observe_property(mpv, 0, p, MPV_FORMAT_NODE_ARRAY);
 #define WATCH_PROP_MAP(p) \
 	mpv_observe_property(mpv, 0, p, MPV_FORMAT_NODE_MAP);
 
@@ -116,6 +134,11 @@
 #define HANDLE_PROP_STRING(p, varName) \
 	(strcmp(prop->name, p) == 0) { \
 		QString value = getProperty(p).toString(); \
+		Q_EMIT varName##Changed(value); \
+	}
+#define HANDLE_PROP_ARRAY(p, varName) \
+	(strcmp(prop->name, p) == 0) { \
+		QVariantList value = getProperty(p).toList(); \
 		Q_EMIT varName##Changed(value); \
 	}
 #define HANDLE_PROP_MAP(p, varName) \
