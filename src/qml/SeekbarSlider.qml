@@ -108,8 +108,52 @@ AppSlider {
 						radius: grooveRect.radius
 					}
 				}
-				
+
 				color: "#33FFFFFF"
+
+				Item {
+					id: cacheRectContainer
+					anchors.fill: parent
+					property var cachedRanges: []
+					function updateCachedRanges() {
+						var ranges = mpvObject.demuxerCacheState["seekable-ranges"]
+						// console.log('seekable-ranges', ranges)
+						if (ranges) {
+							// for (var i = 0; i < ranges.length; i++) {
+							// 	var map = ranges[i]
+							// 	console.log('seekable-ranges', '    ', i, map, map['start'], map['end'])
+							// }
+							cacheRectContainer.cachedRanges = ranges
+						} else {
+							cacheRectContainer.cachedRanges = []
+						}
+					}
+
+					Repeater {
+						// model: mpvObject.demuxerCacheState["seekable-ranges"] || []
+						model: cacheRectContainer.cachedRanges
+						Rectangle {
+							readonly property double startPos: modelData.start
+							readonly property double endPos: modelData.end
+							readonly property double startRatio: slider.maximumValue ? startPos / slider.maximumValue : 0
+							readonly property double endRatio: slider.maximumValue ? endPos / slider.maximumValue : 0
+							x: control.width * startRatio
+							y: 0
+							width: control.width * (endRatio - startRatio)
+							height: grooveRect.height
+							color: "#55FFFFFF"
+						}
+					}
+
+					// The demuxerCacheStateChanged signal does not fire, so we watch
+					// demuxerCacheDuration for changes instead.
+					Connections {
+						target: mpvObject
+						onDemuxerCacheDurationChanged: {
+							cacheRectContainer.updateCachedRanges()
+						}
+					}
+				}
 
 				Rectangle {
 					width: styleData.handlePosition
