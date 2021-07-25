@@ -162,7 +162,6 @@ MpvObject::MpvObject(QQuickItem * parent)
 	WATCH_PROP_INT("chapter")
 	WATCH_PROP_INT("chapter-list/count")
 	WATCH_PROP_INT("decoder-frame-drop-count")
-	WATCH_PROP_INT("demuxer-cache-state/fw-bytes")
 	WATCH_PROP_INT("dheight")
 	WATCH_PROP_INT("dwidth")
 	WATCH_PROP_INT("estimated-frame-count")
@@ -216,6 +215,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	WATCH_PROP_STRING("video-params/pixelformat")
 	WATCH_PROP_STRING("video-out-params/pixelformat")
 	WATCH_PROP_STRING("ytdl-format")
+	WATCH_PROP_MAP("demuxer-cache-state")
 
 	connect(this, &MpvObject::idleActiveChanged,
 			this, &MpvObject::updateState);
@@ -385,7 +385,6 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			if HANDLE_PROP_INT("chapter", chapter)
 			else if HANDLE_PROP_INT("chapter-list/count", chapterListCount)
 			else if HANDLE_PROP_INT("decoder-frame-drop-count", decoderFrameDropCount)
-			else if HANDLE_PROP_INT("demuxer-cache-state/fw-bytes", demuxerCacheStateFwBytes)
 			else if HANDLE_PROP_INT("dwidth", dwidth)
 			else if HANDLE_PROP_INT("dheight", dheight)
 			else if HANDLE_PROP_INT("estimated-frame-count", estimatedFrameCount)
@@ -406,6 +405,10 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			else if HANDLE_PROP_INT("gamma", gamma)
 			else if HANDLE_PROP_INT("saturation", saturation)
 			else if HANDLE_PROP_INT("sub-margin-y", subMarginY)
+
+
+		} else if (prop->format == MPV_FORMAT_NODE_MAP) {
+			if HANDLE_PROP_MAP("demuxer-cache-state", demuxerCacheState)
 		}
 		break;
 	}

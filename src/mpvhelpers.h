@@ -65,6 +65,22 @@
 	Q_SIGNALS: \
 		void varName##Changed(QString value);
 
+#define READONLY_PROP_MAP(p, varName) \
+	public: \
+		Q_PROPERTY(QVariantMap varName READ varName NOTIFY varName##Changed) \
+	public Q_SLOTS: \
+		QVariantMap varName() { return getProperty(p).toMap(); } \
+	Q_SIGNALS: \
+		void varName##Changed(QVariantMap value);
+#define WRITABLE_PROP_MAP(p, varName) \
+	public: \
+		Q_PROPERTY(QVariantMap varName READ varName WRITE set_##varName NOTIFY varName##Changed) \
+	public Q_SLOTS: \
+		QVariantMap varName() { return getProperty(p).toMap(); } \
+		void set_##varName(QVariantMap value) { setProperty(p, value); } \
+	Q_SIGNALS: \
+		void varName##Changed(QVariantMap value);
+
 
 
 
@@ -77,6 +93,8 @@
 	mpv_observe_property(mpv, 0, p, MPV_FORMAT_INT64);
 #define WATCH_PROP_STRING(p) \
 	mpv_observe_property(mpv, 0, p, MPV_FORMAT_STRING);
+#define WATCH_PROP_MAP(p) \
+	mpv_observe_property(mpv, 0, p, MPV_FORMAT_NODE_MAP);
 
 
 // MpvObject::handle_mpv_event()
@@ -98,5 +116,10 @@
 #define HANDLE_PROP_STRING(p, varName) \
 	(strcmp(prop->name, p) == 0) { \
 		QString value = getProperty(p).toString(); \
+		Q_EMIT varName##Changed(value); \
+	}
+#define HANDLE_PROP_MAP(p, varName) \
+	(strcmp(prop->name, p) == 0) { \
+		QVariantMap value = getProperty(p).toMap(); \
 		Q_EMIT varName##Changed(value); \
 	}

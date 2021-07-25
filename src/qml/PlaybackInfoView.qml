@@ -27,8 +27,8 @@ ColumnLayout {
 		PlaybackInfoText { key: "Size"; value: formatBytesHumanized(mpvObject.fileSize) }
 		PlaybackInfoText { key: "Format/Protocol"; value: mpvObject.fileFormat }
 		PlaybackInfoText { key: "Total Cache"
-			value: formatBytesHumanized(mpvObject.demuxerCacheStateFwBytes) + " (" + mpvObject.demuxerCacheDuration.toFixed(1) + " sec)"
-			// visible: mpvObject.demuxerCacheStateFwBytes + mpvObject.demuxerCacheDuration > 0
+			value: formatBytesHumanized(mpvObject.demuxerCacheState['fw-bytes']) + " (" + mpvObject.demuxerCacheDuration.toFixed(1) + " sec)"
+			visible: mpvObject.demuxerCacheState['fw-bytes'] + mpvObject.demuxerCacheDuration > 0
 		}
 		PlaybackInfoText { key: "YTDL"
 			value: mpvObject.ytdlFormat

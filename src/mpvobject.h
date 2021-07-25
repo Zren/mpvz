@@ -53,7 +53,6 @@ class MpvObject : public QQuickFramebufferObject
 	READONLY_PROP_INT("decoder-frame-drop-count", decoderFrameDropCount)
 	READONLY_PROP_INT("dheight", dheight)
 	READONLY_PROP_INT("dwidth", dwidth)
-	READONLY_PROP_INT("demuxer-cache-state/fw-bytes", demuxerCacheStateFwBytes)
 	READONLY_PROP_INT("estimated-frame-count", estimatedFrameCount)
 	READONLY_PROP_INT("estimated-frame-number", estimatedFrameNumber)
 	READONLY_PROP_INT("frame-drop-count", frameDropCount)
@@ -103,6 +102,7 @@ class MpvObject : public QQuickFramebufferObject
 	READONLY_PROP_STRING("video-params/pixelformat", videoParamsPixelformat)
 	READONLY_PROP_STRING("video-out-params/pixelformat", videoOutParamsPixelformat)
 	READONLY_PROP_STRING("ytdl-format", ytdlFormat)
+	READONLY_PROP_MAP("demuxer-cache-state", demuxerCacheState)
 
 public:
 	Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged)
