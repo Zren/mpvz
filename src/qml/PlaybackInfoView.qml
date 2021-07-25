@@ -10,6 +10,9 @@ ColumnLayout {
 		heading.value: mpvObject.filename
 
 		PlaybackInfoText { key: "Title"; value: mpvObject.mediaTitle; visible: mpvObject.filename != mpvObject.mediaTitle }
+		PlaybackInfoText { key: "Size"; value: "" }
+		PlaybackInfoText { key: "Format/Protocol"; value: "mov,mp4,m4a,3gp,3g2,mj2" }
+		PlaybackInfoText { key: "Total Cache"; value: "100 MiB (1.0 sec)" }
 	}
 
 	PlaybackInfoSection {
@@ -40,7 +43,11 @@ ColumnLayout {
 	PlaybackInfoSection {
 		heading.key: "Audio Track #" + mpvObject.aid
 		heading.value: mpvObject.audioCodec
-
+		PlaybackInfoRow {
+			PlaybackInfoText { key: "Channels"; value: mpvObject.audioParamsChannelCount; }
+			PlaybackInfoText { key: "Format"; value: mpvObject.audioParamsFormat }
+		}
+		PlaybackInfoText { key: "Sample Rate"; value: mpvObject.audioParamsSampleRate + " Hz" }
 		PlaybackInfoText { key: "Decoder"; value: mpvObject.audioBitrate + "bps" }
 	}
 }

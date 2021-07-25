@@ -20,6 +20,7 @@
 		<file>qml/MpvPlayer.qml</file>
 		<file>qml/PlaybackInfoSection.qml</file>
 		<file>qml/PlaybackInfoText.qml</file>
+		<file>qml/PlaybackInfoRow.qml</file>
 		<file>qml/PlaybackInfoView.qml</file>
 		<file>qml/PlaylistView.qml</file>
 		<file>qml/SeekbarSlider.qml</file>
