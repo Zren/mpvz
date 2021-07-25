@@ -30,6 +30,10 @@ ColumnLayout {
 			value: formatBytesHumanized(mpvObject.demuxerCacheStateFwBytes) + " (" + mpvObject.demuxerCacheDuration.toFixed(1) + " sec)"
 			// visible: mpvObject.demuxerCacheStateFwBytes + mpvObject.demuxerCacheDuration > 0
 		}
+		PlaybackInfoText { key: "YTDL"
+			value: mpvObject.ytdlFormat
+			visible: mpvObject.filename.includes('watch?v=')
+		}
 	}
 
 	PlaybackInfoSection {

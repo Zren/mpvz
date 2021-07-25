@@ -141,6 +141,9 @@ MpvObject::MpvObject(QQuickItem * parent)
 	// mpv::qt::set_option_variant(mpv, "vf", "lavfi=\"fps=fps=60:round=down\"");
 	// mpv::qt::set_option_variant(mpv, "override-display-fps", "60");
 
+	//--- ytdl 1080p max
+	mpv::qt::set_option_variant(mpv, "ytdl-format", "ytdl-format=bestvideo[width<=?1080]+bestaudio/best");
+
 
 	// Setup the callback that will make QtQuick update and redraw if there
 	// is a new video frame. Use a queued connection: this makes sure the
@@ -212,6 +215,7 @@ MpvObject::MpvObject(QQuickItem * parent)
 	WATCH_PROP_STRING("video-format")
 	WATCH_PROP_STRING("video-params/pixelformat")
 	WATCH_PROP_STRING("video-out-params/pixelformat")
+	WATCH_PROP_STRING("ytdl-format")
 
 	connect(this, &MpvObject::idleActiveChanged,
 			this, &MpvObject::updateState);
@@ -374,6 +378,7 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 			else if HANDLE_PROP_STRING("video-format", videoFormat)
 			else if HANDLE_PROP_STRING("video-params/pixelformat", videoParamsPixelformat)
 			else if HANDLE_PROP_STRING("video-out-params/pixelformat", videoOutParamsPixelformat)
+			else if HANDLE_PROP_STRING("ytdl-format", ytdlFormat)
 
 
 		} else if (prop->format == MPV_FORMAT_INT64) {

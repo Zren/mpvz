@@ -102,6 +102,7 @@ class MpvObject : public QQuickFramebufferObject
 	READONLY_PROP_STRING("video-format", videoFormat)
 	READONLY_PROP_STRING("video-params/pixelformat", videoParamsPixelformat)
 	READONLY_PROP_STRING("video-out-params/pixelformat", videoOutParamsPixelformat)
+	READONLY_PROP_STRING("ytdl-format", ytdlFormat)
 
 public:
 	Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged)
