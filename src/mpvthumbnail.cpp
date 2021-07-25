@@ -8,7 +8,7 @@
 #include "qthelper.hpp"
 
 
-MpvThumbnail::MpvThumbnail(QQuickItem * parent)
+MpvThumbnail::MpvThumbnail(QQuickItem *parent)
 	: MpvObject(parent)
 {
 	setEnableAudio(false);

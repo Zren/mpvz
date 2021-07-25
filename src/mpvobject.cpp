@@ -108,7 +108,7 @@ static void wakeup(void *ctx)
 	QMetaObject::invokeMethod((MpvObject*)ctx, "on_mpv_events", Qt::QueuedConnection);
 }
 
-MpvObject::MpvObject(QQuickItem * parent)
+MpvObject::MpvObject(QQuickItem *parent)
 	: QQuickFramebufferObject(parent)
 	, m_enableAudio(true)
 	, m_useHwdec(false)

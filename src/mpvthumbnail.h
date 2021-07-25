@@ -7,6 +7,6 @@
 class MpvThumbnail : public MpvObject
 {
 public:
-	MpvThumbnail(QQuickItem * parent = 0);
+	MpvThumbnail(QQuickItem *parent = nullptr);
 	virtual ~MpvThumbnail();
 };

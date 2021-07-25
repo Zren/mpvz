@@ -110,7 +110,7 @@ public:
 	Q_PROPERTY(double position READ position NOTIFY positionChanged)
 
 public:
-	MpvObject(QQuickItem * parent = 0);
+	MpvObject(QQuickItem *parent = nullptr);
 	virtual ~MpvObject();
 
 	virtual Renderer *createRenderer() const;
