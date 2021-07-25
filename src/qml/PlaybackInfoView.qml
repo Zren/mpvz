@@ -10,6 +10,7 @@ ColumnLayout {
 		heading.value: mpvObject.filename
 
 		PlaybackInfoText { key: "Title"; value: mpvObject.mediaTitle; visible: mpvObject.filename != mpvObject.mediaTitle }
+		PlaybackInfoText { key: "Chapter"; value: mpvObject.getChapterTitle(mpvObject.chapter) + " (" + (mpvObject.chapter+1) + " / " + mpvObject.chapterListCount + ")"; visible: mpvObject.chapterListCount >= 1 }
 		PlaybackInfoText { key: "Size"; value: "" }
 		PlaybackInfoText { key: "Format/Protocol"; value: "mov,mp4,m4a,3gp,3g2,mj2" }
 		PlaybackInfoText { key: "Total Cache"; value: "100 MiB (1.0 sec)" }
