@@ -16,6 +16,7 @@ MpvThumbnail::MpvThumbnail(QQuickItem *parent)
 	setOption("hr-seek", "no"); // Don't use precise seek
 	setOption("sstep", "10"); // Step every 10 seconds
 	setOption("pause", ""); // Init paused
+	setOption("really-quiet", "yes"); // No stdout
 }
 
 MpvThumbnail::~MpvThumbnail() {
