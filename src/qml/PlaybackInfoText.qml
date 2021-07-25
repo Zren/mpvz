@@ -8,7 +8,7 @@ Text {
 	color: "#FFF"
 	style: Text.Outline
 	styleColor: "#444"
-	font.pixelSize: 14
+	font.pixelSize: 16
 	font.family: "Monospace"
 	wrapMode: Text.Wrap
 	Layout.fillWidth: true
