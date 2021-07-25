@@ -159,7 +159,7 @@ QtObject {
 		onTriggered: mpvObject.saturationUp()
 	}
 	property Action nextVideoTrackAction: Action {
-		text: "Next Audio Track"
+		text: "Next Video Track"
 		shortcut: "_"
 		onTriggered: mpvObject.nextVideoTrack()
 	}
