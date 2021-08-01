@@ -142,8 +142,10 @@ MpvObject::MpvObject(QQuickItem *parent)
 	// mpv::qt::set_option_variant(mpv, "override-display-fps", "60");
 
 	//--- ytdl 1080p max
-	mpv::qt::set_option_variant(mpv, "ytdl-format", "ytdl-format=bestvideo[width<=?1080]+bestaudio/best");
+	mpv::qt::set_option_variant(mpv, "ytdl-format", "ytdl-format=bestvideo[width<=?720]+bestaudio/best");
 
+
+	mpv::qt::set_option_variant(mpv, "quiet", "yes");
 
 	// Setup the callback that will make QtQuick update and redraw if there
 	// is a new video frame. Use a queued connection: this makes sure the
@@ -251,7 +253,12 @@ void MpvObject::doUpdate()
 
 void MpvObject::command(const QVariant& params)
 {
-	mpv::qt::command_variant(mpv, params);
+	mpv::qt::command(mpv, params);
+}
+
+void MpvObject::commandAsync(const QVariant& params)
+{
+	mpv::qt::command_async(mpv, params);
 }
 
 void MpvObject::setProperty(const QString& name, const QVariant& value)
@@ -467,7 +474,7 @@ void MpvObject::seek(double pos)
 {
 	// qDebug() << "seek" << pos;
 	pos = qMax(0.0, qMin(pos, m_duration));
-	command(QVariantList() << "seek" << pos << "absolute");
+	commandAsync(QVariantList() << "seek" << pos << "absolute");
 }
 
 void MpvObject::loadFile(QVariant urls)

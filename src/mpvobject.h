@@ -126,6 +126,7 @@ public:
 
 public slots:
 	void command(const QVariant& params);
+	void commandAsync(const QVariant& params);
 
 	void playPause();
 	void play();
