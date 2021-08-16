@@ -19,8 +19,10 @@
 int main(int argc, char **argv) {
 	QGuiApplication app(argc, argv);
 	QGuiApplication::setApplicationDisplayName("mpvz");
+	QGuiApplication::setOrganizationDomain("zren.github.io");
+	QGuiApplication::setOrganizationName("mpvz");
 
-	QCoreApplication::setApplicationVersion(QT_VERSION_STR);
+	QGuiApplication::setApplicationVersion(QT_VERSION_STR);
 
 	app.setWindowIcon(QIcon(":icons/Tethys/play.png"));
 
