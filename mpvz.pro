@@ -11,7 +11,7 @@ unix {
 	shortcut.files = mpvz.desktop
 	shortcut.path = $$PREFIX/share/applications/
 
-	logo.files = mpvz.png
+	logo.files = mpvz.svg
 	logo.path = $$PREFIX/share/icons/hicolor/48x48/apps/
 
 	INSTALLS += target shortcut logo
