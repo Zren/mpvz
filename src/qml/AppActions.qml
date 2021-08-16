@@ -72,6 +72,17 @@ QtObject {
 		onTriggered: mpvObject.speedDown()
 	}
 
+	property Action halfSpeedAction: Action {
+		text: "/2"
+		shortcut: "["
+		onTriggered: mpvObject.halfSpeed()
+	}
+	property Action doubleSpeedAction: Action {
+		text: "x2"
+		shortcut: "]"
+		onTriggered: mpvObject.doubleSpeed()
+	}
+
 	//--- Play > Seek
 	property Action seekBeginningAction: Action {
 		text: "Beginning"

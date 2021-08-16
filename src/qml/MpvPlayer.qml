@@ -119,6 +119,8 @@ Item {
 		function resetSpeed() { setSpeed(1.0) }
 		function speedUp() { setSpeed(speed + 0.1) }
 		function speedDown() { setSpeed(speed - 0.1) }
+		function halfSpeed() { setSpeed(speed / 2) }
+		function doubleSpeed() { setSpeed(speed * 2) }
 
 		readonly property real isUsingHwdec: hwdec != "no"
 		function toggleHwdec() {
