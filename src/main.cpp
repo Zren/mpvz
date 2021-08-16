@@ -8,6 +8,7 @@
 #include <clocale>
 
 // Qt
+#include <QApplication>
 #include <QGuiApplication>
 #include <QIcon>
 // #include <QtQuick/QQuickWindow>
@@ -17,7 +18,7 @@
 
 
 int main(int argc, char **argv) {
-	QGuiApplication app(argc, argv);
+	QApplication app(argc, argv);
 	QGuiApplication::setApplicationDisplayName("mpvz");
 	QGuiApplication::setOrganizationDomain("zren.github.io");
 	QGuiApplication::setOrganizationName("mpvz");
