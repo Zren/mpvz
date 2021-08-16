@@ -15,6 +15,7 @@
 		<file>qml/Equalizer.qml</file>
 		<file>qml/EqualizerBar.qml</file>
 		<file>qml/EqualizerLabel.qml</file>
+		<file>qml/FileSelectorDialog.qml</file>
 		<file>qml/HeaderBar.qml</file>
 		<file>qml/MainWindow.qml</file>
 		<file>qml/MpvPlayer.qml</file>

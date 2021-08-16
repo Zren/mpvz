@@ -1,4 +1,4 @@
-QT += qml quick x11extras
+QT += qml quick x11extras widgets
 CONFIG += c++14
 CONFIG += debug
 

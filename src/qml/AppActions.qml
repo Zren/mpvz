@@ -7,12 +7,12 @@ QtObject {
 	property Action openFileAction: Action {
 		text: "File"
 		shortcut: "Ctrl+F"
-		// onTriggered: 
+		onTriggered: mpvPlayer.selectFile()
 	}
 	property Action openFolderAction: Action {
 		text: "Folder"
 		shortcut: "Ctrl+G"
-		// onTriggered: 
+		onTriggered: mpvPlayer.selectFolder()
 	}
 	property Action exitAction: Action {
 		text: "Exit"
