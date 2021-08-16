@@ -6,7 +6,6 @@ import QtQuick 2.2
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import QtMultimedia 5.7
 import Qt.labs.folderlistmodel 2.1
 
 AppWindow {
