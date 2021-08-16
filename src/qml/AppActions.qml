@@ -14,6 +14,12 @@ QtObject {
 		shortcut: "Ctrl+G"
 		onTriggered: mpvPlayer.selectFolder()
 	}
+	property Action filePropertiesAction: Action {
+		text: "Properties"
+		shortcut: "Shift+F10"
+		enabled: false
+		// onTriggered: 
+	}
 	property Action exitAction: Action {
 		text: "Exit"
 		shortcut: "Alt+X"
@@ -216,6 +222,14 @@ QtObject {
 	}
 	property Action togglePlaybackInfoAction2: Action { shortcut: "I"; onTriggered: togglePlaybackInfoAction.trigger() }
 
+
+	property Action optionsAction: Action {
+		text: "Options"
+		shortcut: "O"
+		enabled: false
+		// onTriggered:
+	}
+
 	//--- Tools > Playlist
 	property Action togglePlaylistAction: Action {
 		text: "Show / Hide"
@@ -304,9 +318,14 @@ QtObject {
 		onTriggered: window.alwaysOnTop = 'whilePlaying'
 	}
 
-	//---
+	//--- Help
 	property Action homePageAction: Action {
 		text: "Home Page"
 		onTriggered: Qt.openUrlExternally('https://github.com/Zren/mpvz')
+	}
+	property Action aboutAction: Action {
+		text: "About"
+		enabled: false
+		// onTriggered: 
 	}
 }

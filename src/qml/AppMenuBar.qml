@@ -18,10 +18,7 @@ MenuBar {
 
 		MenuSeparator {}
 
-		// MenuItem {
-		//     text: "Properties"
-		//     shortcut: "Shift+F10"
-		// }
+		MenuItem { action: appActions.filePropertiesAction }
 
 		MenuItem { action: appActions.exitAction }
 	}
@@ -58,10 +55,7 @@ MenuBar {
 
 		MenuSeparator {}
 
-		MenuItem {
-			text: "Options"
-			shortcut: "O"
-		}
+		MenuItem { action: appActions.optionsAction }
 	}
 
 
@@ -115,8 +109,6 @@ MenuBar {
 
 		MenuSeparator {}
 
-		MenuItem {
-			text: "About"
-		}
+		MenuItem { action: appActions.aboutAction }
 	}
 }
