@@ -362,10 +362,10 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 		// logPropChange(prop);
 
 		if (prop->format == MPV_FORMAT_NONE) {
-			if HANDLE_PROP_INT("vid", vid)
-			else if HANDLE_PROP_INT("aid", aid)
-			else if HANDLE_PROP_INT("sid", sid)
-			else if HANDLE_PROP_INT("track-list/count", trackListCount)
+			if HANDLE_PROP_NONE("vid", vid)
+			else if HANDLE_PROP_NONE("aid", aid)
+			else if HANDLE_PROP_NONE("sid", sid)
+			else if HANDLE_PROP_NONE("track-list/count", trackListCount)
 
 		} else if (prop->format == MPV_FORMAT_DOUBLE) {
 			if (strcmp(prop->name, "time-pos") == 0) {
