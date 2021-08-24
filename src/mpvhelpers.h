@@ -138,7 +138,8 @@
 	}
 #define HANDLE_PROP_STRING(p, varName) \
 	(strcmp(prop->name, p) == 0) { \
-		QString value = getProperty(p).toString(); \
+		char* charValue = *(char**)prop->data; \
+		QString value = QString::fromUtf8(charValue); \
 		Q_EMIT varName##Changed(value); \
 	}
 #define HANDLE_PROP_ARRAY(p, varName) \
