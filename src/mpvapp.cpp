@@ -54,14 +54,14 @@ void MpvApp::parseArgs() {
 }
 
 bool MpvApp::init() {
-	m_engine.load(QUrl(QStringLiteral("qrc:///qml/MainWindow.qml")));
-	if (m_engine.rootObjects().isEmpty())
-		return false;
-
 	QQmlContext *context = m_engine.rootContext();
 	AppObj *appObj = new AppObj();
 	appObj->m_urls = m_customFiles;
 	context->setContextProperty(QStringLiteral("app"), appObj);
+
+	m_engine.load(QUrl(QStringLiteral("qrc:///qml/MainWindow.qml")));
+	if (m_engine.rootObjects().isEmpty())
+		return false;
 
 	// m_mpvObject = m_engine.findChild<MpvObject*>("mpvObject");
 	// if (m_mpvObject) {
