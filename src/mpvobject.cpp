@@ -293,28 +293,28 @@ void MpvObject::logPropChange(mpv_event_property *prop)
 {
 	switch (prop->format) {
 	case MPV_FORMAT_NONE:
-		qDebug() << "none" << prop->name << 0;
+		qDebug() << objectName() << "none" << prop->name << 0;
 		break;
 	case MPV_FORMAT_STRING:
-		qDebug() << "str " << prop->name << *(char**)prop->data;
+		qDebug() << objectName() << "str " << prop->name << *(char**)prop->data;
 		break;
 	case MPV_FORMAT_FLAG:
-		qDebug() << "bool" << prop->name << *(bool *)prop->data;
+		qDebug() << objectName() << "bool" << prop->name << *(bool *)prop->data;
 		break;
 	case MPV_FORMAT_INT64:
-		qDebug() << "int " << prop->name << *(int64_t *)prop->data;
+		qDebug() << objectName() << "int " << prop->name << *(int64_t *)prop->data;
 		break;
 	case MPV_FORMAT_DOUBLE:
-		qDebug() << "doub" << prop->name << *(double *)prop->data;
+		qDebug() << objectName() << "doub" << prop->name << *(double *)prop->data;
 		break;
 	case MPV_FORMAT_NODE_ARRAY:
-		qDebug() << "arr " << prop->name; // TODO
+		qDebug() << objectName() << "arr " << prop->name; // TODO
 		break;
 	case MPV_FORMAT_NODE_MAP:
-		qDebug() << "map " << prop->name; // TODO
+		qDebug() << objectName() << "map " << prop->name; // TODO
 		break;
 	default:
-		qDebug() << "prop(format=" << prop->format << ")" << prop->name;
+		qDebug() << objectName() << "prop(format=" << prop->format << ")" << prop->name;
 		break;
 	}
 }
