@@ -184,7 +184,7 @@ signals:
 	void fileLoaded();
 
 private slots:
-	void on_mpv_events();
+	void onMpvEvents();
 	void doUpdate();
 
 protected:

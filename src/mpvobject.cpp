@@ -105,7 +105,7 @@ void MpvRenderer::render() {
 //--- MpvObject
 static void wakeup(void *ctx)
 {
-	QMetaObject::invokeMethod((MpvObject*)ctx, "on_mpv_events", Qt::QueuedConnection);
+	QMetaObject::invokeMethod((MpvObject*)ctx, "onMpvEvents", Qt::QueuedConnection);
 }
 
 MpvObject::MpvObject(QQuickItem *parent)
@@ -277,7 +277,7 @@ void MpvObject::setOption(const QString& name, const QVariant& value)
 }
 
 
-void MpvObject::on_mpv_events()
+void MpvObject::onMpvEvents()
 {
 	// Process all events, until the event queue is empty.
 	while (mpv) {
