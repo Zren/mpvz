@@ -68,32 +68,56 @@ Window {
 				}
 			}
 		}
-		ScrollView {
-			id: propertyView
+		ColumnLayout {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			Layout.preferredWidth: 500
 			Layout.minimumWidth: 300
-			ListView {
-				model: mpvObject.getProperty("property-list").sort()
-				delegate: RowLayout {
-					width: ListView.view.width
-					Text {
-						text: modelData + ":"
-						font.weight: Font.Bold
-						Layout.alignment: Qt.AlignTop
-						color: "#fff"
-						// style: Text.Outline
-						// styleColor: "#444"
+			
+			ScrollView {
+				id: propertyScrollView
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+
+				ListView {
+					id: propertyListView
+					property var propertyListModel: mpvObject.getProperty("property-list").sort()
+					property var propertyFilterModel: propertyListModel
+					model: propertyFilterModel
+					delegate: RowLayout {
+						width: ListView.view.width
+						Text {
+							text: modelData + ":"
+							font.weight: Font.Bold
+							Layout.alignment: Qt.AlignTop
+							color: "#fff"
+							// style: Text.Outline
+							// styleColor: "#444"
+						}
+						Text {
+							text: mpvObject.getProperty(modelData)
+							wrapMode: Text.Wrap
+							color: "#ddd"
+							Layout.fillWidth: true
+							Layout.alignment: Qt.AlignTop
+						}
 					}
-					Text {
-						text: mpvObject.getProperty(modelData)
-						wrapMode: Text.Wrap
-						color: "#ddd"
-						Layout.fillWidth: true
-						Layout.alignment: Qt.AlignTop
+					function applyFilter() {
+						var query = propertyFilterField.text.toLowerCase()
+						propertyFilterModel = propertyListModel.filter(function(key){
+							if (query) {
+								return key.toLowerCase().includes(query)
+							} else {
+								return true
+							}
+						})
 					}
 				}
+			}
+			TextField {
+				id: propertyFilterField
+				Layout.fillWidth: true
+				onTextChanged: propertyListView.applyFilter()
 			}
 		}
 	}
