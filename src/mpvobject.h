@@ -184,13 +184,14 @@ signals:
 	void fileLoaded();
 
 private slots:
-	void on_mpv_events();
+	void onMpvEvents();
 	void doUpdate();
 
 protected:
 	mpv_handle *mpv;
 
 private:
+	void logPropChange(mpv_event_property *prop);
 	void handle_mpv_event(mpv_event *event);
 	static void on_update(void *ctx);
 

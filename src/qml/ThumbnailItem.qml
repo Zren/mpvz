@@ -3,6 +3,7 @@ import QtQuick 2.0
 
 MpvThumbnail {
 	id: mpvThumb
+	objectName: "mpvThumb"
 	anchors.fill: parent
 
 	Component.onCompleted: {

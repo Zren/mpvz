@@ -44,11 +44,19 @@ MpvRenderer::MpvRenderer(const MpvObject *obj)
 {
 
 	// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L106
+#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(2, 0)
+	mpv_opengl_init_params gl_init_params{
+		get_proc_address,
+		nullptr // get_proc_address_ctx
+	};
+#else
 	mpv_opengl_init_params gl_init_params{
 		get_proc_address,
 		nullptr, // get_proc_address_ctx
 		nullptr // extra_exts (deprecated)
 	};
+#endif
+
 	mpv_render_param display{
 		MPV_RENDER_PARAM_INVALID,
 		nullptr
@@ -105,7 +113,7 @@ void MpvRenderer::render() {
 //--- MpvObject
 static void wakeup(void *ctx)
 {
-	QMetaObject::invokeMethod((MpvObject*)ctx, "on_mpv_events", Qt::QueuedConnection);
+	QMetaObject::invokeMethod((MpvObject*)ctx, "onMpvEvents", Qt::QueuedConnection);
 }
 
 MpvObject::MpvObject(QQuickItem *parent)
@@ -277,7 +285,7 @@ void MpvObject::setOption(const QString& name, const QVariant& value)
 }
 
 
-void MpvObject::on_mpv_events()
+void MpvObject::onMpvEvents()
 {
 	// Process all events, until the event queue is empty.
 	while (mpv) {
@@ -286,6 +294,36 @@ void MpvObject::on_mpv_events()
 			break;
 		}
 		handle_mpv_event(event);
+	}
+}
+
+void MpvObject::logPropChange(mpv_event_property *prop)
+{
+	switch (prop->format) {
+	case MPV_FORMAT_NONE:
+		qDebug() << objectName() << "none" << prop->name << 0;
+		break;
+	case MPV_FORMAT_STRING:
+		qDebug() << objectName() << "str " << prop->name << *(char**)prop->data;
+		break;
+	case MPV_FORMAT_FLAG:
+		qDebug() << objectName() << "bool" << prop->name << *(bool *)prop->data;
+		break;
+	case MPV_FORMAT_INT64:
+		qDebug() << objectName() << "int " << prop->name << *(int64_t *)prop->data;
+		break;
+	case MPV_FORMAT_DOUBLE:
+		qDebug() << objectName() << "doub" << prop->name << *(double *)prop->data;
+		break;
+	case MPV_FORMAT_NODE_ARRAY:
+		qDebug() << objectName() << "arr " << prop->name; // TODO
+		break;
+	case MPV_FORMAT_NODE_MAP:
+		qDebug() << objectName() << "map " << prop->name; // TODO
+		break;
+	default:
+		qDebug() << objectName() << "prop(format=" << prop->format << ")" << prop->name;
+		break;
 	}
 }
 
@@ -329,12 +367,13 @@ void MpvObject::handle_mpv_event(mpv_event *event)
 	}
 	case MPV_EVENT_PROPERTY_CHANGE: {
 		mpv_event_property *prop = (mpv_event_property *)event->data;
+		// logPropChange(prop);
 
 		if (prop->format == MPV_FORMAT_NONE) {
-			if HANDLE_PROP_INT("vid", vid)
-			else if HANDLE_PROP_INT("aid", aid)
-			else if HANDLE_PROP_INT("sid", sid)
-			else if HANDLE_PROP_INT("track-list/count", trackListCount)
+			if HANDLE_PROP_NONE("vid", vid)
+			else if HANDLE_PROP_NONE("aid", aid)
+			else if HANDLE_PROP_NONE("sid", sid)
+			else if HANDLE_PROP_NONE("track-list/count", trackListCount)
 
 		} else if (prop->format == MPV_FORMAT_DOUBLE) {
 			if (strcmp(prop->name, "time-pos") == 0) {

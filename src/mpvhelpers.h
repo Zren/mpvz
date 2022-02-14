@@ -116,6 +116,11 @@
 
 
 // MpvObject::handle_mpv_event()
+#define HANDLE_PROP_NONE(p, varName) \
+	(strcmp(prop->name, p) == 0) { \
+		int64_t value = 0; \
+		Q_EMIT varName##Changed(value); \
+	}
 #define HANDLE_PROP_BOOL(p, varName) \
 	(strcmp(prop->name, p) == 0) { \
 		bool value = *(bool *)prop->data; \
@@ -123,7 +128,7 @@
 	}
 #define HANDLE_PROP_INT(p, varName) \
 	(strcmp(prop->name, p) == 0) { \
-		int64_t value = getProperty(p).toInt(); \
+		int64_t value = *(int64_t *)prop->data; \
 		Q_EMIT varName##Changed(value); \
 	}
 #define HANDLE_PROP_DOUBLE(p, varName) \
@@ -133,7 +138,8 @@
 	}
 #define HANDLE_PROP_STRING(p, varName) \
 	(strcmp(prop->name, p) == 0) { \
-		QString value = getProperty(p).toString(); \
+		char* charValue = *(char**)prop->data; \
+		QString value = QString::fromUtf8(charValue); \
 		Q_EMIT varName##Changed(value); \
 	}
 #define HANDLE_PROP_ARRAY(p, varName) \
