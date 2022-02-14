@@ -44,11 +44,19 @@ MpvRenderer::MpvRenderer(const MpvObject *obj)
 {
 
 	// https://github.com/mpv-player/mpv/blob/master/libmpv/render_gl.h#L106
+#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(2, 0)
+	mpv_opengl_init_params gl_init_params{
+		get_proc_address,
+		nullptr // get_proc_address_ctx
+	};
+#else
 	mpv_opengl_init_params gl_init_params{
 		get_proc_address,
 		nullptr, // get_proc_address_ctx
 		nullptr // extra_exts (deprecated)
 	};
+#endif
+
 	mpv_render_param display{
 		MPV_RENDER_PARAM_INVALID,
 		nullptr
